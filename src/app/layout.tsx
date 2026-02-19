@@ -1,16 +1,30 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Cabin_Sketch } from "next/font/google";
+
+import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-secondary",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const cabinSketch = Cabin_Sketch({
   subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-cabin-sketch",
+});
+
+const dogica = localFont({
+  src: [
+    { path: "../../public/fonts/dogica.ttf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/dogicabold.ttf", weight: "700", style: "normal" },
+    { path: "../../public/fonts/dogicapixel.ttf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/dogicapixelbold.ttf", weight: "700", style: "normal" },
+  ],
+  variable: "--font-primary",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -24,8 +38,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="en" className={`${inter.variable} ${dogica.variable} ${cabinSketch.variable}`}>
+      <body className="antialiased">
         <Toaster position="top-right" />
         {children}
       </body>
