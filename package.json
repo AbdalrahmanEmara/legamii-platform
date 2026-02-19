@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+    "@iconify-json/streamline-freehand-color": "^1.2.2",
+    "@iconify/react": "^6.0.2",
     "@tanstack/react-query": "^5.90.21",
     "next": "16.1.6",
     "react": "19.2.3",

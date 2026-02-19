@@ -1,26 +1,369 @@
+/* src/app/globals.css
+ * Tailwind v4 — single source of truth for all design tokens.
+ * No tailwind.config.js needed.
+ */
+
 @import "tailwindcss";
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap'); */
+/* Dogica Pixel: add to /public/fonts/ and declare with @font-face below */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ═════════════════════════════════════════════════════════════════════════════
+   @theme — ALL DESIGN TOKENS
+   This replaces tailwind.config.js entirely in Tailwind v4.
+   Every --* variable here becomes a Tailwind utility class automatically.
+   ═════════════════════════════════════════════════════════════════════════════ */
+@theme {
+  /* ── Font Families ──────────────────────────────────────────────────────── */
+  --font-primary: "Dogica Pixel", monospace;
+  --font-secondary: "Inter", sans-serif;
+  --font-cabin-sketch: "Cabin Sketch", cursive;
+
+  /* ── Font Weights ───────────────────────────────────────────────────────── */
+  --font-weight-thin: 100;
+  --font-weight-extralight: 200;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+
+  /* ── Font Sizes ─────────────────────────────────────────────────────────── */
+  /* Titles */
+  --text-title-1: 72px;
+  --text-title-2: 64px;
+  --text-title-3: 56px;
+  /* Headings */
+  --text-h1: 56px;
+  --text-h2: 48px;
+  --text-h3: 40px;
+  --text-h4: 32px;
+  --text-h5: 24px;
+  --text-h6: 20px;
+  --text-h7: 16px;
+  /* Labels */
+  --text-label-1: 16px;
+  --text-label-2: 14px;
+  --text-label-3: 12px;
+  /* Body */
+  --text-body-1: 20px;
+  --text-body-2: 18px;
+  --text-body-3: 14px;
+  --text-body-4: 12px;
+  /* Captions */
+  --text-caption-1: 10px;
+  --text-caption-2: 9px;
+
+  /* ── Border Radius ──────────────────────────────────────────────────────── */
+  --radius-none: 0px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-3xl: 24px;
+  --radius-4xl: 32px;
+  --radius-5xl: 48px;
+  --radius-full: 999px;
+
+  /* ── Spacing ────────────────────────────────────────────────────────────── */
+  --spacing-zero: 0px;
+  --spacing-px: 2px;
+  --spacing-xxs: 4px;
+  --spacing-xs2: 8px;
+  --spacing-xs: 12px;
+  --spacing-sm: 16px;
+  --spacing-base: 24px;
+  --spacing-md: 32px;
+  --spacing-lg: 40px;
+  --spacing-xl: 48px;
+  --spacing-xl2: 56px;
+  --spacing-xl3: 64px;
+  --spacing-xl4: 72px;
+  --spacing-xl5: 80px;
+  --spacing-xl6: 88px;
+
+  /* ── Sizes ──────────────────────────────────────────────────────────────── */
+  --size-xxs: 2px;
+  --size-xs: 4px;
+  --size-sm: 8px;
+  --size-base: 12px;
+  --size-lg: 16px;
+  --size-xl: 20px;
+  --size-2xl: 24px;
+  --size-3xl: 32px;
+  --size-4xl: 40px;
+  --size-5xl: 48px;
+
+  /* ── Color Palette — Light (default) ────────────────────────────────────── */
+  /* Red */
+  --color-red-100: #ffccdd;
+  --color-red-200: #ff99bb;
+  --color-red-300: #ff6699;
+  --color-red-500: #ff0055;
+  --color-red-600: #cc0044;
+  --color-red-700: #990033;
+  --color-red-800: #660022;
+  /* Yellow */
+  --color-yellow-50: #fffde7;
+  --color-yellow-200: #fff599;
+  --color-yellow-300: #fff066;
+  --color-yellow-500: #ffe500;
+  --color-yellow-600: #ccb800;
+  --color-yellow-700: #998a00;
+  --color-yellow-800: #665c00;
+  /* Green */
+  --color-green-50: #e7fff1;
+  --color-green-200: #99ffc2;
+  --color-green-300: #66ffa3;
+  --color-green-500: #22ff7b;
+  --color-green-600: #19c25d;
+  --color-green-700: #00993d;
+  --color-green-800: #006629;
+  /* Cyan */
+  --color-cyan-50: #e6fbfe;
+  --color-cyan-100: #cffafe;
+  --color-cyan-200: #a5f3fc;
+  --color-cyan-300: #67e8f9;
+  --color-cyan-500: #06b6d4;
+  --color-cyan-700: #047f95;
+  --color-cyan-800: #035563;
+  /* Secondary / Blue */
+  --color-secondary-50: #e5e8ff;
+  --color-secondary-200: #99bdff;
+  --color-secondary-300: #669cff;
+  --color-secondary-500: #0059ff;
+  --color-secondary-600: #0047cc;
+  --color-secondary-700: #0047cc;
+  --color-secondary-800: #002466;
+  /* Primary / Purple */
+  --color-primary-50: #faeafb;
+  --color-primary-200: #e9aaee;
+  --color-primary-300: #df80e5;
+  --color-primary-500: #d865e0;
+  --color-primary-600: #a122aa;
+  --color-primary-700: #791a7f;
+  --color-primary-800: #501155;
+  /* Black & White */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  /* Neutral */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #12121a;
+  --color-neutral-950: #020203;
+
+  /* ── Semantic Color Tokens ──────────────────────────────────────────────── */
+  /* Use these in components — they flip automatically in dark mode           */
+  --color-bg: var(--color-primary-500);
+  --color-el-bg: var(--color-neutral-50);
+  --color-border: var(--color-neutral-800);
+  --color-text: var(--color-neutral-950);
+  --color-sec-text: var(--color-neutral-500);
+  --color-sec-el: var(--color-neutral-100);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ═════════════════════════════════════════════════════════════════════════════
+   DARK MODE
+   Redefines semantic tokens only — palette stays accessible in both modes.
+   Toggle by adding `dark` class to <html>.
+   ═════════════════════════════════════════════════════════════════════════════ */
+.dark {
+  /* Inverted palette */
+  --color-red-100: #660022;
+  --color-red-200: #990033;
+  --color-red-300: #cc0044;
+  --color-red-500: #ff0055;
+  --color-red-600: #ff6699;
+  --color-red-700: #ff99bb;
+  --color-red-800: #ffccdd;
+
+  --color-yellow-50: #998a00;
+  --color-yellow-200: #998a00;
+  --color-yellow-300: #ccb800;
+  --color-yellow-500: #ffe500;
+  --color-yellow-600: #fff066;
+  --color-yellow-700: #fff599;
+  --color-yellow-800: #fffde7;
+
+  --color-green-50: #006629;
+  --color-green-200: #00993d;
+  --color-green-300: #19c25d;
+  --color-green-500: #22ff7b;
+  --color-green-600: #66ffa3;
+  --color-green-700: #99ffc2;
+  --color-green-800: #e7fff1;
+
+  --color-secondary-50: #002466;
+  --color-secondary-200: #0047cc;
+  --color-secondary-300: #0047cc;
+  --color-secondary-500: #0059ff;
+  --color-secondary-600: #669cff;
+  --color-secondary-700: #99bdff;
+  --color-secondary-800: #e5e8ff;
+
+  --color-primary-50: #501155;
+  --color-primary-200: #791a7f;
+  --color-primary-300: #a122aa;
+  --color-primary-500: #d865e0;
+  --color-primary-600: #df80e5;
+  --color-primary-700: #e9aaee;
+  --color-primary-800: #faeafb;
+
+  --color-neutral-50: #020203;
+  --color-neutral-100: #12121a;
+  --color-neutral-200: #262626;
+  --color-neutral-300: #404040;
+  --color-neutral-400: #525252;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #a3a3a3;
+  --color-neutral-700: #d4d4d4;
+  --color-neutral-800: #e5e5e5;
+  --color-neutral-900: #f5f5f5;
+  --color-neutral-950: #fafafa;
+
+  /* Semantic tokens — dark */
+  --color-bg: var(--color-neutral-50);
+  --color-el-bg: var(--color-neutral-100);
+  --color-border: var(--color-primary-200);
+  --color-text: var(--color-neutral-950);
+  --color-sec-text: var(--color-neutral-700);
+  --color-sec-el: var(--color-neutral-200);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ═════════════════════════════════════════════════════════════════════════════
+   TYPOGRAPHY COMPONENT CLASSES
+   Matches Figma layer names exactly.
+   Each class bundles font-family + size + line-height + letter-spacing.
+   ═════════════════════════════════════════════════════════════════════════════ */
+@layer components {
+  /* Titles — Dogica Pixel */
+  .title-1 {
+    font-family: var(--font-primary);
+    font-size: 72px;
+    line-height: 88px;
+    letter-spacing: -0.8px;
   }
-}
+  .title-2 {
+    font-family: var(--font-primary);
+    font-size: 64px;
+    line-height: 76px;
+    letter-spacing: -0.8px;
+  }
+  .title-3 {
+    font-family: var(--font-primary);
+    font-size: 56px;
+    line-height: 68px;
+    letter-spacing: -0.6px;
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Headings — Inter */
+  .heading-h1 {
+    font-family: var(--font-secondary);
+    font-size: 56px;
+    line-height: 68px;
+    letter-spacing: -0.5px;
+  }
+  .heading-h2 {
+    font-family: var(--font-secondary);
+    font-size: 48px;
+    line-height: 58px;
+    letter-spacing: -0.4px;
+  }
+  .heading-h3 {
+    font-family: var(--font-secondary);
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: -0.3px;
+  }
+  .heading-h4 {
+    font-family: var(--font-secondary);
+    font-size: 32px;
+    line-height: 38px;
+    letter-spacing: -0.2px;
+  }
+  .heading-h5 {
+    font-family: var(--font-secondary);
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: -0.15px;
+  }
+  .heading-h6 {
+    font-family: var(--font-secondary);
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0px;
+  }
+  .heading-h7 {
+    font-family: var(--font-secondary);
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0px;
+  }
+
+  /* Labels — Dogica Pixel */
+  .label-1 {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: -0.18px;
+  }
+  .label-2 {
+    font-family: var(--font-primary);
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+  }
+  .label-3 {
+    font-family: var(--font-primary);
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -0.12px;
+  }
+
+  /* Body — Inter */
+  .body-1 {
+    font-family: var(--font-secondary);
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 0px;
+  }
+  .body-2 {
+    font-family: var(--font-secondary);
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0px;
+  }
+  .body-3 {
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0px;
+  }
+  .body-4 {
+    font-family: var(--font-secondary);
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0px;
+  }
+
+  /* Captions — Inter */
+  .caption-1 {
+    font-family: var(--font-secondary);
+    font-size: 10px;
+    line-height: 12px;
+  }
+  .caption-2 {
+    font-family: var(--font-secondary);
+    font-size: 9px;
+    line-height: 10px;
+  }
 }
