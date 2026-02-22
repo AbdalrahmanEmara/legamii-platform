@@ -2,10 +2,12 @@ import { CloseIcon } from "../icons/CloseIcon";
 import { MinusIcon } from "../icons/MinusIcon";
 import { SquareIcon } from "../icons/SquareIcon";
 
-export default function ReusableWindow({ children, title = "title" }) {
+export default function ReusableWindow({ className, children, title = "title" }) {
   return (
-    <div className="border-border outline -outline-offset-1 outline-Border rounded-lg  shadow-[2px_3px_4px_0px_rgba(0,0,0,1.00)]">
-      <header className="bg-primary-50 p-sm font-primary border-border flex justify-between rounded-tl-lg rounded-tr-lg border-b text-sm leading-5 font-normal">
+    <div
+      className={`border-text rounded-lg border shadow-[2px_3px_4px_0px_rgba(0,0,0,1.00)] ${className}`}
+    >
+      <header className="bg-primary-50 p-sm font-primary border-text flex justify-between rounded-tl-lg rounded-tr-lg border-b text-sm leading-5 font-normal">
         <p className="uppercase">{title}</p>
         <div className="flex h-[16px] gap-x-2">
           <div className="flex items-end pb-0.5">
