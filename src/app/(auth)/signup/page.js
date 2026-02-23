@@ -8,7 +8,7 @@ import ReusableWindow from "@/components/ui/ReusableWindow";
 export default function page() {
   return (
     <Background className={"flex items-center justify-center"}>
-      <div className="md:px-xl3 px-base py-xl flex">
+      <div className="md:px-xl3 px-base py-xl flex gap-xl6">
         <ReusableWindow title="Sing_Up.sys" className="w-200 max-w-full">
           <AuthHeader prompt={"Already have an account?"} to={"/login"} linkTitle={"Login"} />
 
