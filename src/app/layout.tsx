@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Cabin_Sketch } from "next/font/google";
+import { Inter, Cabin_Sketch, Jost, Montserrat } from "next/font/google";
 
 import localFont from "next/font/local";
 import "./globals.css";
@@ -14,6 +14,18 @@ const cabinSketch = Cabin_Sketch({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-cabin-sketch",
+});
+
+const jost = Jost({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-jost",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-montserrat",
 });
 
 const dogica = localFont({
@@ -38,8 +50,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${dogica.variable} ${cabinSketch.variable}`}>
-      <body className="antialiased">
+    <html
+      lang="en"
+      className={`${inter.variable} ${dogica.variable} ${cabinSketch.variable} ${jost.variable} ${montserrat.variable}`}
+    >
+      <body className="antialiased" suppressHydrationWarning>
         <Toaster position="top-right" />
         {children}
       </body>
