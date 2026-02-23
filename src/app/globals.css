@@ -10,7 +10,9 @@
 
 /* ---break---
  */
-
+* {
+  box-sizing: border-box;
+}
 @custom-variant dark (&:is(.dark *));
 /* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap'); */
 /* Dogica Pixel: add to /public/fonts/ and declare with @font-face below */

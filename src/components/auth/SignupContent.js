@@ -4,7 +4,7 @@ import FormInput from "./FormInput";
 import GradeSelect from "./GradeSelect";
 export default function SignupContent() {
   return (
-    <div className="max-h-250 overflow-auto  gap-md px-xl py-lg bg-el-bg flex flex-col rounded-b-lg">
+    <div className="max-h-225 overflow-auto  gap-md px-xl py-lg bg-el-bg flex flex-col rounded-b-lg">
       <header className="flex flex-col gap-2">
         <p className="text-text font-primary text-4xl leading-[48px] font-bold uppercase">
           Ready to level up your learning?
@@ -21,7 +21,7 @@ export default function SignupContent() {
 
         <Btn1 title="Sign Up" className="bg-primary-500 mt-md" />
 
-        <div className="self-stretch inline-flex justify-start items-center gap-2 my-base">
+        <div className="self-stretch inline-flex justify-start items-center gap-2">
           <div className="flex-1 h-0 outline outline-offset-[-0.50px] outline-neutral-400"></div>
           <div className="justify-center text-neutral-400 text-xs font-normal font-futura capitalize">or</div>
           <div className="flex-1 h-0 outline outline-offset-[-0.50px] outline-neutral-400"></div>
