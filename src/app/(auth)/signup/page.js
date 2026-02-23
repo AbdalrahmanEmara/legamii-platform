@@ -14,7 +14,7 @@ export default function page() {
 
           <SignupContent />
         </ReusableWindow>
-        <div className="hidden lg:flex flex-col flex-1 h-lvh justify-center items-center">
+        <div className="hidden lg:flex flex-col flex-1 justify-center items-center">
           <LogoIcon size={240} />
           <LogoWord LEstyles={'text-neutral-950 text-8xl font-normal font-cabin-sketch tracking-[11.64px]'} GAstyles={'text-neutral-950 text-7xl font-normal font-primary leading-6'} />
         </div>
