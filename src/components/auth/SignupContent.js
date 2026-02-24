@@ -1,4 +1,3 @@
-'use client';
 import GoogleIcon from "../icons/GoogleIcon";
 import Btn1 from "../ui/Btn1";
 import FormInput from "./FormInput";
@@ -32,16 +31,6 @@ export default function SignupContent() {
           <GoogleIcon size={23} />
           <span>Google</span>
         </button>
-        {/* Dark mode toggle — just to visually test */}
-        {/* <button
-          className="mt-base px-sm py-xs bg-primary-500 label-2 rounded-lg text-white"
-          onClick={(e) => {
-            e.preventDefault();
-            document.documentElement.classList.toggle("dark")
-          }}
-        >
-          Toggle Dark Mode
-        </button> */}
       </form>
     </div>
   );
