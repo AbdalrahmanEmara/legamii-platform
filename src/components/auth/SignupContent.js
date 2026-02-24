@@ -1,13 +1,12 @@
-'use client';
 import GoogleIcon from "../icons/GoogleIcon";
 import Btn1 from "../ui/Btn1";
 import FormInput from "./FormInput";
 import GradeSelect from "./GradeSelect";
 export default function SignupContent() {
   return (
-    <div className="max-h-225 overflow-auto  gap-md px-xl py-lg bg-el-bg flex flex-col rounded-b-lg">
+    <div className="max-h-225 overflow-auto  gap-md px-xl py-md bg-el-bg flex flex-col rounded-b-lg">
       <header className="flex flex-col gap-2">
-        <p className="text-text font-primary text-4xl leading-[48px] font-bold uppercase">
+        <p className="text-text font-primary text-3xl leading-9 font-bold uppercase">
           Ready to level up your learning?
         </p>
         <p className="text-sec-text font-secondary text-lg leading-6 font-normal">
@@ -20,7 +19,7 @@ export default function SignupContent() {
         <FormInput type="password" placeholder="Your password" label="password" id="password" />
         <GradeSelect label="Grade" placeholder="Select your grade" />
 
-        <Btn1 title="Sign Up" className="bg-primary-500 mt-md" />
+        <Btn1 title="Sign Up" className="bg-primary-500 mt-xs2" />
 
         <div className="self-stretch inline-flex justify-start items-center gap-2">
           <div className="flex-1 h-0 outline outline-offset-[-0.50px] outline-neutral-400"></div>
@@ -31,16 +30,6 @@ export default function SignupContent() {
         <button className="flex text-text text-lg font-bold font-montserrat capitalize bg-sec-el px-md py-sm rounded hover:bg-neutral-200 items-center justify-center gap-4">
           <GoogleIcon size={23} />
           <span>Google</span>
-        </button>
-        {/* Dark mode toggle — just to visually test */}
-        <button
-          className="mt-base px-sm py-xs bg-primary-500 label-2 rounded-lg text-white"
-          onClick={(e) => {
-            e.preventDefault();
-            document.documentElement.classList.toggle("dark")
-          }}
-        >
-          Toggle Dark Mode
         </button>
       </form>
     </div>
