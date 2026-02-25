@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import localFont from "next/font/local";
 
 const dogica = localFont({
-  src: "../fonts/Dogica_Pixel.ttf",
+  src: "../app/fonts/Dogica_Pixel.ttf",
   display: "swap",
 });
 

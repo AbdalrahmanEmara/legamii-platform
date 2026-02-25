@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
-import Navigation from "./_components/Navigation";
-import Header from "./_components/Header";
-import Footer from "./_components/ui/Footer";
+import Navigation from "../components/Navigation";
+import Header from "../components/Header";
+import Footer from "../components/ui/Footer";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

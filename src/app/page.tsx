@@ -1,8 +1,8 @@
-import ContentBox from "./_components/ui/ContentBox";
+import ContentBox from "../components/ui/ContentBox";
 
 export default function Home() {
   return (
-    <div className="bg-background flex min-h-screen flex-wrap items-center justify-center gap-8 p-8">
+    <div className="bg-background flex flex-wrap items-center justify-center gap-8 p-8">
       <ContentBox width={340} height={300}>
         <h2 className="mb-4 text-xl font-bold">Mathematics</h2>
         <p className="text-muted-foreground">Your content goes here</p>

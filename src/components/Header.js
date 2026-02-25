@@ -3,7 +3,7 @@ import Logo from "./Logo";
 import Navigation from "./Navigation";
 import ProgressBar from "./ui/ProgressBar.tsx";
 import { Bell } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 function Header() {
   const streak = 10;
@@ -12,22 +12,23 @@ function Header() {
   const xpProgress = 60;
 
   const [visible, setVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > lastScrollY && window.scrollY > 50) {
-        setVisible(false); // scrolling down
+      if (window.scrollY > lastScrollY.current && window.scrollY > 50) {
+        setVisible(false);
       } else {
-        setVisible(true); // scrolling up
+        setVisible(true);
       }
 
-      setLastScrollY(window.scrollY);
+      lastScrollY.current = window.scrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   function onBellClick() {
     console.log("Do nothing");
@@ -56,7 +57,7 @@ function Header() {
         {/* Fire icon + Streak */}
         <div className="flex items-center gap-1.5">
           <img
-            src="public/Social-Rewards-Trends-Hot-Flame--Streamline-Pixel.svg"
+            src="/Social-Rewards-Trends-Hot-Flame--Streamline-Pixel.svg"
             alt="Streak"
             className="h-6 w-6"
           />
@@ -81,11 +82,12 @@ function Header() {
         <span className="text-foreground text-sm font-medium">{xp} XP</span>
 
         {/* Avatar */}
-        <img
-          src="./Logo.png"
-          alt="Avatar"
-          className="border-primary h-10 w-10 rounded-full border-2 object-cover"
-        />
+        <button
+          onClick={() => console.log("Open profile")}
+          className="border-primary h-10 w-10 overflow-hidden rounded-full border-2"
+        >
+          <img src="/Logo.png" alt="Avatar" className="h-full w-full object-cover" />
+        </button>
       </div>
     </header>
   );
