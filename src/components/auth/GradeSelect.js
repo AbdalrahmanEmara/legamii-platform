@@ -46,7 +46,7 @@ export default function GradeSelect({
         id={id}
         type="button"
         onClick={() => setOpen((s) => !s)}
-        className="text-sec-text font-secondary relative h-13 w-full rounded border border-neutral-400 bg-el-bg px-4 pr-12 text-left text-sm"
+        className="text-sec-text font-secondary bg-el-bg relative h-13 w-full rounded border border-neutral-400 px-4 pr-12 text-left text-sm"
       >
         {selected ? (
           <span className="text-text">{selected}</span>
@@ -61,7 +61,7 @@ export default function GradeSelect({
 
       {/* Options (in normal document flow) */}
       {open && (
-        <div className="border border-neutral-300 bg-sec-el shadow-[0_10px_30px_rgba(0,0,0,0.12)]">
+        <div className="bg-sec-el border border-neutral-300 shadow-[0_10px_30px_rgba(0,0,0,0.12)]">
           <ul className="max-h-72 overflow-auto py-3">
             {options.map((opt) => {
               const isSelected = opt === selected;
@@ -78,7 +78,7 @@ export default function GradeSelect({
                       "font-secondary text-sm",
                       "text-neutral-700",
                       "border border-transparent",
-                      "hover:border hover:border-neutral-700 hover:bg-el-bg",
+                      "hover:bg-el-bg hover:border hover:border-neutral-700",
                       "hover:shadow-[2px_2px_4px_1px_rgba(0,0,0,0.76)]",
                       isSelected ? "text-text" : "",
                     ].join(" ")}

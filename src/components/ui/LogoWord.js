@@ -6,5 +6,5 @@ export default function LogoWord({ className = "", LEstyles, GAstyles, logoSize,
         <span className={`font-primary ${GAstyles}`}>GAMII</span>
       </p>
     </div>
-  )
+  );
 }
