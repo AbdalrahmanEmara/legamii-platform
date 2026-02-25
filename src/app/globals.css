@@ -1,5 +1,4 @@
 /* src/app/globals.css
-/* src/app/globals.css
  * Tailwind v4 — single source of truth for all design tokens.
  * No tailwind.config.js needed.
  */
@@ -420,7 +419,6 @@
     line-height: 10px;
   }
 }
-
 /* ---break---
  */
 @theme inline {

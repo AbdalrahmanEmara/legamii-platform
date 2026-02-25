@@ -41,7 +41,7 @@ export default function Background({ children }) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 min-h-screen">{children}</div>
+      <div className="relative min-h-screen">{children}</div>
     </div>
   );
 }

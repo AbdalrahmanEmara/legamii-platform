@@ -1,21 +1,36 @@
-import ContentBox from "../components/ui/ContentBox";
-
-export default function Home() {
+"use client";
+export default function DesignSystemTest() {
   return (
-    <div className="bg-background flex flex-wrap items-center justify-center gap-8 p-8">
-      <ContentBox width={340} height={300}>
-        <h2 className="mb-4 text-xl font-bold">Mathematics</h2>
-        <p className="text-muted-foreground">Your content goes here</p>
-      </ContentBox>
+    <div className="bg-el-bg p-base min-h-screen">
+      {/* Typography */}
+      <h1 className="title-1 text-text mb-sm">Title 1 — Dogica Pixel</h1>
+      <h2 className="heading-h2 text-text mb-sm">Heading H2 — Inter</h2>
+      <p className="body-2 text-sec-text mb-sm">Body 2 — Inter. Secondary text color.</p>
+      <span className="label-1 text-primary-500">Label 1 — Dogica Pixel</span>
 
-      <ContentBox width={400}>
-        <h2 className="mb-4 text-xl font-bold">History</h2>
-        <p className="text-muted-foreground">Auto height based on content</p>
-      </ContentBox>
+      {/* Colors */}
+      <div className="gap-xs mt-base flex">
+        <div className="w-size-5xl h-size-5xl bg-primary-500 rounded-lg" />
+        <div className="w-size-5xl h-size-5xl bg-secondary-500 rounded-lg" />
+        <div className="w-size-5xl h-size-5xl rounded-lg bg-red-500" />
+        <div className="w-size-5xl h-size-5xl rounded-lg bg-green-500" />
+        <div className="w-size-5xl h-size-5xl rounded-lg bg-yellow-500" />
+        <div className="w-size-5xl h-size-5xl rounded-lg bg-neutral-800" />
+      </div>
+
+      {/* Semantic tokens */}
+      <div className="mt-base p-sm border-border bg-el-bg rounded-2xl border">
+        <p className="body-3 text-text">This box uses semantic tokens.</p>
+        <p className="body-3 text-sec-text">Secondary text color.</p>
+      </div>
+
+      {/* Dark mode toggle — just to visually test */}
+      <button
+        className="mt-base px-sm py-xs bg-primary-500 label-2 rounded-lg text-white"
+        onClick={() => document.documentElement.classList.toggle("dark")}
+      >
+        Toggle Dark Mode
+      </button>
     </div>
   );
-}
-
-{
-  /* <div>Legamii Landing page</div>; */
 }

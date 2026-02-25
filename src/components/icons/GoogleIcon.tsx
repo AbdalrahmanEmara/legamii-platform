@@ -1,0 +1,63 @@
+// src/components/icons/GoogleIcon.tsx
+
+interface GoogleIconProps {
+  className?: string;
+  size?: number; // controls width (height scales proportionally, original is 23x23)
+  title?: string;
+}
+
+export default function GoogleIcon({ className, size = 23, title }: GoogleIconProps) {
+  // original icon ratio: 23 (w) : 23 (h) — it's a square
+  const width = size;
+  const height = size;
+
+  const a11yProps = title
+    ? { role: "img" as const, "aria-label": title }
+    : { "aria-hidden": true as const };
+
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 23 23"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      {...a11yProps}
+    >
+      {title ? <title>{title}</title> : null}
+
+      {/* Blue — right cap */}
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M22.54 11.7613C22.54 10.9459 22.4668 10.1618 22.3309 9.40906H11.5V13.8575H17.6891C17.4225 15.295 16.6123 16.5129 15.3943 17.3284V20.2138H19.1109C21.2855 18.2118 22.54 15.2636 22.54 11.7613Z"
+        fill="#4285F4"
+      />
+
+      {/* Green — bottom */}
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M11.4999 22.9998C14.6049 22.9998 17.2081 21.97 19.1108 20.2137L15.3942 17.3282C14.3644 18.0182 13.0472 18.4259 11.4999 18.4259C8.50467 18.4259 5.96945 16.403 5.06513 13.6848H1.22308V16.6644C3.11536 20.4228 7.00445 22.9998 11.4999 22.9998Z"
+        fill="#34A853"
+      />
+
+      {/* Yellow — left */}
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M5.06523 13.6851C4.83523 12.9951 4.70455 12.2581 4.70455 11.5001C4.70455 10.7422 4.83523 10.0051 5.06523 9.31512V6.33557H1.22318C0.444318 7.88807 0 9.64443 0 11.5001C0 13.3558 0.444318 15.1122 1.22318 16.6647L5.06523 13.6851Z"
+        fill="#FBBC05"
+      />
+
+      {/* Red — top */}
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M11.4999 4.57386C13.1883 4.57386 14.7042 5.15409 15.896 6.29364L19.1944 2.99523C17.2029 1.13955 14.5997 0 11.4999 0C7.00445 0 3.11536 2.57705 1.22308 6.33545L5.06513 9.315C5.96945 6.59682 8.50468 4.57386 11.4999 4.57386Z"
+        fill="#EA4335"
+      />
+    </svg>
+  );
+}
