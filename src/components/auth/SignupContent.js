@@ -1,18 +1,15 @@
-import GoogleIcon from "../icons/GoogleIcon";
 import Btn1 from "../ui/Btn1";
+import GoogleBtn from "../ui/GoogleBtn";
 import FormInput from "./FormInput";
 import GradeSelect from "./GradeSelect";
+import SigningContentHeader from "./SigningContentHeader";
 export default function SignupContent() {
   return (
-    <div className="max-h-225 overflow-auto  gap-md px-xl py-md bg-el-bg flex flex-col rounded-b-lg">
-      <header className="flex flex-col gap-2">
-        <p className="text-text font-primary text-3xl leading-9 font-bold uppercase">
-          Ready to level up your learning?
-        </p>
-        <p className="text-sec-text font-secondary text-lg leading-6 font-normal">
-          Join the game of learning - Level up your skills, win contests, grow smarter everyday
-        </p>
-      </header>
+    <div className="gap-md px-xl py-md bg-el-bg flex max-h-225 flex-col overflow-auto rounded-b-lg">
+      <SigningContentHeader
+        header="Ready to level up your learning?"
+        word="Join the game of learning - Level up your skills, win contests, grow smarter everyday"
+      />
 
       <form className="gap-base flex flex-col">
         <FormInput type="email" placeholder="Enter your email" label="email" id="email" />
@@ -21,16 +18,14 @@ export default function SignupContent() {
 
         <Btn1 title="Sign Up" className="bg-primary-500 mt-xs2" />
 
-        <div className="self-stretch inline-flex justify-start items-center gap-2">
-          <div className="flex-1 h-0 outline outline-offset-[-0.50px] outline-neutral-400"></div>
-          <div className="justify-center text-neutral-400 text-xs font-normal font-futura capitalize">or</div>
-          <div className="flex-1 h-0 outline outline-offset-[-0.50px] outline-neutral-400"></div>
+        <div className="inline-flex items-center justify-start gap-2 self-stretch">
+          <div className="h-0 flex-1 outline outline-offset-[-0.50px] outline-neutral-400"></div>
+          <div className="font-futura justify-center text-xs font-normal text-neutral-400 capitalize">
+            or
+          </div>
+          <div className="h-0 flex-1 outline outline-offset-[-0.50px] outline-neutral-400"></div>
         </div>
-
-        <button className="flex text-text text-lg font-bold font-montserrat capitalize bg-sec-el px-md py-sm rounded hover:bg-neutral-200 items-center justify-center gap-4">
-          <GoogleIcon size={23} />
-          <span>Google</span>
-        </button>
+        <GoogleBtn />
       </form>
     </div>
   );
