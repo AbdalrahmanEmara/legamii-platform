@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function RestAuthLayout({ children }) {
   return (
-    <BackgroundV2>
+    <BackgroundV2 className={"flex flex-col"}>
       <header className="py-base px-xl flex justify-between items-center">
         <Link href="/" className="text-text flex gap-1 text-base font-primary leading-5">
           <span className="font-bold">&lt;</span>
@@ -13,7 +13,7 @@ export default function RestAuthLayout({ children }) {
         <Logo LEstyles={'text-2xl'} GAstyles={'text-lg'} />
       </header>
 
-      <div className="md:px-xl3 px-base py-xl">{children}</div>
+      <div className="flex justify-center grow md:px-xl3 px-base py-xl">{children}</div>
     </BackgroundV2>
   )
 }

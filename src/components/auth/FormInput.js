@@ -5,13 +5,14 @@ export default function FormInput({
   id,
   error,
   className,
+  labelClassName,
   ...props
 }) {
   return (
     <div className={`gap-xs2 flex flex-col ${className || ""}`}>
       <label
         htmlFor={id}
-        className="text-text font-primary text-sm leading-5 font-normal uppercase"
+        className={`text-text font-primary text-sm leading-5 font-normal uppercase ${labelClassName || ""}`}
       >
         {label}
       </label>
