@@ -1,5 +1,6 @@
 import Logo from "@/components/auth/Logo";
 import BackgroundV2 from "@/components/ui/BackgroundV2";
+import ReusableWindow from "@/components/ui/ReusableWindow";
 import Link from "next/link";
 
 export default function RestAuthLayout({ children }) {
@@ -13,7 +14,14 @@ export default function RestAuthLayout({ children }) {
         <Logo LEstyles={'text-2xl'} GAstyles={'text-lg'} />
       </header>
 
-      <div className="flex justify-center grow md:px-xl3 px-base py-xl">{children}</div>
+      <div className="flex flex-col justify-between items-center grow md:px-xl3 px-base py-xl">
+        <ReusableWindow title="password_assistant.sys" className={'max-w-158.25'}>
+          {children}
+        </ReusableWindow>
+        <p className="max-w-150 text-text text-sm font-medium font-secondary leading-5 text-center">
+          By clicking &quot;Continue with email or phone number,&quot; you will reset your account password. Having trouble? <span className="font-bold">Contact us</span>—we&apos;d be happy to help.
+        </p>
+      </div>
     </BackgroundV2>
   )
 }
