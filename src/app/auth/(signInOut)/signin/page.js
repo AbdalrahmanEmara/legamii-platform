@@ -8,7 +8,7 @@ export default function SignIn() {
   return (
     <>
       <ReusableWindow title="Sing_Up.sys" className="w-200 max-w-full min-h-217">
-        <AuthHeader prompt={"Don't have account yet?"} to={"/signup"} linkTitle={"Create one"} />
+        <AuthHeader prompt={"Don't have account yet?"} to={"/auth/signup"} linkTitle={"Create one"} />
 
         <SigninContent />
       </ReusableWindow>

@@ -8,7 +8,7 @@ export default function page() {
   return (
     <>
       <ReusableWindow title="Sing_Up.sys" className="w-200 max-w-full">
-        <AuthHeader prompt={"Already have an account?"} to={"/signin"} linkTitle={"Login"} />
+        <AuthHeader prompt={"Already have an account?"} to={"/auth/signin"} linkTitle={"Login"} />
 
         <SignupContent />
       </ReusableWindow>
