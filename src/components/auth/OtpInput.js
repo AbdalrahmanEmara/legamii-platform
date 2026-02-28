@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Btn1 from "../ui/Btn1";
+import { useRouter } from "next/navigation";
 
 export default function OtpInput({ length = 6, onComplete }) {
   const [otp, setOtp] = useState(new Array(length).fill(""));
@@ -41,6 +42,12 @@ export default function OtpInput({ length = 6, onComplete }) {
     }
   };
 
+  const router = useRouter();
+  const handleContinue = (e) => {
+    e.preventDefault();
+    router.push("/auth/create-new-password");
+  }
+
   return (
     <div>
       <div className="gap-xs2 flex justify-center">
@@ -63,7 +70,7 @@ export default function OtpInput({ length = 6, onComplete }) {
       <p className="text-primary-600 font-secondary mt-4 flex justify-end text-sm leading-5 font-normal">
         Resend code: after {timer}s
       </p>
-      <Btn1 title={"continue"} className={"mt-8 w-full"} />
+      <Btn1 title={"continue"} className={"mt-8 w-full"} onClick={handleContinue} />
     </div>
   );
 }
