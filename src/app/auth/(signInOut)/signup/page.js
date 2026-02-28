@@ -1,16 +1,16 @@
 import AuthHeader from "@/components/auth/AuthHeader";
-import SigninContent from "@/components/auth/SigninContent";
+import SignupContent from "@/components/auth/SignupContent";
 import { LogoIcon } from "@/components/icons/LogoIcon";
 import LogoWord from "@/components/ui/LogoWord";
 import ReusableWindow from "@/components/ui/ReusableWindow";
 
-export default function SignIn() {
+export default function page() {
   return (
     <>
-      <ReusableWindow title="Sing_Up.sys" className="w-200 max-w-full min-h-217">
-        <AuthHeader prompt={"Don't have account yet?"} to={"/signup"} linkTitle={"Create one"} />
+      <ReusableWindow title="Sing_Up.sys" className="w-200 max-w-full">
+        <AuthHeader prompt={"Already have an account?"} to={"/auth/signin"} linkTitle={"Login"} />
 
-        <SigninContent />
+        <SignupContent />
       </ReusableWindow>
       <div className="hidden flex-1 flex-col items-center justify-center lg:flex">
         <LogoIcon size={240} />
