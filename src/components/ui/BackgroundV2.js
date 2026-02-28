@@ -10,7 +10,7 @@ export default function BackgroundV2({ children, className }) {
         height={500}
         className="pointer-events-none absolute right-0 bottom-0 left-0 z-0 h-60 w-full overflow-hidden"
       />
-      <div className={`relative min-h-screen ${className || ''}`}>{children}</div>
+      <div className={`relative min-h-screen ${className || ""}`}>{children}</div>
     </div>
   );
 }

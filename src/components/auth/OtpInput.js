@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useRef, useState } from "react";
 import Btn1 from "../ui/Btn1";
@@ -24,13 +24,13 @@ export default function OtpInput({ length = 6, onComplete }) {
     if (newOtp.join("").length === length) {
       onComplete(newOtp.join(""));
     }
-  }
+  };
 
   const handleKeyDown = (e, index) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1].focus();
     }
-  }
+  };
 
   const handlePaste = (e) => {
     const data = e.clipboardData.getData("text").split("");
@@ -39,11 +39,11 @@ export default function OtpInput({ length = 6, onComplete }) {
       inputRefs.current[length - 1].focus();
       onComplete(data.join(""));
     }
-  }
+  };
 
   return (
     <div>
-      <div className="flex justify-center gap-xs2">
+      <div className="gap-xs2 flex justify-center">
         {otp.map((data, index) => (
           <input
             key={index}
@@ -56,11 +56,14 @@ export default function OtpInput({ length = 6, onComplete }) {
             onKeyDown={(e) => handleKeyDown(e, index)}
             onPaste={handlePaste}
             placeholder="-"
-            className={`w-[64px] placeholder:font-montserrat placeholder:text-neutral-400 text-lg font-bold font-secondary leading-6 text-center border border-border p-sm rounded-lg text-white ${data ? "bg-primary-500 shadow-[2px_3px_4px_0px_rgba(0,0,0,1.00)] outline-1 -outline-offset-1 outline-neutral-800" : "bg-neutral-100"}`} />
+            className={`placeholder:font-montserrat font-secondary focus:border-border p-sm w-[64px] rounded-lg border text-center text-lg leading-6 font-bold text-white caret-transparent placeholder:text-neutral-400 focus:outline-none ${data ? "bg-primary-500 shadow-[2px_3px_4px_0px_rgba(0,0,0,1.00)] outline-1 -outline-offset-1 outline-neutral-800" : "bg-neutral-100"}`}
+          />
         ))}
       </div>
-      <p className="flex justify-end mt-4 text-primary-600 text-sm font-normal font-secondary leading-5">Resend code: after {timer}s</p>
-      <Btn1 title={'continue'} className={'w-full mt-8'}/>
+      <p className="text-primary-600 font-secondary mt-4 flex justify-end text-sm leading-5 font-normal">
+        Resend code: after {timer}s
+      </p>
+      <Btn1 title={"continue"} className={"mt-8 w-full"} />
     </div>
-  )
+  );
 }

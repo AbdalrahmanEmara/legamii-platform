@@ -31,7 +31,7 @@ export default function SigninContent() {
         >
           Forgot password?
         </Link>
-        <Btn1 title="Sign In" className={'mt-md'}/>
+        <Btn1 title="Sign In" className={"mt-md"} />
       </form>
     </div>
   );
