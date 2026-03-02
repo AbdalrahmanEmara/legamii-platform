@@ -5,19 +5,21 @@ interface ContentBoxProps {
   height?: string | number;
   children: React.ReactNode;
   className?: string;
+  direction?: string;
 }
 
-const ContentBox: React.FC<ContentBoxProps> = ({ width, height, children, className = "" }) => {
+const ContentBox: React.FC<ContentBoxProps> = ({ width, height, children, className = "" , direction="col"}) => {
   return (
     <div
-      className={`flex  flex-col items-start gap-[var(--spacing-2xl)] rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-el-bg)] p-[var(--spacing-base)] shadow-[2px_3px_4px_0_#000] ${className} `}
+      className={`flex  flex-${direction}  gap-2xl rounded-lg border border-[#020203] bg-el-bg p-base shadow-[2px_3px_4px_0px_rgba(0,0,0,1.00)] outline-border  ${className} `}
       style={{
         width: typeof width === "number" ? `${width}px` : width,
         height: typeof height === "number" ? `${height}px` : height,
       }}
     >
       {/* ================= CONTENT ================= */}
-      <div className="p-6">{children}</div>
+      {/* <div className="flex-none">{children}</div> */}
+      {children}
     </div>
   );
 };

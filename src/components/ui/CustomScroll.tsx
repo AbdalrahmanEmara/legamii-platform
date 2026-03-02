@@ -61,7 +61,7 @@ export default function CustomScroll({
     </div>
 
     {/* Custom Scrollbar */}
-    <div className="w-8 border-l border-[#262626] flex justify-center">
+    <div className="w-8 border-l border-[#262626] flex justify-center bg-el-bg">
       <div className="relative w-4 h-full">
         <div
           className="absolute w-full rounded-[4px] bg-[#D4D4D4]"
