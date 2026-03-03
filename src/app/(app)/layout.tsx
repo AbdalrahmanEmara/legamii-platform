@@ -1,3 +1,4 @@
+import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 
 export default function AppLayout({
@@ -9,6 +10,7 @@ export default function AppLayout({
     <div className="pt-xl4 min-h-screen">
       <Header />
       {children}
+      <Footer />
     </div>
   );
 }

@@ -1,3 +1,3 @@
 export default function ContestPage() {
-  return <div className="h-400">Contest page</div>;
+  return <div className="p-4 h-200 bg-primary-500">Contest page</div>;
 }
