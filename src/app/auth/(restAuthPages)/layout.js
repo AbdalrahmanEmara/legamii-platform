@@ -1,11 +1,11 @@
 import Logo from "@/components/auth/Logo";
-import BackgroundV2 from "@/components/ui/BackgroundV2";
+import BackgroundV2 from "@/components/ui/BackgroundAuth";
 import ReusableWindow from "@/components/ui/ReusableWindow";
 import Link from "next/link";
 
 export default function RestAuthLayout({ children }) {
   return (
-    <BackgroundV2 className={"flex flex-col"}>
+    <BackgroundV2 className={"flex flex-col"} variant="auth">
       <header className="py-base px-xl flex items-center justify-between">
         <Link href="/" className="text-text font-primary flex gap-1 text-base leading-5">
           <span className="font-bold">&lt;</span>

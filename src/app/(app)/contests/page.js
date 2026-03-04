@@ -1,3 +1,5 @@
 export default function ContestPage() {
-  return <div className="p-4 h-200 bg-primary-500">Contest page</div>;
+  return <div>
+    <p className="title-1 text-primary-500">Contest page</p>
+  </div>;
 }
