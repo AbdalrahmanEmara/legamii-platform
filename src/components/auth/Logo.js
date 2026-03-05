@@ -1,6 +1,12 @@
 import { LogoIcon } from "../icons/LogoIcon";
 
-export default function Logo({ className = "", LEstyles = "", GAstyles = "", logoSize = 48, logoClassName = "" }) {
+export default function Logo({
+  className = "",
+  LEstyles = "",
+  GAstyles = "",
+  logoSize = 48,
+  logoClassName = "",
+}) {
   return (
     <div className={`flex gap-2.5 ${className}`}>
       <LogoIcon size={logoSize} className={logoClassName} />

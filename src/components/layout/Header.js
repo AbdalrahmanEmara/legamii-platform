@@ -109,7 +109,7 @@ function Header() {
           onClick={() => console.log("Open profile")}
           className="overflow-hidden rounded-full"
         >
-          <Image src="/avatar.png" alt="Avatar" width={40} height={40} />
+          <Image src="/images/avatar.png" alt="Avatar" width={40} height={40} className="min-w-[40px]" />
         </button>
       </div>
     </header>
