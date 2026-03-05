@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Cabin_Sketch, Jost, Montserrat } from "next/font/google";
+import {
+  Inter,
+  Cabin_Sketch,
+  Jost,
+  Montserrat,
+  Rajdhani,
+  Share,
+  Share_Tech_Mono,
+} from "next/font/google";
 
 import localFont from "next/font/local";
 import "./globals.css";
@@ -28,6 +36,18 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
+export const rajdhani = Rajdhani({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-rajdhani",
+});
+
+const shareTechMono = Share_Tech_Mono({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-share-tech-mono",
+});
+
 const dogica = localFont({
   src: [
     { path: "../../public/fonts/dogica.ttf", weight: "400", style: "normal" },
@@ -52,7 +72,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${dogica.variable} ${cabinSketch.variable} ${jost.variable} ${montserrat.variable}`}
+      className={`${inter.variable} ${dogica.variable} ${cabinSketch.variable} ${jost.variable} ${montserrat.variable} ${rajdhani.variable} ${shareTechMono.variable}`}
     >
       <body className="antialiased" suppressHydrationWarning>
         <Toaster position="top-right" />

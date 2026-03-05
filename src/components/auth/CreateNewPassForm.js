@@ -3,8 +3,7 @@
 import { useState } from "react";
 import FormInput from "./FormInput";
 import Btn1 from "../ui/Btn1";
-import { Check, Eye, EyeClosed, X } from 'lucide-react';
-
+import { Check, Eye, EyeClosed, X } from "lucide-react";
 
 const requirements = [
   { label: "Minimum 8 characters", test: (p) => p.length >= 8 },
@@ -34,7 +33,11 @@ export default function CreateNewPassForm() {
           onChange={(e) => setPassword(e.target.value)}
           endIcon={
             <button type="button" onClick={() => setShowPassword((prev) => !prev)} className="">
-              {showPassword ? <Eye className="w-5 h-5 text-primary-500" /> : <EyeClosed className="w-5 h-5 text-sec-text" />}
+              {showPassword ? (
+                <Eye className="text-primary-500 h-5 w-5" />
+              ) : (
+                <EyeClosed className="text-sec-text h-5 w-5" />
+              )}
             </button>
           }
         />
@@ -47,7 +50,11 @@ export default function CreateNewPassForm() {
           error={confirmedPassError}
           endIcon={
             <button type="button" onClick={() => setShowPassword((prev) => !prev)} className="">
-              {showPassword ? <Eye className="w-5 h-5 text-primary-500" /> : <EyeClosed className="w-5 h-5 text-sec-text" />}
+              {showPassword ? (
+                <Eye className="text-primary-500 h-5 w-5" />
+              ) : (
+                <EyeClosed className="text-sec-text h-5 w-5" />
+              )}
             </button>
           }
         />
@@ -74,7 +81,11 @@ export default function CreateNewPassForm() {
                 <span
                   className={`mr-3 text-2xl ${passed ? "text-primary-500" : failed ? "text-red-500" : "text-sec-text"}`}
                 >
-                  {failed ? <X className="inline-block w-5 h-5" strokeWidth={3} /> : <Check className="inline-block w-5 h-5" strokeWidth={3} />}
+                  {failed ? (
+                    <X className="inline-block h-5 w-5" strokeWidth={3} />
+                  ) : (
+                    <Check className="inline-block h-5 w-5" strokeWidth={3} />
+                  )}
                 </span>{" "}
                 {label}
               </li>

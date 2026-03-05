@@ -46,7 +46,7 @@ export default function OtpInput({ length = 6, onComplete }) {
   const handleContinue = (e) => {
     e.preventDefault();
     router.push("/auth/create-new-password");
-  }
+  };
 
   return (
     <div>
