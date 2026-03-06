@@ -11,12 +11,14 @@ export default function FormInput({
 }) {
   return (
     <div className={`gap-xs2 relative flex flex-col ${className || ""}`}>
-      <label
-        htmlFor={id}
-        className={`text-text font-primary text-sm leading-5 font-normal uppercase ${labelClassName || ""}`}
-      >
-        {label}
-      </label>
+      {label &&
+        <label
+          htmlFor={id}
+          className={`text-text font-primary text-sm leading-5 font-normal uppercase ${labelClassName || ""}`}
+        >
+          {label}
+        </label>
+      }
       <input
         type={type}
         id={id}

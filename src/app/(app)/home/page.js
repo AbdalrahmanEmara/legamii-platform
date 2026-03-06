@@ -1,7 +1,13 @@
+import Welcome from "@/components/homePage/Welcome";
+
 export default function PracticePage() {
+  const user = {
+    name: "Ali",
+  }
+
   return (
     <div>
-      <p className="title-1 text-primary-500">Home Page</p>
+      <Welcome name={user.name} />
     </div>
   );
 }
