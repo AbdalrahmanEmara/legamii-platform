@@ -2,18 +2,19 @@ import ReusableWindow from "../ReusableWindow";
 import AnswerOption from "./AnswerOption";
 import AiTutorModal from "./AiTutorModal";
 import ButtonSecondary from "../ButtonSecondary";
+import { StatusBadge } from "../StatusBadge";
 import { useState } from "react";
 
-const DIFFICULTY_STYLES = {
-  EASY: "bg-green-100 text-green-700 border border-green-300",
-  INTERMEDIATE: "bg-yellow-100 text-yellow-800 border border-yellow-300",
-  HARD: "bg-red-100 text-red-600 border border-red-300",
-};
+// const DIFFICULTY_STYLES = {
+//   EASY: "bg-green-100 text-green-700 border border-green-300",
+//   INTERMEDIATE: "bg-yellow-100 text-yellow-800 border border-yellow-300",
+//   HARD: "bg-red-100 text-red-600 border border-red-300",
+// };
 const LETTERS = ["A)", "B)", "C)", "D)"];
 function QuestionReviewCard({ question, index, userAnswer }) {
   const [showTutor, setShowTutor] = useState(false);
 
-  const diffStyle = DIFFICULTY_STYLES[question.difficulty] || DIFFICULTY_STYLES.EASY;
+  // const diffStyle = DIFFICULTY_STYLES[question.difficulty] || DIFFICULTY_STYLES.EASY;
 
   return (
     <>
@@ -24,11 +25,12 @@ function QuestionReviewCard({ question, index, userAnswer }) {
             <h3 className="heading-h5-primary font-semibold tracking-wider uppercase">
               QUESTION_{index + 1}
             </h3>
-            <span
+            {/* <span
               className={`rounded px-3 py-1 font-mono text-xs font-bold tracking-widest ${diffStyle}`}
             >
               {question.difficulty}
-            </span>
+            </span> */}
+            <StatusBadge status={question.difficulty} />
           </div>
 
           <div className="my-md">

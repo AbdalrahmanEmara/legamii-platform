@@ -6,7 +6,7 @@ import QuestionList from "@/components/ui/QuestionList";
 import ReusableWindow from "@/components/ui/ReusableWindow";
 import Timer from "@/components/ui/Timer";
 import SummaryPage from "@/components/ui/practice/SummaryPage";
-import ProgressBar from "@/components/ui/practice/Progressbar";
+import ProgressBar from "@/components/ui/ProgressBar";
 import { useEffect, useState } from "react";
 import BackgroundV2 from "@/components/ui/BackgroundV2";
 
@@ -232,8 +232,11 @@ function PracticePage() {
                 <div className="border-border pt-base gap-base mt-auto flex w-full items-center border-t">
                   <div className="flex-1">
                     <ProgressBar
-                      current={isLast && selected !== undefined ? QUESTIONS.length : currentIndex}
-                      total={QUESTIONS.length}
+                      progress={
+                        isLast && selected !== undefined
+                          ? 100
+                          : (currentIndex / QUESTIONS.length) * 100
+                      }
                     />
                   </div>
                   <button

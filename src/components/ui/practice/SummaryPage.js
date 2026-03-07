@@ -35,7 +35,7 @@ function SummaryPage({ questions, answers, timeTaken }) {
               ].map((s) => (
                 <div
                   key={s.label}
-                  className={`p-base gap-sm flex-[1 0 0] border-border flex h-[120.5px] flex-col items-center justify-center rounded-md shadow-[2px_3px_4px_0_#e5e7eb] ${s.cls}`}
+                  className={`p-base gap-sm flex-[1_0_0] border border-border flex h-[120.5px] flex-col items-center justify-center rounded-md shadow-[2px_3px_4px_0_#000] ${s.cls}`}
                 >
                   <span className="body-3 text-text text-center font-medium">{s.label}</span>
                   <div

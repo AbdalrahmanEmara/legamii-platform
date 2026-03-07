@@ -46,7 +46,7 @@ function AnswerOption({
 
   // Default (not chosen – quiz mode)
   let containerCls =
-    "border-border bg-neutral-50";
+    "border-neutral-400 bg-neutral-50";
 
   // Review mode
   if (reviewMode) {

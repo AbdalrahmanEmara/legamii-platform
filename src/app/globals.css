@@ -174,7 +174,8 @@
   --color-neutral-950: #020203;
 
   /* ── Semantic Color Tokens ──────────────────────────────────────────────── */
-  /* Use these in components — they flip automatically in dark mode           */
+  /* --color-border owns border-border. shadcn's --border is mapped to        */
+  /* --color-shadcn-border (border-shadcn-border) in @theme inline below.     */
   --color-bg: var(--color-primary-500);
   --color-el-bg: var(--color-neutral-50);
   --color-border: var(--color-neutral-800);
@@ -183,13 +184,11 @@
   --color-sec-el: var(--color-neutral-100);
 }
 
-/* ═════════════════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════/* ═════════════════════════════════════════════════════════════════════════════
    DARK MODE
-   Redefines semantic tokens only — palette stays accessible in both modes.
-   Toggle by adding `dark` class to <html>.
    ═════════════════════════════════════════════════════════════════════════════ */
 .dark {
-  /* Inverted palette */
+  /* ── Inverted Palette ───────────────────────────────────────────────────── */
   --color-red-100: #660022;
   --color-red-200: #990033;
   --color-red-300: #cc0044;
@@ -242,13 +241,15 @@
   --color-neutral-900: #f5f5f5;
   --color-neutral-950: #fafafa;
 
-  /* Semantic tokens — dark */
+  /* ── Semantic Tokens — Dark ─────────────────────────────────────────────── */
   --color-bg: var(--color-neutral-50);
   --color-el-bg: var(--color-neutral-100);
   --color-border: var(--color-primary-200);
   --color-text: var(--color-neutral-950);
   --color-sec-text: var(--color-neutral-700);
   --color-sec-el: var(--color-neutral-200);
+
+  /* ── shadcn Dark Tokens ─────────────────────────────────────────────────── */
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -281,7 +282,6 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
-
 /* ═════════════════════════════════════════════════════════════════════════════
    TYPOGRAPHY COMPONENT CLASSES
    Matches Figma layer names exactly.
@@ -361,6 +361,15 @@
     color: var(--color-text);
   }
 
+  .heading-h6-primary {
+    font-family: var(--font-primary);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0px;
+    color: var(--color-text);
+  }
+
   /* Labels — Dogica Pixel */
   .label-1 {
     font-family: var(--font-primary);
@@ -421,14 +430,13 @@
 }
 /* ---break---
  */
+/* ═════════════════════════════════════════════════════════════════════════════
+   @theme inline — shadcn token bridge
+   --color-shadcn-border maps shadcn's --border so it doesn't overwrite
+   your --color-border semantic token above.
+   Radius uses --radius-shadcn-* for the same reason.
+   ═════════════════════════════════════════════════════════════════════════════ */
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -444,7 +452,7 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
-  --color-border: var(--border);
+  --color-shadcn-border: var(--border); /* shadcn → use border-shadcn-border in shadcn components */
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-chart-1: var(--chart-1);
@@ -460,9 +468,20 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --radius-shadcn-sm: calc(var(--radius) - 4px);
+  --radius-shadcn-md: calc(var(--radius) - 2px);
+  --radius-shadcn-lg: var(--radius);
+  --radius-shadcn-xl: calc(var(--radius) + 4px);
+  --radius-shadcn-2xl: calc(var(--radius) + 8px);
+  --radius-shadcn-3xl: calc(var(--radius) + 12px);
+  --radius-shadcn-4xl: calc(var(--radius) + 16px);
 }
-/* ---break---
- */
+
+/* ---break--- */
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   :root — shadcn base CSS variables (light mode)
+   ═════════════════════════════════════════════════════════════════════════════ */
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -501,7 +520,9 @@
  */
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    /* border-shadcn-border keeps the universal reset using shadcn's subtle gray,
+       leaving border-border clean for your design system. */
+    @apply border-shadcn-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
@@ -512,10 +533,10 @@
 /* Hide default scrollbar */
 /* Hide default scrollbar but keep scrolling */
 .hide-scrollbar {
-  -ms-overflow-style: none;  /* IE & Edge */
-  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .hide-scrollbar::-webkit-scrollbar {
-  display: none;             /* Chrome, Safari */
+  display: none; /* Chrome, Safari */
 }

@@ -4,6 +4,8 @@ import "../globals.css";
 import Background from "@/components/ui/Background";
 import CustomScroll from "@/components/ui/CustomScroll";
 import Button from "@/components/ui/Button";
+import ProgressBar from "@/components/ui/ProgressBar";
+import { StatusBadge } from "@/components/ui/StatusBadge";
 export const subjects = [
   {
     id: 1,
@@ -79,7 +81,7 @@ function page() {
           className="mt-8 ml-16 flex h-[777px] w-[1384px] flex-col"
         >
           {/**Heading */}
-          <div className="border-[#020203] px-base py-sm flex w-full items-center justify-between  border-b bg-white">
+          <div className="px-base py-sm flex w-full items-center justify-between border-b border-[#020203] bg-white">
             <div className="heading-h5-primary font-bold">PRACTICE</div>
           </div>
 
@@ -88,27 +90,27 @@ function page() {
             <div className="p-base grid grid-cols-2 items-start gap-[var(--spacing-base)] self-stretch bg-white">
               {subjects.map((item, index) => (
                 // <ContentBox key={index} className="w-full p-[var(--spacing-base)]">
-                <ContentBox key={index} className="w-full p-[24px]">
+                <ContentBox key={index} className="p-base w-full">
                   {/**content Container */}
-                  {/**Icon and name of subject name*/}
-                  <div className="gap-xs flex items-center">
-                    {/**icon */}
-                    <div className="flex items-center justify-center gap-[10px] rounded-md">
-                      <img src={item.icon} alt={item.name} className="p-sm" />
+                  {/* Top row: icon + name + badge */}
+                  <div className="flex w-full items-center justify-between">
+                    <div className="gap-xs flex items-center">
+                      <div className="flex items-center justify-center rounded-md">
+                        <img src={item.icon} alt={item.name} className="p-sm" />
+                      </div>
+                      <h2 className="heading-h5-primary font-normal">{item.name}</h2>
                     </div>
-                    {/**Subject name */}
-                    <h2 className="heading-h5-primary font-normal">{item.name}</h2>
-                    {/* <p className="text-muted-foreground break-all">{item.description}</p> */}
+                    <StatusBadge status={item.status} />
                   </div>
                   <div className="flex-column gap-xs pt-base flex items-start self-stretch">
-                    <ContentBox className="p-sm  bg-el-bg flex items-center justify-center gap-[16px] rounded-md border text-center shadow-none">
+                    <ContentBox className="p-sm bg-el-bg flex items-center justify-center gap-[16px] rounded-md border text-center shadow-none">
                       <div className="flex-none">
                         <p className="body-2 font-medium">{item.lastAccuracy}%</p>
                         <p className="body-4 font-medium text-neutral-500">Last Accuracy</p>
                       </div>
                     </ContentBox>
 
-                    <ContentBox className="p-sm  bg-el-bg flex items-center justify-center gap-[16px] rounded-md border text-center shadow-none">
+                    <ContentBox className="p-sm bg-el-bg flex items-center justify-center gap-[16px] rounded-md border text-center shadow-none">
                       <div className="flex-none">
                         <p className="body-2 items-center font-medium">{item.attempted}</p>
                         <p className="body-4 font-medium text-neutral-500">attempted</p>
@@ -116,7 +118,7 @@ function page() {
                     </ContentBox>
 
                     <ContentBox
-                      className="p-sm  bg-el-bg items-center justify-center gap-4 rounded-md border text-center shadow-none"
+                      className="p-sm bg-el-bg items-center justify-center gap-4 rounded-md border text-center shadow-none"
                       direction="row"
                     >
                       {/* <!-- Fire Icon --> */}
@@ -132,47 +134,44 @@ function page() {
                     </ContentBox>
                   </div>
 
-
-
                   {/* <div className="gap-sm my-xl2 flex w-[360px] flex-col items-start"> */}
-                    <div className="flex flex-col gap-sm my-base w-[360px] items-start">
-                      {item.topics.map((topic, index) => (
-                        <div key={index} className="flex flex-col gap-xs2 w-full">
-                          <div className="flex justify-between body-3 font-medium">
-                            <span>{topic.name}</span>
-                          </div>
+                  <div className="gap-sm my-base flex w-[360px] flex-col items-start">
+                    {item.topics.map((topic, index) => (
+                      <div key={index} className="gap-xs2 flex w-full flex-col">
+                        <div className="body-3 flex justify-between font-medium">
+                          <span>{topic.name}</span>
+                        </div>
 
-                          <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200 flex">
+                        {/* <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200 flex">
                             <div
                               className="bg-primary-500 h-full rounded-full transition-all duration-300"
                               style={{ width: `${topic.progress}%` }}
                             />
-                          </div>
-                        </div>
-                      ))}
+                          </div> */}
+                        <ProgressBar progress={topic.progress} />
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="gap-xs2 my-base flex w-full flex-col items-start self-stretch">
+                    <div className="body-1 flex justify-between font-medium">
+                      <span>Mastery level {item.masteryLevel}%</span>
                     </div>
 
-
-
-<div className="flex flex-col gap-xs2 my-base w-full items-start self-stretch">
-                              <div className="flex justify-between body-1 font-medium ">
-                            <span>Mastery level {item.masteryLevel}%</span>
-                          </div>
-
-                          <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200 flex">
-                            <div
+                    {/* <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200 flex"> */}
+                    {/* <div
                               className="bg-primary-500 h-full rounded-full transition-all duration-300"
                               style={{ width: `${item.masteryLevel}%` }}
-                            />
-                          </div>
-</div>
-                 {/* Button */}
-                 <div className="flex justify-end">
-
-                  <Button className="mt-auto flex-none">
-                    <span className="label-1 text-text text-base font-bold">START QUIZ</span>
-                  </Button>
-                 </div>
+                            /> */}
+                    <ProgressBar progress={item.masteryLevel} />
+                    {/* </div> */}
+                  </div>
+                  {/* Button */}
+                  <div className="flex justify-end">
+                    <Button className="mt-auto flex-none">
+                      <span className="label-1 text-text text-base font-bold">START QUIZ</span>
+                    </Button>
+                  </div>
                 </ContentBox>
               ))}
             </div>
