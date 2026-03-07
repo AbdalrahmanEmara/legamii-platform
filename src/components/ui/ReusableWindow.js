@@ -2,7 +2,7 @@ import { CloseIcon } from "../icons/CloseIcon";
 import { MinusIcon } from "../icons/MinusIcon";
 import { SquareIcon } from "../icons/SquareIcon";
 
-export default function ReusableWindow({ className, children, title = "title" }) {
+export default function ReusableWindow({ className = "", children = "", title = "title" }) {
   return (
     <div
       className={`bg-el-bg border-text rounded-lg border shadow-[2px_3px_4px_0px_rgba(0,0,0,1.00)] ${className}`}

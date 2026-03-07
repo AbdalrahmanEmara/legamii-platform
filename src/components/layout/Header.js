@@ -101,7 +101,7 @@ function Header() {
               {xp} XP
             </span>
           </div>
-          <ProgressBar progress={xpProgress} width={120} height={6} />
+          <ProgressBar color="primary-500" progress={xpProgress} width={43} height={3} header={true} borderColor="primary-800" />
         </div>
 
         {/* Avatar */}
@@ -109,7 +109,13 @@ function Header() {
           onClick={() => console.log("Open profile")}
           className="overflow-hidden rounded-full"
         >
-          <Image src="/images/avatar.png" alt="Avatar" width={40} height={40} className="min-w-[40px]" />
+          <Image
+            src="/images/avatar.png"
+            alt="Avatar"
+            width={40}
+            height={40}
+            className="min-w-[40px]"
+          />
         </button>
       </div>
     </header>
