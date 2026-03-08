@@ -5,6 +5,8 @@
 
 @import "tailwindcss";
 
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&family=Cabin+Sketch:wght@400;700&family=Jost:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap'); */
+
 /* @import "tw-animate-css/dist/tw-animate.css"; */
 /* @import "shadcn/tailwind.css"; */
 
@@ -24,11 +26,11 @@
    ═════════════════════════════════════════════════════════════════════════════ */
 @theme {
   /* ── Font Families ──────────────────────────────────────────────────────── */
-  --font-primary: "Dogica Pixel", monospace;
-  --font-secondary: "Inter", sans-serif;
-  --font-cabin-sketch: "Cabin Sketch", cursive;
-  --font-futura: "Jost", sans-serif;
-  --font-montserrat: "Montserrat", sans-serif;
+  --font-primary: var(--font-dogica);
+  --font-secondary: var(--font-inter);
+  --font-cabin-sketch: var(--font-cabin-sketch);
+  --font-futura: var(--font-jost);
+  --font-montserrat: var(--font-montserrat);
 
   /* ── Font Weights ───────────────────────────────────────────────────────── */
   --font-weight-thin: 100;

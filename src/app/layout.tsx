@@ -47,7 +47,7 @@ import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-secondary",
+  variable: "--font-inter",
 });
 
 const cabinSketch = Cabin_Sketch({
@@ -75,7 +75,7 @@ const dogica = localFont({
     { path: "../../public/fonts/dogicapixel.ttf", weight: "400", style: "normal" },
     { path: "../../public/fonts/dogicapixelbold.ttf", weight: "700", style: "normal" },
   ],
-  variable: "--font-primary",
+  variable: "--font-dogica",
   display: "swap",
 });
 

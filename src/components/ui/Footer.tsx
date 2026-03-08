@@ -21,7 +21,7 @@ const Footer = () => {
 
           {/* Column 2 - Navigation */}
           <div className="flex-1">
-            <div className="text-Primary-500 justify-start font-['Dogica_Pixel'] text-sm leading-5 font-bold">
+            <div className="text-Primary-500 font-primary justify-start text-sm leading-5 font-bold">
               Navigation
             </div>
             <ul className="space-y-2">
@@ -62,7 +62,7 @@ const Footer = () => {
 
           {/* Column 3 - System */}
           <div className="flex-1">
-            <div className="text-Primary-500 justify-start font-['Dogica_Pixel'] text-sm leading-5 font-bold">
+            <div className="text-Primary-500 font-primary justify-start text-sm leading-5 font-bold">
               System
             </div>
             <ul className="space-y-2">
@@ -107,7 +107,7 @@ const Footer = () => {
 
           {/* Column 4 - Connect */}
           <div className="flex-1">
-            <div className="text-Primary-500 justify-start font-['Dogica_Pixel'] text-sm leading-5 font-bold">
+            <div className="text-Primary-500 font-primary justify-start text-sm leading-5 font-bold">
               Connect
             </div>
             <div className="mb-3 flex items-center gap-3">

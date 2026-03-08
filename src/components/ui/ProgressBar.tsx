@@ -39,16 +39,15 @@ const ProgressBar = ({
 }: ProgressBarProps) => {
   return (
     <div className="relative w-full">
-
       {/* Square above bar */}
       <span
-        className={`${squareColor} absolute -left-1 -top-1 ${squareSize} border border-neutral-950 z-10`}
+        className={`${squareColor} absolute -top-1 -left-1 ${squareSize} z-10 border border-white`}
       />
 
       {/* Bar */}
-      <div className={`relative w-full ${height} ${bgColor} border border-neutral-950`}>
+      <div className={`relative w-full ${height} border-primary-500 border`}>
         <span
-          className={`absolute left-0 top-0 h-full ${color}`}
+          className={`absolute top-0 left-0 h-full ${color}`}
           style={{ width: `${progress}%` }}
         />
       </div>

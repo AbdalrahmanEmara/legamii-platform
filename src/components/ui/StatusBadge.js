@@ -14,8 +14,8 @@ export function StatusBadge({ status }) {
   const styles = BADGE_STYLES[status] ?? BADGE_STYLES["GOOD"];
   return (
     <div className="inline-flex justify-end items-start">
-      <div className={`px-6 py-2 -rotate-3 rounded-sm outline outline-[1.60px] outline-offset-[-1.60px] flex justify-center items-center ${styles}`}>
-        <span className="text-sm font-normal font-['Dogica_Pixel'] leading-5">{status}</span>
+      <div className={`px-6 py-2 -rotate-3 rounded-sm outline-[1.60px] outline-offset-[-1.60px] flex justify-center items-center ${styles}`}>
+        <span className="text-sm font-normal font-primary leading-5">{status}</span>
       </div>
     </div>
   );
