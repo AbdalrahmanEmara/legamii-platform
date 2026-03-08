@@ -110,7 +110,7 @@ function Sidebar({ chats, activeChatId, onSelectChat, onNewChat }) {
                 className="group relative flex cursor-pointer items-center border-none bg-transparent px-0 py-1.5 text-left transition-colors hover:bg-transparent"
               >
                 {/* Horizontal connector line */}
-                <span className="mr-1.5 flex-shrink-0 font-mono text-sm text-gray-400">
+                <span className="mr-1.5 shrink-0 font-mono text-sm text-gray-400">
                   {isLast ? "└" : "─"}
                 </span>
                 <span
