@@ -5,7 +5,10 @@
 
 @import "tailwindcss";
 
-/* ---break--- */
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&family=Cabin+Sketch:wght@400;700&family=Jost:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap'); */
+
+/* @import "tw-animate-css/dist/tw-animate.css"; */
+/* @import "shadcn/tailwind.css"; */
 
 * {
   box-sizing: border-box;
@@ -174,7 +177,7 @@
   --color-sec-el: var(--color-neutral-100);
 }
 
-/* ═════════════════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════/* ═════════════════════════════════════════════════════════════════════════════
    DARK MODE
    ═════════════════════════════════════════════════════════════════════════════ */
 .dark {
@@ -272,7 +275,6 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
-
 /* ═════════════════════════════════════════════════════════════════════════════
    TYPOGRAPHY COMPONENT CLASSES
    ═════════════════════════════════════════════════════════════════════════════ */
@@ -495,4 +497,16 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/*For scroller*/
+/* Hide default scrollbar */
+/* Hide default scrollbar but keep scrolling */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }
