@@ -135,7 +135,7 @@ function Sidebar({ chats, activeChatId, onSelectChat, onNewChat }) {
 function MessageBubble({ message }) {
   const isUser = message.role === "user";
   return (
-    <div className={` gap-xs2 flex flex-col ${isUser ? "items-end" : "items-start"}`}>
+    <div className={`gap-xs2 flex flex-col ${isUser ? "items-end" : "items-start"}`}>
       {/* Bubble */}
       <div
         className={`p-sm body-2 border-border w-[360px] rounded-md border font-medium shadow-[2px_3px_4px_0_#000] ${

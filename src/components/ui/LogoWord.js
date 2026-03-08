@@ -1,4 +1,4 @@
-export default function LogoWord({ className = "", LEstyles, GAstyles, logoSize, logoClassName }) {
+export default function LogoWord({ className = "", LEstyles, GAstyles, logoClassName }) {
   return (
     <div className={`flex items-end ${className}`}>
       <p className="text-text">

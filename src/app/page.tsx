@@ -1,9 +1,18 @@
 "use client";
+
+import Btn1 from "@/components/ui/Btn1";
+import { useRouter } from "next/navigation";
+
 export default function DesignSystemTest() {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push("/auth/signin");
+  };
   return (
     <div className="bg-el-bg p-base min-h-screen">
       {/* Typography */}
-      <h1 className="title-1 text-text mb-sm">Title 1 — Dogica Pixel</h1>
+      <h1 className="title-1 mb-sm text-primary-500 uppercase">Legamii</h1>
+      <Btn1 title={"Sign In"} className="mb-sm text-white" onClick={handleClick} />
       <h2 className="heading-h2 text-text mb-sm">Heading H2 — Inter</h2>
       <p className="body-2 text-sec-text mb-sm">Body 2 — Inter. Secondary text color.</p>
       <span className="label-1 text-primary-500">Label 1 — Dogica Pixel</span>

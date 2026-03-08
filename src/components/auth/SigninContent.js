@@ -26,12 +26,12 @@ export default function SigninContent() {
         />
         <FormInput type="password" placeholder="Your password" label="password" id="password" />
         <Link
-          href={"/forgot-password"}
+          href={"/auth/forget-password"}
           className="text-primary-600 font-primary mt-[8px] text-right text-xs leading-4 font-bold"
         >
           Forgot password?
         </Link>
-        <Btn1 title="Sign In" className={'mt-md'}/>
+        <Btn1 title="Sign In" className={"mt-md"} />
       </form>
     </div>
   );

@@ -267,8 +267,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import ReusableWindow from "../ReusableWindow";
-import CustomScroll from "../CustomScroll";
+import ReusableWindow from "../ui/ReusableWindow";
+import CustomScroll from "../ui/CustomScroll";
 
 function SendIcon() {
   return (
@@ -312,11 +312,11 @@ function MessageBubble({ message }) {
         {message.text}
       </div>
       {isUser ? (
-        <span className="body-4 uppercase tracking-widest text-gray-400">YOU</span>
+        <span className="body-4 tracking-widest text-gray-400 uppercase">YOU</span>
       ) : (
         <div className="gap-xs2 flex items-center">
           <img className="h-[32px] w-[32px]" src="/images/Robot.png" alt="TUTOR" />
-          <span className="body-3 uppercase tracking-widest text-gray-400">TUTOR</span>
+          <span className="body-3 tracking-widest text-gray-400 uppercase">TUTOR</span>
         </div>
       )}
     </div>
@@ -383,20 +383,16 @@ Explain clearly, use simple language, short paragraphs, and analogies.`,
 
       const data = await res.json();
       const reply =
-        data.content?.map((c) => c.text || "").join("") ||
-        "Sorry, I couldn't respond right now!";
+        data.content?.map((c) => c.text || "").join("") || "Sorry, I couldn't respond right now!";
       setMessages((prev) => [...prev, { role: "tutor", text: reply }]);
     } catch {
-      setMessages((prev) => [
-        ...prev,
-        { role: "tutor", text: "Connection error. Try again!" },
-      ]);
+      setMessages((prev) => [...prev, { role: "tutor", text: "Connection error. Try again!" }]);
     }
 
     setLoading(false);
   };
 
- return (
+  return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-5"
       onClick={onClose} // ✅ clicking backdrop closes
@@ -408,7 +404,6 @@ Explain clearly, use simple language, short paragraphs, and analogies.`,
           className="flex h-[560px] w-[600px] max-w-[95vw] flex-col overflow-hidden"
         >
           <div className="flex flex-1 flex-col overflow-hidden">
-
             {/* HEADER */}
             <div className="gap-sm px-base py-sm flex items-center justify-between border-b border-[#262626]">
               <div className="gap-sm flex items-center">
@@ -417,16 +412,16 @@ Explain clearly, use simple language, short paragraphs, and analogies.`,
               </div>
               <button
                 onClick={() => router.push("/aiChat")}
-                className="border border-black bg-white px-4 py-1.5 font-mono text-xs shadow-[3px_3px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer"
+                className="cursor-pointer border border-black bg-white px-4 py-1.5 font-mono text-xs shadow-[3px_3px_0_#000] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
               >
                 Go To Chat
               </button>
             </div>
 
             {/* MESSAGES — ✅ CustomScroll for the scrollbar */}
-            <div className="flex flex-1 min-h-0 overflow-hidden">
+            <div className="flex min-h-0 flex-1 overflow-hidden">
               <CustomScroll>
-                <div className="flex flex-col gap-base p-base w-full">
+                <div className="gap-base p-base flex w-full flex-col">
                   {messages.map((m, i) => (
                     <MessageBubble key={i} message={m} />
                   ))}
@@ -449,12 +444,12 @@ Explain clearly, use simple language, short paragraphs, and analogies.`,
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && send()}
                 placeholder="Ask your tutor anything"
-                className="body-3 bg-el-bg p-sm flex-1 rounded-sm border border-neutral-900 text-gray-700 outline-none placeholder:text-gray-300 focus:border-neutral-900 transition-colors"
+                className="body-3 bg-el-bg p-sm flex-1 rounded-sm border border-neutral-900 text-gray-700 transition-colors outline-none placeholder:text-gray-300 focus:border-neutral-900"
               />
               <button
                 onClick={send}
                 disabled={loading}
-                className={`flex h-10 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-sm border border-black bg-primary-500 text-white shadow-[2px_3px_4px_0_#000] transition-all ${
+                className={`bg-primary-500 flex h-10 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-sm border border-black text-white shadow-[2px_3px_4px_0_#000] transition-all ${
                   loading
                     ? "cursor-not-allowed opacity-50"
                     : "hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
@@ -463,13 +458,11 @@ Explain clearly, use simple language, short paragraphs, and analogies.`,
                 <SendIcon />
               </button>
             </div>
-
           </div>
         </ReusableWindow>
       </div>
     </div>
   );
 }
-
 
 export default AiTutorModal;
