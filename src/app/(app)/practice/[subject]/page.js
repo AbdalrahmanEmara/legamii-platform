@@ -1,14 +1,12 @@
 "use client";
 
-import Background from "@/components/ui/Background";
-import AnswerOption from "@/components/ui/practice/AnswerOption";
+import AnswerOption from "@/components/practice/AnswerOption";
 import QuestionList from "@/components/ui/QuestionList";
 import ReusableWindow from "@/components/ui/ReusableWindow";
 import Timer from "@/components/ui/Timer";
-import SummaryPage from "@/components/ui/practice/SummaryPage";
+import SummaryPage from "@/components/practice/SummaryPage";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { useEffect, useState } from "react";
-import BackgroundV2 from "@/components/ui/BackgroundV2";
 
 /**Data */
 const QUESTIONS = [
@@ -165,93 +163,88 @@ function PracticePage() {
   }
 
   return (
-    <BackgroundV2>
-      <div>
-        <ReusableWindow
-          title="AI_TUTOR.SYS"
-          className="mt-8 ml-16 flex h-[777px] w-[1384px] flex-col"
-        >
-          <div className="flex flex-1 self-stretch">
-            {/* Left Sidebar */}
-            <QuestionList questions={QUESTIONS} currentIndex={currentIndex} answers={answers} />
+    <div>
+      <ReusableWindow title="AI_TUTOR.SYS" className="m-auto flex w-[1384px] max-w-full flex-col">
+        <div className="flex flex-1 self-stretch">
+          {/* Left Sidebar */}
+          <QuestionList questions={QUESTIONS} currentIndex={currentIndex} answers={answers} />
 
-            {/* Right Side */}
-            <div className="flex flex-1 flex-col">
-              {/* Subject Header */}
-              <div className="flex w-full items-center justify-between border-b border-[#020203] px-6 py-4">
-                <h2 className="heading-h5-primary font-bold">Math Quiz</h2>
-                <Timer seconds={timeLeft} />
+          {/* Right Side */}
+          <div className="flex flex-1 flex-col">
+            {/* Subject Header */}
+            <div className="flex w-full items-center justify-between border-b border-[#020203] px-6 py-4">
+              <h2 className="heading-h5-primary font-bold">Math Quiz</h2>
+              <Timer seconds={timeLeft} />
+            </div>
+
+            {/* Question + Options Area */}
+            <div className="p-base gap-base flex flex-1 flex-col overflow-y-auto">
+              <div className="gap-4xl flex flex-col items-stretch">
+                {/* Question + Options */}
+                <div className="gap-base flex flex-1 flex-col">
+                  <div className="label-1 text-text font-medium">Question_{currentIndex + 1}</div>
+                  <div className="body-1 text-text font-medium">{q.text}</div>
+                  <div className="gap-sm flex flex-col items-stretch">
+                    {q.options.map((opt, oi) => (
+                      <AnswerOption
+                        key={oi}
+                        letter={LETTERS[oi]}
+                        text={opt}
+                        selected={selected === oi}
+                        onClick={() => handleSelect(oi)}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Navigation row: back + skip */}
+                <div className="mt-xl flex items-center justify-between">
+                  <button
+                    onClick={handleBack}
+                    disabled={currentIndex === 0}
+                    className={`border-border px-sm py-xs2 label-1 flex items-center justify-center rounded-md border font-medium transition-all ${
+                      currentIndex === 0
+                        ? "cursor-not-allowed border-gray-200 text-gray-300"
+                        : "hover:border-primary-200 cursor-pointer border-gray-300 bg-white text-gray-600 shadow-[2px_2px_0_#e5e7eb]"
+                    }`}
+                  >
+                    {"<"}
+                  </button>
+
+                  {!isLast && (
+                    <button
+                      onClick={handleSkip}
+                      className="border-border px-sm py-xs2 label-1 hover:border-primary-200 flex items-center justify-center rounded-md border font-medium transition-all"
+                    >
+                      SKIP &gt;|
+                    </button>
+                  )}
+                </div>
               </div>
 
-              {/* Question + Options Area */}
-              <div className="p-base gap-base flex flex-1 flex-col overflow-y-auto">
-                <div className="gap-4xl flex flex-col items-stretch">
-                  {/* Question + Options */}
-                  <div className="gap-base flex flex-1 flex-col">
-                    <div className="label-1 text-text font-medium">Question_{currentIndex + 1}</div>
-                    <div className="body-1 text-text font-medium">{q.text}</div>
-                    <div className="gap-sm flex flex-col items-stretch">
-                      {q.options.map((opt, oi) => (
-                        <AnswerOption
-                          key={oi}
-                          letter={LETTERS[oi]}
-                          text={opt}
-                          selected={selected === oi}
-                          onClick={() => handleSelect(oi)}
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Navigation row: back + skip */}
-                  <div className="mt-xl flex items-center justify-between">
-                    <button
-                      onClick={handleBack}
-                      disabled={currentIndex === 0}
-                      className={`border-border px-sm py-xs2 label-1 flex items-center justify-center rounded-md border font-medium transition-all ${
-                        currentIndex === 0
-                          ? "cursor-not-allowed border-gray-200 text-gray-300"
-                          : "hover:border-primary-200 cursor-pointer border-gray-300 bg-white text-gray-600 shadow-[2px_2px_0_#e5e7eb]"
-                      }`}
-                    >
-                      {"<"}
-                    </button>
-
-                    {!isLast && (
-                      <button
-                        onClick={handleSkip}
-                        className="border-border px-sm py-xs2 label-1 hover:border-primary-200 flex items-center justify-center rounded-md border font-medium transition-all"
-                      >
-                        SKIP &gt;|
-                      </button>
-                    )}
-                  </div>
+              {/* Bottom row: progress bar + next/finish button */}
+              <div className="border-border pt-base gap-base mt-auto flex w-full items-center border-t">
+                <div className="flex-1">
+                  <ProgressBar
+                    progress={
+                      isLast && selected !== undefined
+                        ? 100
+                        : (currentIndex / QUESTIONS.length) * 100
+                    }
+                  />
                 </div>
-
-                {/* Bottom row: progress bar + next/finish button */}
-                <div className="border-border pt-base gap-base mt-auto flex w-full items-center border-t">
-                  <div className="flex-1">
-                    <ProgressBar
-                      progress={
-                        isLast && selected !== undefined
-                          ? 100
-                          : (currentIndex / QUESTIONS.length) * 100
-                      }
-                    />
-                  </div>
-                  <button
-                    onClick={handleNext}
-                    className="label-1 bg-primary-500 px-md py-sm flex flex-shrink-0 items-center justify-center rounded-md border border-black font-bold tracking-wide text-white shadow-[2px_3px_4px_0_#000]"
-                  >
-                    {isLast ? "FINISH" : "Next →"}
-                  </button>
-                </div>
+                <button
+                  onClick={handleNext}
+                  className="label-1 bg-primary-500 px-md py-sm flex flex-shrink-0 items-center justify-center rounded-md border border-black font-bold tracking-wide text-white shadow-[2px_3px_4px_0_#000]"
+                >
+                  {isLast ? "FINISH" : "Next →"}
+                </button>
               </div>
             </div>
           </div>
-        </ReusableWindow>
-      </div>
-    </BackgroundV2>
+        </div>
+      </ReusableWindow>
+    </div>
   );
 }
 

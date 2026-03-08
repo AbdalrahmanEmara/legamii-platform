@@ -19,13 +19,14 @@
 
 // export default ProgressBar;
 
-
 interface ProgressBarProps {
   progress: number;
   color?: string;
   bgColor?: string;
-  height?: string;       // h-2 | h-3 | h-4
-  squareSize?: string;   // w-2 h-2 | w-3 h-3
+  borderSquareColor?: string;
+  height?: string; // h-2 | h-3 | h-4
+  width?: string;
+  squareSize?: string; // w-2 h-2 | w-3 h-3
   squareColor?: string;
 }
 
@@ -33,19 +34,22 @@ const ProgressBar = ({
   progress,
   color = "bg-primary-500",
   bgColor = "bg-neutral-200",
-  height = "h-2",
-  squareSize = "w-2 h-2",
+  borderSquareColor = "white",
+  height = "2",
+  width = "full",
+  // squareSize = "w-2 h-2",
+  squareSize = "2",
   squareColor = "bg-primary-500",
 }: ProgressBarProps) => {
   return (
-    <div className="relative w-full">
+    <div className={`relative w-${width}`}>
       {/* Square above bar */}
       <span
-        className={`${squareColor} absolute -top-1 -left-1 ${squareSize} z-10 border border-white`}
+        className={`${squareColor} absolute -top-1 -left-1 w-${squareSize} h-${squareSize} z-10 border border-${borderSquareColor}`}
       />
 
       {/* Bar */}
-      <div className={`relative w-full ${height} border-primary-500 border`}>
+      <div className={`relative h-${height} border-primary-500 border`}>
         <span
           className={`absolute top-0 left-0 h-full ${color}`}
           style={{ width: `${progress}%` }}

@@ -7,8 +7,7 @@
 
 /* @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&family=Cabin+Sketch:wght@400;700&family=Jost:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap'); */
 
-/* @import "tw-animate-css/dist/tw-animate.css"; */
-/* @import "shadcn/tailwind.css"; */
+/* ---break--- */
 
 * {
   box-sizing: border-box;
@@ -21,11 +20,11 @@
    ═════════════════════════════════════════════════════════════════════════════ */
 @theme {
   /* ── Font Families ──────────────────────────────────────────────────────── */
-  --font-primary: "Dogica Pixel", monospace;
-  --font-secondary: "Inter", sans-serif;
-  --font-cabin-sketch: "Cabin Sketch", cursive;
-  --font-futura: "Jost", sans-serif;
-  --font-montserrat: "Montserrat", sans-serif;
+  --font-primary: var(--font-dogica);
+  --font-secondary: var(--font-inter);
+  --font-cabin-sketch: var(--font-cabin-sketch);
+  --font-futura: var(--font-jost);
+  --font-montserrat: var(--font-montserrat);
   --font-rajdhani: "Rajdhani", sans-serif;
   --font-share-tech-mono: "Share Tech Mono", monospace;
 
@@ -341,6 +340,42 @@
     letter-spacing: 0px;
   }
 
+  .heading-h5-primary {
+    font-family: var(--font-primary);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: -0.15px;
+    color: var(--color-text);
+  }
+
+  .heading-h6-primary {
+    font-family: var(--font-primary);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0px;
+    color: var(--color-text);
+  }
+
+  .heading-h5-primary {
+    font-family: var(--font-primary);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: -0.15px;
+    color: var(--color-text);
+  }
+
+  .heading-h6-primary {
+    font-family: var(--font-primary);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0px;
+    color: var(--color-text);
+  }
+
   .label-1 {
     font-family: var(--font-primary);
     font-size: 16px;
@@ -396,9 +431,8 @@
     line-height: 10px;
   }
 }
-
-/* ---break--- */
-
+/* ---break---
+ */
 /* ═════════════════════════════════════════════════════════════════════════════
    @theme inline — shadcn token bridge
    --color-shadcn-border maps shadcn's --border so it doesn't overwrite
@@ -421,6 +455,7 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-shadcn-border: var(--border); /* shadcn → use border-shadcn-border in shadcn components */
   --color-shadcn-border: var(--border); /* shadcn → use border-shadcn-border in shadcn components */
   --color-input: var(--input);
   --color-ring: var(--ring);

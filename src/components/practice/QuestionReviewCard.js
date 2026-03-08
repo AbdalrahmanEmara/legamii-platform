@@ -1,8 +1,8 @@
-import ReusableWindow from "../ReusableWindow";
+import ReusableWindow from "../ui/ReusableWindow";
 import AnswerOption from "./AnswerOption";
 import AiTutorModal from "./AiTutorModal";
-import ButtonSecondary from "../ButtonSecondary";
-import { StatusBadge } from "../StatusBadge";
+import ButtonSecondary from "../ui/ButtonSecondary";
+import { StatusBadge } from "../ui/StatusBadge";
 import { useState } from "react";
 
 // const DIFFICULTY_STYLES = {
@@ -18,7 +18,7 @@ function QuestionReviewCard({ question, index, userAnswer }) {
 
   return (
     <>
-      <ReusableWindow title={`QUESTION_${index + 1}.SYS`} className="mb-sm w-[1032px] p-px">
+      <ReusableWindow title={`QUESTION_${index + 1}.SYS`} className="w-[1032px] p-px">
         <div className="p-base">
           {/* Title + difficulty badge */}
           <div className="flex items-center justify-between">
@@ -63,10 +63,9 @@ function QuestionReviewCard({ question, index, userAnswer }) {
               />
             ))}
           </div>
-</div>
-          {/* SPACE BEFORE TIP */}
-          <div className="mt-lg border-t border-black" >
-
+        </div>
+        {/* SPACE BEFORE TIP */}
+        <div className="mt-lg border-t border-black">
           {/* TIP BAR */}
           <div className="w-full bg-neutral-50 py-6">
             <div className="flex items-start gap-6 px-8">
@@ -79,7 +78,7 @@ function QuestionReviewCard({ question, index, userAnswer }) {
 
                 {/* Text Block */}
                 <div className="flex flex-col">
-                  <p className="mb-xxs label-2 font-semibold text-text">TIP!</p>
+                  <p className="mb-xxs label-2 text-text font-semibold">TIP!</p>
 
                   <p className="mt-xxs body-2 text-text font-medium">{question.tip}</p>
                 </div>

@@ -28,19 +28,21 @@ function ProgressBar({ current, total }) {
       <div className="relative mb-1.5">
         {/* Square thumb */}
         <div
-          className="absolute -top-2 h-3 w-3 rounded-sm bg-primary-500 shadow-[0_0_8px_rgba(168,85,247,0.6)] transition-all duration-500"
+          className="bg-primary-500 absolute -top-2 h-3 w-3 rounded-sm shadow-[0_0_8px_rgba(168,85,247,0.6)] transition-all duration-500"
           style={{ left: `calc(${pct}% - 6px)` }}
         />
         {/* Track */}
         <div className="h-1.5 overflow-hidden rounded-full bg-gray-200">
           {/* Fill */}
           <div
-            className="h-full rounded-full bg-primary-500 transition-all duration-500"
+            className="bg-primary-500 h-full rounded-full transition-all duration-500"
             style={{ width: `${pct}%` }}
           />
         </div>
       </div>
-      <div className="font-mono text-xs text-gray-400">{current}/{total}</div>
+      <div className="font-mono text-xs text-gray-400">
+        {current}/{total}
+      </div>
     </div>
   );
 }

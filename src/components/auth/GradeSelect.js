@@ -33,7 +33,7 @@ export default function GradeSelect({
   };
 
   return (
-    <div ref={wrapRef} className="gap-xs2 flex flex-col">
+    <div ref={wrapRef} className="gap-xs2 hide-scrollbar flex flex-col">
       <label
         htmlFor={id}
         className="text-text font-primary text-sm leading-5 font-normal uppercase"

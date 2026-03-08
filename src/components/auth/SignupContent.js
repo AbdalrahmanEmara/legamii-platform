@@ -5,7 +5,7 @@ import GradeSelect from "./GradeSelect";
 import SigningContentHeader from "./SigningContentHeader";
 export default function SignupContent() {
   return (
-    <div className="gap-md px-xl py-md bg-el-bg flex max-h-225 flex-col overflow-auto rounded-b-lg">
+    <div className="gap-md px-xl py-md bg-el-bg hide-scroll flex max-h-225 flex-col overflow-auto rounded-b-lg">
       <SigningContentHeader
         header="Ready to level up your learning?"
         word="Join the game of learning - Level up your skills, win contests, grow smarter everyday"

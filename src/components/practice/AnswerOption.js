@@ -32,63 +32,40 @@
 //   );
 // }
 // import "../../../src/app/globals.css";
-function AnswerOption({
-  letter,
-  text,
-  selected,
-  onClick,
-  reviewMode,
-  isCorrect,
-  isUserPick,
-}) {
+function AnswerOption({ letter, text, selected, onClick, reviewMode, isCorrect, isUserPick }) {
   const base =
     "w-full flex items-center gap-xs self-stretch p-sm rounded-[2px] border transition-all duration-200 text-left";
 
   // Default (not chosen – quiz mode)
-  let containerCls =
-    "border-neutral-400 bg-neutral-50";
+  let containerCls = "border-neutral-400 bg-neutral-50";
 
   // Review mode
   if (reviewMode) {
     if (isCorrect) {
-      containerCls =
-        "border-green-600 shadow-[2px_3px_4px_0_#00993D]";
+      containerCls = "border-green-600 shadow-[2px_3px_4px_0_#00993D]";
     } else if (isUserPick) {
-      containerCls =
-        "border-red-500 bg-neutral-50";
+      containerCls = "border-red-500 bg-neutral-50";
     }
   }
 
   // Selected (quiz mode only)
   else if (selected) {
-    containerCls =
-      "border-[#020203] bg-neutral-50 shadow-[2px_3px_4px_0_#000]";
+    containerCls = "border-[#020203] bg-neutral-50 shadow-[2px_3px_4px_0_#000]";
   }
 
   return (
     <button
       onClick={reviewMode ? undefined : onClick}
-      className={`
-        ${base}
-        ${containerCls}
-        ${!reviewMode && !selected ? "hover:border-black" : ""}
-        ${reviewMode ? "cursor-default" : "cursor-pointer"} 
-      `}
+      className={` ${base} ${containerCls} ${!reviewMode && !selected ? "hover:border-black" : ""} ${reviewMode ? "cursor-default" : "cursor-pointer"} `}
     >
-      <span className="body-2 font-medium">
-        {letter}
-      </span>
+      <span className="body-2 font-medium">{letter}</span>
 
-      <span className="flex-1 body-2 font-medium">{text}</span>
+      <span className="body-2 flex-1 font-medium">{text}</span>
 
-      {reviewMode && isCorrect && (
-        <span className="ml-auto text-green-600 font-bold">✓</span>
-      )}
+      {reviewMode && isCorrect && <span className="ml-auto font-bold text-green-600">✓</span>}
 
       {reviewMode && isUserPick && !isCorrect && (
-        <span className="ml-auto text-red-500 text-sm">
-          ✗ your answer
-        </span>
+        <span className="ml-auto text-sm text-red-500">✗ your answer</span>
       )}
     </button>
   );

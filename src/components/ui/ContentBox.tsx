@@ -1,5 +1,3 @@
-import React from "react";
-
 interface ContentBoxProps {
   width?: string | number;
   height?: string | number;
@@ -8,10 +6,16 @@ interface ContentBoxProps {
   direction?: string;
 }
 
-const ContentBox: React.FC<ContentBoxProps> = ({ width, height, children, className = "" , direction="col"}) => {
+const ContentBox: React.FC<ContentBoxProps> = ({
+  width,
+  height,
+  children,
+  className = "",
+  direction = "col",
+}) => {
   return (
     <div
-      className={`flex  flex-${direction}  gap-2xl rounded-lg border border-[#020203] bg-el-bg p-base shadow-[2px_3px_4px_0px_rgba(0,0,0,1.00)] outline-border  ${className} `}
+      className={`flex flex-${direction} gap-2xl bg-el-bg p-base outline-border rounded-lg border border-[#020203] shadow-[2px_3px_4px_0px_rgba(0,0,0,1.00)] ${className} `}
       style={{
         width: typeof width === "number" ? `${width}px` : width,
         height: typeof height === "number" ? `${height}px` : height,

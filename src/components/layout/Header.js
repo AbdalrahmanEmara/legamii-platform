@@ -6,6 +6,7 @@ import { LogoIcon } from "../icons/LogoIcon";
 import FireIcon from "../icons/FireIcon";
 import BellIcon from "../icons/BellIcon";
 import Image from "next/image";
+import Logo from "../Logo";
 
 function Header() {
   const streak = 10;
@@ -45,7 +46,7 @@ function Header() {
     >
       {/* Left */}
       <div className="gap-xl5 flex items-center">
-        <LogoIcon size={49} />
+        <Logo size={49} />
         <Navigation />
       </div>
 
@@ -101,7 +102,13 @@ function Header() {
               {xp} XP
             </span>
           </div>
-          <ProgressBar progress={xpProgress} width={120} height={6} />
+          <ProgressBar
+            progress={xpProgress}
+            width={40}
+            height={3}
+            borderSquareColor="black"
+            squareSize="3 px"
+          />
         </div>
 
         {/* Avatar */}
@@ -109,7 +116,13 @@ function Header() {
           onClick={() => console.log("Open profile")}
           className="overflow-hidden rounded-full"
         >
-          <Image src="/images/avatar.png" alt="Avatar" width={40} height={40} className="min-w-[40px]" />
+          <Image
+            src="/images/avatar.png"
+            alt="Avatar"
+            width={40}
+            height={40}
+            className="min-w-[40px]"
+          />
         </button>
       </div>
     </header>
