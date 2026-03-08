@@ -307,7 +307,7 @@ function AiTutorPage() {
                 <button
                   onClick={handleSend}
                   disabled={loading}
-                  className={`bg-primary-500 flex h-9 w-9 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg border-none text-white shadow-[2px_2px_0_#7c3aed] transition-opacity ${
+                  className={`bg-primary-500 flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border-none text-white shadow-[2px_2px_0_#7c3aed] transition-opacity ${
                     loading ? "cursor-not-allowed opacity-50" : "hover:opacity-90"
                   }`}
                 >

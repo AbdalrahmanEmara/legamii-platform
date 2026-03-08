@@ -43,16 +43,7 @@ function Header() {
         <Navigation />
       </div>
       {/* Right */}
-      {/* <div className="ml-auto flex items-center gap-6">
-        <ProgressBar xp={1} level={20} />
 
-        <div className="text-sm text-white">
-          <p>LVL {20}</p>
-          <p className="text-xs text-gray-400">{1} XP</p>
-        </div>
-
-        <img src="public/Logo.png" alt="User avatar" className="h-8 w-8 rounded-full" />
-      </div> */}
       <div className="ml-auto flex h-10 items-center gap-[24px]">
         {/* Fire icon + Streak */}
         <div className="flex items-center gap-1.5">

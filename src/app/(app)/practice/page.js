@@ -140,12 +140,6 @@ function page() {
                         <span>{topic.name}</span>
                       </div>
 
-                      {/* <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200 flex">
-                            <div
-                              className="bg-primary-500 h-full rounded-full transition-all duration-300"
-                              style={{ width: `${topic.progress}%` }}
-                            />
-                          </div> */}
                       <ProgressBar progress={topic.progress} />
                     </div>
                   ))}
@@ -156,20 +150,11 @@ function page() {
                     <span>Mastery level {item.masteryLevel}%</span>
                   </div>
 
-                  {/* <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200 flex"> */}
-                  {/* <div
-                              className="bg-primary-500 h-full rounded-full transition-all duration-300"
-                              style={{ width: `${item.masteryLevel}%` }}
-                            /> */}
                   <ProgressBar progress={item.masteryLevel} />
-                  {/* </div> */}
                 </div>
                 {/* Button */}
                 <div className="flex justify-end">
                   <Btn1 title={"Start Quiz"} className={"w-fit"} />
-                  {/* <Button className="mt-auto flex-none">
-                    <span className="label-1 text-text text-base font-bold">START QUIZ</span>
-                  </Button> */}
                 </div>
               </ContentBox>
             ))}

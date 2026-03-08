@@ -1,6 +1,5 @@
 "use client";
 
-import Background from "@/components/ui/Background";
 import AnswerOption from "@/components/practice/AnswerOption";
 import QuestionList from "@/components/ui/QuestionList";
 import ReusableWindow from "@/components/ui/ReusableWindow";
@@ -8,7 +7,6 @@ import Timer from "@/components/ui/Timer";
 import SummaryPage from "@/components/practice/SummaryPage";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { useEffect, useState } from "react";
-import BackgroundMain from "@/components/ui/BackgroundMain";
 
 /**Data */
 const QUESTIONS = [
