@@ -170,7 +170,7 @@ function PracticePage() {
           <QuestionList questions={QUESTIONS} currentIndex={currentIndex} answers={answers} />
 
           {/* Right Side */}
-          <div className="flex flex-1 flex-col">
+          <div className="flex flex-1 flex-col border-l border-border">
             {/* Subject Header */}
             <div className="flex w-full items-center justify-between border-b border-[#020203] px-6 py-4">
               <h2 className="heading-h5-primary font-bold">Math Quiz</h2>

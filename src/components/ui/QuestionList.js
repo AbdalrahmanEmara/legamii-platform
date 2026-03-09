@@ -16,7 +16,7 @@ import "../../app/globals.css";
 export default function QuestionList({ questions, currentIndex, answers }) {
   return (
     //  true w : 196
-    <div className="flex h-full w-[230px] flex-col border-r border-[#020203] bg-white">
+    <div className="flex h-full w-[230px] flex-col  border-[#020203] bg-el-bg">
       {/* Header */}
       <div className="bg-color-white flex items-center justify-center border-b border-[#020203] px-6 py-2">
         <span className="font-primary text-text text-sm leading-[24px] font-normal tracking-[0]">
@@ -24,7 +24,7 @@ export default function QuestionList({ questions, currentIndex, answers }) {
         </span>
       </div>
       {/* Body */}
-      <div className="border-border flex flex-1 flex-col gap-2 overflow-y-auto border bg-white px-6 py-2">
+      <div className=" flex flex-1 flex-col gap-2 overflow-y-auto  bg-el-bg px-6 py-2">
         {/* Questions label */}
         <div className="mb-2 flex items-center gap-2">
           <div className="h-3 w-3 rounded-sm bg-black"></div>
