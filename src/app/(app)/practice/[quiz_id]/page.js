@@ -7,6 +7,8 @@ import Timer from "@/components/ui/Timer";
 import SummaryPage from "@/components/practice/SummaryPage";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { getQuestions } from "@/lib/services/quiz.service";
 
 /**Data */
 const QUESTIONS = [
@@ -110,7 +112,13 @@ const QUESTIONS = [
 const QUIZ_DURATION = 90;
 const LETTERS = ["A)", "B)", "C)", "D)"];
 
-function PracticePage() {
+async function PracticePage() {
+  const { quiz_id } = useParams();
+  console.log(quiz_id);
+
+  const quiz = await getQuestions(quiz_id);
+  console.log(quiz);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(QUIZ_DURATION);

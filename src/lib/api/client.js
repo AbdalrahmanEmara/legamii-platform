@@ -3,10 +3,10 @@ import "server-only"
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-async function request(method, endpoint, { body, params }) {
+async function request(method, endpoint, { body, params } = {}) {
   const url = new URL(`${BASE_URL}/${endpoint}`);
 
-  if (params) {
+  if (params) { 
     Object.entries(params).forEach(([Key, value]) => {
       if (value !== undefined && value !== null) {
         url.searchParams.set(Key, String(value));

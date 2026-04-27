@@ -4,74 +4,98 @@ import "..//../globals.css";
 import CustomScroll from "@/components/ui/CustomScroll";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import Btn1 from "@/components/ui/Btn1";
-export const subjects = [
-  {
-    id: 1,
-    name: "Mathematics",
-    icon: "Fx",
-    grade: "F",
-    status: "NEEDS WORK",
-    lastAccuracy: 68,
-    attempted: 4,
-    streak: 1,
-    masteryLevel: 62,
-    topics: [
-      { name: "Calculus", progress: 35 },
-      { name: "Trigonometry", progress: 22 },
-      { name: "Algebra", progress: 60 },
-    ],
-  },
-  {
-    id: 2,
-    name: "History",
-    icon: "Book",
-    grade: "A",
-    status: "STRONG",
-    lastAccuracy: 88,
-    attempted: 35,
-    streak: 17,
-    masteryLevel: 80,
-    topics: [
-      { name: "World War", progress: 70 },
-      { name: "Renaissance", progress: 65 },
-    ],
-  },
-  {
-    id: 3,
-    name: "Physics",
-    icon: "Atom",
-    grade: "B",
-    status: "GOOD",
-    lastAccuracy: 74,
-    attempted: 18,
-    streak: 5,
-    masteryLevel: 71,
-    topics: [
-      { name: "Mechanics", progress: 58 },
-      { name: "Electricity", progress: 44 },
-      { name: "Optics", progress: 63 },
-    ],
-  },
-  {
-    id: 4,
-    name: "Chemistry",
-    icon: "Flask",
-    grade: "C",
-    status: "IMPROVING",
-    lastAccuracy: 69,
-    attempted: 22,
-    streak: 3,
-    masteryLevel: 66,
-    topics: [
-      { name: "Organic", progress: 52 },
-      { name: "Inorganic", progress: 40 },
-      { name: "Thermochemistry", progress: 61 },
-    ],
-  },
-];
+import { getQuizList } from "@/lib/services/quiz.service";
+import FireIcon from "@/components/icons/FireIcon";
+import StartQuizButton from "@/components/practice/StartQuizButton";
+// export const subjects = [
+//   {
+//     id: 1,
+//     name: "Mathematics",
+//     icon: "Fx",
+//     grade: "F",
+//     status: "NEEDS WORK",
+//     lastAccuracy: 68,
+//     attempted: 4,
+//     streak: 1,
+//     masteryLevel: 62,
+//     topics: [
+//       { name: "Calculus", progress: 35 },
+//       { name: "Trigonometry", progress: 22 },
+//       { name: "Algebra", progress: 60 },
+//     ],
+//   },
+//   {
+//     id: 2,
+//     name: "History",
+//     icon: "Book",
+//     grade: "A",
+//     status: "STRONG",
+//     lastAccuracy: 88,
+//     attempted: 35,
+//     streak: 17,
+//     masteryLevel: 80,
+//     topics: [
+//       { name: "World War", progress: 70 },
+//       { name: "Renaissance", progress: 65 },
+//     ],
+//   },
+//   {
+//     id: 3,
+//     name: "Physics",
+//     icon: "Atom",
+//     grade: "B",
+//     status: "GOOD",
+//     lastAccuracy: 74,
+//     attempted: 18,
+//     streak: 5,
+//     masteryLevel: 71,
+//     topics: [
+//       { name: "Mechanics", progress: 58 },
+//       { name: "Electricity", progress: 44 },
+//       { name: "Optics", progress: 63 },
+//     ],
+//   },
+//   {
+//     id: 4,
+//     name: "Chemistry",
+//     icon: "Flask",
+//     grade: "C",
+//     status: "IMPROVING",
+//     lastAccuracy: 69,
+//     attempted: 22,
+//     streak: 3,
+//     masteryLevel: 66,
+//     topics: [
+//       { name: "Organic", progress: 52 },
+//       { name: "Inorganic", progress: 40 },
+//       { name: "Thermochemistry", progress: 61 },
+//     ],
+//   },
+// ];
 
-function page() {
+async function page() {
+  const subject = await getQuizList()
+
+  const subjects = subject.map((item) => {
+    return {
+      name: item.subject.name,
+      id: item.subject.id,
+      lastAttemptAccuracy: item.lastAttemptAccuracy,
+      attempted: item.attempted,
+      streak: item.streak,
+      masteryLevel: item.totalMasteryLevel,
+      tags: item.subjectTagsMasteryLevel.map((tag) => {
+        return {
+          tagName: tag.tagName,
+          tagId: tag.tagId,
+          masteryLevel: tag.masteryLevel
+        }
+      })
+    }
+  })
+
+  console.log(subject)
+
   return (
     <div>
       <ReusableWindow
@@ -94,7 +118,8 @@ function page() {
                 <div className="flex w-full items-center justify-between">
                   <div className="gap-xs flex items-center">
                     <div className="flex items-center justify-center rounded-md">
-                      <img src={item.icon} alt={item.name} className="p-sm" />
+                      {/* <img src={item.icon} alt={item.name} className="p-sm" /> */}
+
                     </div>
                     <h2 className="heading-h5-primary font-normal">{item.name}</h2>
                   </div>
@@ -103,7 +128,7 @@ function page() {
                 <div className="flex-column gap-xs pt-base flex items-start self-stretch">
                   <ContentBox className="p-sm bg-el-bg flex items-center justify-center gap-[16px] rounded-md border text-center shadow-none">
                     <div className="flex-none">
-                      <p className="body-2 font-medium">{item.lastAccuracy}%</p>
+                      <p className="body-2 font-medium">{Math.round(item.lastAttemptAccuracy)}%</p>
                       <p className="body-4 font-medium text-neutral-500">Last Accuracy</p>
                     </div>
                   </ContentBox>
@@ -120,11 +145,7 @@ function page() {
                     direction="row"
                   >
                     {/* <!-- Fire Icon --> */}
-                    <img
-                      src="YOUR_IMAGE_SRC_HERE"
-                      alt="fire icon"
-                      className="aspect-square h-6 w-6"
-                    />
+                    <FireIcon />
                     <div className="flex-none">
                       <p className="body-2 font-medium">{item.streak} Days</p>
                       <p className="body-4 font-medium text-neutral-500">Streak</p>
@@ -134,27 +155,27 @@ function page() {
 
                 {/* <div className="gap-sm my-xl2 flex w-[360px] flex-col items-start"> */}
                 <div className="gap-sm my-base flex w-[360px] flex-col items-start">
-                  {item.topics.map((topic, index) => (
-                    <div key={index} className="gap-xs2 flex w-full flex-col">
+                  {item.tags.map((tag) => (
+                    <div key={tag.tagId} className="gap-xs2 flex w-full flex-col">
                       <div className="body-3 flex justify-between font-medium">
-                        <span>{topic.name}</span>
+                        <span>{tag.tagName}</span>
                       </div>
 
-                      <ProgressBar progress={topic.progress} />
+                      <ProgressBar progress={tag.masteryLevel} />
                     </div>
                   ))}
                 </div>
 
                 <div className="gap-xs2 my-base flex w-full flex-col items-start self-stretch">
                   <div className="body-1 flex justify-between font-medium">
-                    <span>Mastery level {item.masteryLevel}%</span>
+                    <span>Mastery level {Math.round(item.masteryLevel * 100)}%</span>
                   </div>
 
-                  <ProgressBar progress={item.masteryLevel} />
+                  <ProgressBar progress={Math.round(item.masteryLevel * 100)} />
                 </div>
                 {/* Button */}
                 <div className="flex justify-end">
-                  <Btn1 title={"Start Quiz"} className={"w-fit"} />
+                  <StartQuizButton subject_id={item.id} difficulty={Number(0)} subjectTagsMasteryLevel={item.tags} />
                 </div>
               </ContentBox>
             ))}
