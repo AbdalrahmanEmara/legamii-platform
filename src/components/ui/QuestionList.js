@@ -1,19 +1,5 @@
-// function QuestionList() {
-//   return (
-//     <div className="flex h-[724] w-[196] flex-col items-start gap-6 self-stretch border-r border-[#262626] p-0">
-//       {/**Header */}
-//       <div className="flex items-center justify-center gap-[10px] self-stretch border-b border-[#262626] px-6 py-2">
-//         Title
-//       </div>
-//       <p> Salma hossam</p>
-//     </div>
-//   );
-// }
-
-// export default QuestionList;
-
 import "../../app/globals.css";
-export default function QuestionList({ questions, currentIndex, answers }) {
+export default function QuestionList({ questions, currentIndex }) {
   return (
     //  true w : 196
     <div className="flex h-full w-[230px] flex-col  border-[#020203] bg-el-bg">
@@ -32,12 +18,12 @@ export default function QuestionList({ questions, currentIndex, answers }) {
         </div>
 
         {questions.map((q, i) => {
-          const answered = answers[i] !== undefined;
+          const isSkipped = i <= currentIndex;
           const isCurrent = i === currentIndex;
           return (
             <div
-              key={q.id}
-              className={`mb-0.5 cursor-default rounded px-1 py-0.5 pl-4 font-mono text-xs transition-all duration-200 ${isCurrent ? "bg-purple-100 text-purple-600" : answered ? "text-gray-400 line-through" : "text-gray-600"}`}
+              key={q.questionId}
+              className={`mb-0.5 cursor-default rounded px-1 py-0.5 pl-4 font-mono text-xs transition-all duration-200 ${isCurrent ? "bg-purple-100 text-purple-600" : isSkipped ? "text-gray-400 line-through" : "text-gray-600"}`}
             >
               #{`Question_${i + 1}`}
             </div>
@@ -47,28 +33,3 @@ export default function QuestionList({ questions, currentIndex, answers }) {
     </div>
   );
 }
-
-// unction QuestionList({ questions, currentIndex, answers }) {
-//   return (
-//     <aside className="w-40 flex-shrink-0 bg-purple-50 border-r-2 border-purple-100 py-5 overflow-y-auto">
-//       <div className="font-mono text-xs font-bold text-purple-600 uppercase tracking-wider px-4 pb-3 border-b border-purple-100 mb-2">
-//         Question List
-//       </div>
-//       <div className="px-3">
-//         <div className="font-mono text-xs font-bold text-purple-900 mb-1.5 pl-1">■ Questions</div>
-//         {questions.map((q, i) => {
-//           const answered = answers[i] !== undefined;
-//           const isCurrent = i === currentIndex;
-//           return (
-//             <div
-//               key={q.id}
-//               className={`font-mono text-xs px-1 pl-4 py-0.5 rounded mb-0.5 cursor-default transition-all duration-200
-//                 ${isCurrent ? "bg-purple-100 text-purple-600" : answered ? "text-gray-400 line-through" : "text-gray-600"}`}
-//             >
-//               #{`Question_${i + 1}`}
-//             </div>
-//           );
-//         })}
-//       </div>
-//     </aside>
-//   );

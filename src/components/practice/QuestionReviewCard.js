@@ -1,20 +1,13 @@
 import ReusableWindow from "../ui/ReusableWindow";
-import AnswerOption from "./AnswerOption";
 import AiTutorModal from "./AiTutorModal";
 import ButtonSecondary from "../ui/ButtonSecondary";
 import { StatusBadge } from "../ui/StatusBadge";
 import { useState } from "react";
 
-// const DIFFICULTY_STYLES = {
-//   EASY: "bg-green-100 text-green-700 border border-green-300",
-//   INTERMEDIATE: "bg-yellow-100 text-yellow-800 border border-yellow-300",
-//   HARD: "bg-red-100 text-red-600 border border-red-300",
-// };
 const LETTERS = ["A)", "B)", "C)", "D)"];
+const arrange = ["a", "b", "c", "d"];
 function QuestionReviewCard({ question, index, userAnswer }) {
   const [showTutor, setShowTutor] = useState(false);
-
-  // const diffStyle = DIFFICULTY_STYLES[question.difficulty] || DIFFICULTY_STYLES.EASY;
 
   return (
     <>
@@ -25,20 +18,17 @@ function QuestionReviewCard({ question, index, userAnswer }) {
             <h3 className="heading-h5-primary font-semibold tracking-wider uppercase">
               QUESTION_{index + 1}
             </h3>
-            {/* <span
-              className={`rounded px-3 py-1 font-mono text-xs font-bold tracking-widest ${diffStyle}`}
-            >
-              {question.difficulty}
-            </span> */}
-            <StatusBadge status={question.difficulty} />
+            {question?.difficulty && (
+              <StatusBadge status={question.difficulty.toUpperCase()} />
+            )}
           </div>
 
           <div className="my-md">
             {/* Question text */}
-            <p className="body-1 text-text mb-sm">{question.text}</p>
+            <p className="body-1 text-text mb-sm">{question?.questionText}</p>
 
             {/* Tags */}
-            <div className="gap-base flex flex-wrap">
+            {/* <div className="gap-base flex flex-wrap">
               {question.tags.map((tag) => (
                 <span
                   key={tag}
@@ -47,21 +37,21 @@ function QuestionReviewCard({ question, index, userAnswer }) {
                   {tag}
                 </span>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Options */}
           <div className="gap-sm flex flex-col items-stretch">
-            {question.options.map((opt, oi) => (
-              <AnswerOption
-                key={oi}
-                letter={LETTERS[oi]}
-                text={opt}
-                reviewMode
-                isCorrect={oi === question.correct}
-                isUserPick={oi === userAnswer}
-              />
-            ))}
+            <ul className="flex flex-col gap-sm">
+              {Object.values(question?.options ?? {}).map((opt, oi) => {
+                return (
+                  <li key={oi} className={`${question?.answer === arrange[oi] ? "border-green-600 shadow-md shadow-green-600" : ""} ${userAnswer === arrange[oi] ? userAnswer !== question?.answer ? "border-red-600 shadow-md shadow-red-600" : "border-green-600 shadow-md shadow-green-600" : ""} flex items-center gap-xs border p-4 shadow`}>
+                    <span className="font-semibold">{LETTERS[oi]}</span>
+                    <p className="body-2">{opt}</p>
+                  </li>
+                )
+              })}
+            </ul>
           </div>
         </div>
         {/* SPACE BEFORE TIP */}
@@ -80,7 +70,7 @@ function QuestionReviewCard({ question, index, userAnswer }) {
                 <div className="flex flex-col">
                   <p className="mb-xxs label-2 text-text font-semibold">TIP!</p>
 
-                  <p className="mt-xxs body-2 text-text font-medium">{question.tip}</p>
+                  <p className="mt-xxs body-2 text-text font-medium">{question?.tip}</p>
                 </div>
               </div>
 

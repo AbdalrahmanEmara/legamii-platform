@@ -6,6 +6,7 @@ const BADGE_STYLES = {
   IMPROVING: "outline-orange-500 text-orange-500 shadow-[2px_3px_2px_0px_rgba(200,80,0,1.00)]",
   EASY: "outline-green-600 text-green-600 shadow-[2px_3px_2px_0px_rgba(0,153,61,1.00)]",
   INTERMEDIATE: "outline-yellow-600 text-yellow-600 shadow-[2px_3px_2px_0px_rgba(153,138,0,1.00)]",
+  MEDIUM: "outline-yellow-600 text-yellow-600 shadow-[2px_3px_2px_0px_rgba(153,138,0,1.00)]",
   HARD: "outline-red-600 text-red-600 shadow-[2px_3px_2px_0px_rgba(200,0,0,1.00)]",
   WEAK: "outline-red-600 text-red-600 shadow-[2px_3px_2px_0px_rgba(200,0,0,1.00)]",
 };
