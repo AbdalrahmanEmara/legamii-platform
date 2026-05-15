@@ -1,17 +1,17 @@
 "use client";
+import { Suspense } from "react";
 import OtpInput from "@/components/auth/OtpInput";
 import { verifyEmailAction } from "@/lib/actions/auth.actions";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
-export default function OtpPage() {
+function OtpPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams?.get("email");
 
   const handleVerifyOtp = async (email, otp) => {
     try {
-      console.log(email, otp);
       const res = await verifyEmailAction({ email, otp });
 
       if (res?.success === true) {
@@ -38,5 +38,13 @@ export default function OtpPage() {
 
       <OtpInput length={6} email={email} onComplete={handleVerifyOtp} />
     </div>
+  );
+}
+
+export default function OtpPage() {
+  return (
+    <Suspense fallback={null}>
+      <OtpPageContent />
+    </Suspense>
   );
 }

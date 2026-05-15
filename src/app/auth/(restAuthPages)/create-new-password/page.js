@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import CreateNewPassForm from "@/components/auth/CreateNewPassForm";
 
 export default function NewPassPage() {
@@ -7,7 +8,9 @@ export default function NewPassPage() {
         create new password
       </p>
 
-      <CreateNewPassForm />
+      <Suspense fallback={null}>
+        <CreateNewPassForm />
+      </Suspense>
     </div>
   );
 }
