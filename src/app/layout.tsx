@@ -113,7 +113,7 @@ export default function RootLayout({
       className={`${inter.variable} ${dogica.variable} ${cabinSketch.variable} ${jost.variable} ${montserrat.variable} ${rajdhani.variable} ${shareTechMono.variable}`}
     >
       <body className="antialiased" suppressHydrationWarning>
-        <Toaster position="top-right" />
+        <Toaster position="top-center" />
         {children}
       </body>
     </html>
