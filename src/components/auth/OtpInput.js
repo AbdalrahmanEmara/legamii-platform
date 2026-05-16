@@ -4,10 +4,10 @@ import { useRef, useState } from "react";
 import Btn1 from "../ui/Btn1";
 import { useRouter } from "next/navigation";
 
-export default function OtpInput({ length = 6, onComplete }) {
+export default function OtpInput({ length = 6, onComplete, email }) {
   const [otp, setOtp] = useState(new Array(length).fill(""));
   const inputRefs = useRef([]);
-  const [timer, setTimer] = useState(60);
+  // const [timer, setTimer] = useState(60);
 
   const handleChange = (el, index) => {
     if (isNaN(el.value)) return;
@@ -20,10 +20,12 @@ export default function OtpInput({ length = 6, onComplete }) {
     if (el.value && index < length - 1) {
       inputRefs.current[index + 1].focus();
     }
+  };
 
+  const handleOnClick = () => {
     // Trigger callback if the OTP is complete
-    if (newOtp.join("").length === length) {
-      onComplete(newOtp.join(""));
+    if (otp.join("").length === length) {
+      onComplete(email, otp.join(""));
     }
   };
 
@@ -38,14 +40,8 @@ export default function OtpInput({ length = 6, onComplete }) {
     if (data.length === length) {
       setOtp(data);
       inputRefs.current[length - 1].focus();
-      onComplete(data.join(""));
+      onComplete(email, data.join(""));
     }
-  };
-
-  const router = useRouter();
-  const handleContinue = (e) => {
-    e.preventDefault();
-    router.push("/auth/create-new-password");
   };
 
   return (
@@ -68,9 +64,14 @@ export default function OtpInput({ length = 6, onComplete }) {
         ))}
       </div>
       <p className="text-primary-600 font-secondary mt-4 flex justify-end text-sm leading-5 font-normal">
-        Resend code: after {timer}s
+        Otp expires in 60min
       </p>
-      <Btn1 title={"continue"} className={"mt-8 w-full"} onClick={handleContinue} />
+      <Btn1
+        title={"continue"}
+        className={"mt-8 w-full"}
+        onClick={handleOnClick}
+        disabled={!otp.every((d) => d)}
+      />
     </div>
   );
 }
