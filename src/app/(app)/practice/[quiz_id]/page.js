@@ -3,21 +3,22 @@ import { getQuestions } from "@/lib/services/quiz.service";
 
 async function Page({ params }) {
   const { quiz_id } = await params;
+  let questions = null;
 
   try {
-    const questions = await getQuestions(quiz_id);
-    return (
-      <PracticePage questions={questions.data} quiz_id={quiz_id} />
-    )
-  }
-  catch (error) {
+    questions = await getQuestions(quiz_id);
+  } catch (error) {
     console.log(error);
+  }
+
+  if (!questions)
     return (
       <div>
-        <h1>Something went wrong</h1>
+        <span>Sorry, something went wrong.</span>
       </div>
-    )
-  }
+    );
+
+  return <PracticePage questions={questions?.data} quiz_id={quiz_id} />;
 }
 
 export default Page;

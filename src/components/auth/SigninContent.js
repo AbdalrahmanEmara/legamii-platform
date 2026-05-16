@@ -12,9 +12,12 @@ import { loginSchema } from "@/lib/validators";
 import { loginAction } from "@/lib/actions/auth.actions";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import { Eye, EyeClosed } from "lucide-react";
 
 export default function SigninContent() {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -57,12 +60,21 @@ export default function SigninContent() {
           {...register("email")}
         />
         <FormInput
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="Your password"
           label="password"
           id="password"
           {...register("password")}
           error={errors.password?.message}
+          endIcon={
+            <button type="button" onClick={() => setShowPassword((prev) => !prev)} className="">
+              {showPassword ? (
+                <Eye className="text-primary-500 h-5 w-5" />
+              ) : (
+                <EyeClosed className="text-sec-text h-5 w-5" />
+              )}
+            </button>
+          }
         />
         <Link
           href={"/auth/forget-password"}
