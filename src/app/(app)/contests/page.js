@@ -136,84 +136,44 @@ import { Terminal, Target, Trophy, Swords, Zap } from "lucide-react";
 import { getContests } from "@/lib/services/student_contest.service";
 import ContestFilters from "@/components/ui/ContestFilters";
 
-// const FILTERS = [
-//   {
-//     id: "contests",
-//     label: "Contests",
-//     children: [
-//       { id: "live", label: "Live" },
-//       { id: "upcoming", label: "Upcoming" },
-//       { id: "registered", label: "Registered" },
-//     ],
-//   },
-//   { id: "history", label: "History" },
-// ];
-
-// const mockContests = [
-//   {
-//     id: 1,
-//     title: "Science Fair Prep",
-//     tags: ["Grade Level", "Science", "100 Player"],
-//     icon: Terminal, // Using terminal for now, or beaker if available
-//     iconBg: "bg-secondary-50",
-//     iconColor: "text-secondary-500",
-//     status: "Live",
-//     friendsJoining: 0,
-//   },
-//   {
-//     id: 2,
-//     title: "Calculus Blitz: Derivative Dash",
-//     tags: ["Global 8-11", "Calculus", "1120 Player"],
-//     icon: Target,
-//     iconBg: "bg-red-100", // Pinkish background
-//     iconColor: "text-red-500",
-//     status: "Upcoming",
-//     timeText: "Tomorrow, 8:00 PM",
-//     friendsJoining: 3,
-//   },
-//   {
-//     id: 3,
-//     title: "Algorithm Mastery Weekly #42",
-//     tags: ["Global", "Algorithms", "2000 Player"],
-//     icon: Trophy,
-//     iconBg: "bg-cyan-50",
-//     iconColor: "text-cyan-500",
-//     status: "Upcoming",
-//     timeText: "Oct 24, 6:00 PM",
-//     friendsJoining: 12,
-//   },
-// ];
-
-
 
 export default async function ContestsPage({
   searchParams,
 }) {
-const status =
-  searchParams?.status || "ONGOING";
-const contestsData = await getContests(status);
 
-console.log(contestsData);
+  const params = await searchParams;
 
-const contests = contestsData.data.map((contest) => ({
-  contestId: contest.contestId,
-  classId: contest.classId,
+  const status =
+    params?.status || "ONGOING";
 
-  title: contest.title,
+  const contestsData =
+    await getContests(status);
 
-  tags: [
-    contest.gradeLevel,
-    contest.subject,
-    `${contest.playersCount} Player`,
-  ],
+  console.log(contestsData);
+  console.log(contestsData.data);
+  console.log(contestsData.data.data);
 
-  status: contest.status,
-  isRegistered: contest.isRegistered,
+  const contests =
+    contestsData.data.map((contest) => ({
+      contestId: contest.contestId,
+      classId: contest.classId,
 
-  timeText: contest.startTime,
+      title: contest.title,
 
-  friendsJoining: contest.friendsJoining || 0,
-}));
+      tags: [
+        contest.gradeLevel,
+        contest.subject,
+        `${contest.playersCount} Player`,
+      ],
+
+      status: contest.status,
+      isRegistered: contest.isRegistered,
+
+      timeText: contest.startTime,
+
+      friendsJoining:
+        contest.friendsJoining || 0,
+    }));
 
 
   return (
@@ -244,7 +204,7 @@ const contests = contestsData.data.map((contest) => ({
             <div className="flex flex-col gap-base p-base">
               {contests.map((contest) => (
                 <ContestCard key={contest.contestId} {...contest} />
-                
+
               ))}
             </div>
           </CustomScroll>

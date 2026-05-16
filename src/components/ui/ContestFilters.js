@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 
 const FILTERS = [
+
     {
-        id: "contests",
+        id: "ALL",
         label: "Contests",
         children: [
             {
@@ -29,16 +29,16 @@ const FILTERS = [
     },
 ];
 
+
 export default function ContestFilters({ current }) {
     const router = useRouter();
-    // const [active, setActive] = useState(current || "live");
 
+
+   
     function handleFilter(status) {
-        router.push(
-            `/contests?status=${status}`
-        );
-    }
 
+        router.push(`/contests?status=${status}`);
+    }
     return (
         <nav className="flex flex-1 flex-col p-xs gap-y-1 pt-sm">
             {FILTERS.map((item) => (
@@ -47,9 +47,13 @@ export default function ContestFilters({ current }) {
                     {/* Parent row */}
                     <button
                         onClick={() =>
-                            handleFilter(item.id)
+                            item.children
+                                ? handleFilter("ONGOING")
+                                : handleFilter(item.id)
                         }
-                        className={`flex w-full items-center gap-2 px-sm py-xs2 text-left rounded transition-colors ${current === item.id ? "text-text font-semibold" : "text-sec-text hover:text-text"
+                        className={`flex w-full items-center gap-2 px-sm py-xs2 text-left rounded transition-colors ${current === item.id
+                                ? "text-text font-semibold"
+                                : "text-sec-text hover:text-text"
                             }`}
                     >
                         {/* Checkbox — only on "Contests" parent */}
@@ -97,3 +101,8 @@ export default function ContestFilters({ current }) {
     );
 }
 
+{/*onClick={() =>
+         item.children
+          ? handleFilter("ONGOING")
+         :  handleFilter(item.id)
+         }*/}

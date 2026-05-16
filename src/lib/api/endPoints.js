@@ -22,7 +22,7 @@ export const ENDPOINTS = {
   },
   student_contest: {
     list: (status) =>
-      `${v}/student-contest?status=${status}`,
+      `${v}/student-contest?status=${status}` ,
 
     lobby: (classId, contestId) =>
       `${v}/student-contest/class/${classId}/contest/${contestId}`,
