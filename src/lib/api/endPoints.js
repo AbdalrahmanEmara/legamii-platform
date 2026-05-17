@@ -20,7 +20,26 @@ export const ENDPOINTS = {
   teacher: {},
   student: {},
   cloudinary: {},
-  student_contest: {},
+  student_contest: {
+    list: (status) => `${v}/student-contest?status=${status}`,
+    lobby: (classId, contestId) => `${v}/student-contest/class/${classId}/contest/${contestId}`,
+    register: (classId, contestId) =>
+      `${v}/student-contest/class/${classId}/contest/${contestId}/register`,
+    start: (classId, contestId) =>
+      `${v}/student-contest/class/${classId}/contest/${contestId}/start`,
+    questions: (studentContestId) => `${v}/student-contest/${studentContestId}/questions`,
+    question: (studentContestId, questionId) =>
+      `${v}/student-contest/${studentContestId}/question/${questionId}`,
+    submit: (studentContestId, questionId) =>
+      `${v}/student-contest/${studentContestId}/question/${questionId}`,
+    flag: (studentContestId, questionId) =>
+      `${v}/student-contest/${studentContestId}/question/${questionId}`,
+    finish: (studentContestId) => `${v}/student-contest/${studentContestId}/finish`,
+    summary: (studentContestId) => `${v}/student-contest/${studentContestId}/summary`,
+    detailedSummary: (studentContestId) =>
+      `${v}/student-contest/${studentContestId}/detailed-summary`,
+    rank: (studentContestId) => `${v}/student-contest/${studentContestId}/rank`,
+  },
   subject: {},
   grade: {},
   quiz: {
