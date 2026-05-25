@@ -3,7 +3,7 @@ import { api } from "../api/client";
 import { ENDPOINTS } from "../api/endPoints";
 
 // GET all contests
-export async function getContests(classId, status) {
+export async function getContests(classId = null, status) {
   return api.get(ENDPOINTS.student_contest.list(classId, status));
 }
 
