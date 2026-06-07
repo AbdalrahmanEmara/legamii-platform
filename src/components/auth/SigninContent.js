@@ -30,6 +30,7 @@ export default function SigninContent() {
     try {
       const res = await loginAction(data);
       if (res?.success) {
+        toast.success("Login successful");
         router.replace("/practice");
       } else {
         toast.error(res?.message);

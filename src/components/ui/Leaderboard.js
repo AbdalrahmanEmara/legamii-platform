@@ -84,7 +84,7 @@ const leaderboardData = [
 export default function Leaderboard() {
   return (
     <ReusableWindow
-      className="flex h-[1004px] w-[413px] flex-col items-start items-stretch"
+      className="flex w-full flex-col items-stretch"
       title="Global_Leaderboard.sys"
     >
       <CustomScroll>

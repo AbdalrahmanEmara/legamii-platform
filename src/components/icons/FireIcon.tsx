@@ -7,18 +7,14 @@ interface FireIconProps {
 }
 
 export default function FireIcon({ className, size = 24, title }: FireIconProps) {
-  // original icon ratio: 24 (w) : 24 (h) — square
-  const width = size;
-  const height = size;
-
   const a11yProps = title
     ? { role: "img" as const, "aria-label": title }
     : { "aria-hidden": true as const };
 
   return (
     <svg
-      width={width}
-      height={height}
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

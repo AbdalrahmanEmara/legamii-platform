@@ -358,6 +358,16 @@
     color: var(--color-text);
   }
 
+  .heading-h4-primary {
+    /* Heading/H4/Semi Bold */
+    font-family: var(--font-primary);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 38px;
+    letter-spacing: -0.2px;
+    color: var(--color-text);
+  }
+
   .heading-h5-primary {
     font-family: var(--font-primary);
     font-size: 24px;

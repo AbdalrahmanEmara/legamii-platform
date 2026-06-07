@@ -135,18 +135,16 @@ import ContestCard from "@/components/ui/ContestCard";
 import { Terminal, Target, Trophy, Swords, Zap } from "lucide-react";
 import { getContests } from "@/lib/services/student_contest.service";
 import ContestFilters from "@/components/ui/ContestFilters";
+import { getContestsAction } from "@/lib/actions/student_contest.action";
 
 export default async function ContestsPage({ searchParams }) {
   const params = await searchParams;
 
-  const status = params?.status || "ONGOING";
+  const status = params?.status || "COMPLETED";
 
   let contestsData = [];
   try {
-    contestsData = await getContests(status);
-    if (!contestsData.data) {
-      throw new Error("No data");
-    }
+    contestsData = await getContestsAction(status);
   } catch (error) {
     console.error(error);
   }

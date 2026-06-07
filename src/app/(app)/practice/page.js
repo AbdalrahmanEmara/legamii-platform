@@ -7,33 +7,46 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { getQuizList } from "@/lib/services/quiz.service";
 import FireIcon from "@/components/icons/FireIcon";
 import StartQuizButton from "@/components/practice/StartQuizButton";
+import { getAllGradesAction } from "@/lib/actions/grade.actions";
+import { getQuizListAction } from "@/lib/actions/quiz.actions";
 
 async function page() {
-  const subject = await getQuizList();
+  let subject;
+  let subjects;
+  try {
+    subject = await getQuizListAction();
+    subjects = subject.map((item) => {
+      return {
+        name: item.subject.name,
+        id: item.subject.id,
+        lastAttemptAccuracy: item.lastAttemptAccuracy,
+        attempted: item.attempted,
+        streak: item.streak,
+        masteryLevel: item.totalMasteryLevel,
+        status: item.status,
+        tags: item.subjectTagsMasteryLevel.map((tag) => {
+          return {
+            tagName: tag.tagName,
+            tagId: tag.tagId,
+            masteryLevel: tag.masteryLevel,
+          };
+        }),
+      };
+    });
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
 
-  const subjects = subject.map((item) => {
-    return {
-      name: item.subject.name,
-      id: item.subject.id,
-      lastAttemptAccuracy: item.lastAttemptAccuracy,
-      attempted: item.attempted,
-      streak: item.streak,
-      masteryLevel: item.totalMasteryLevel,
-      status: item.status,
-      tags: item.subjectTagsMasteryLevel.map((tag) => {
-        return {
-          tagName: tag.tagName,
-          tagId: tag.tagId,
-          masteryLevel: tag.masteryLevel,
-        };
-      }),
-    };
-  });
+
+  const grades = await getAllGradesAction();
+  console.log(grades);
+
 
   console.log(subject);
 
   return (
-    <div>
+    <div> 
       <ReusableWindow
         title=" AI_TUTOR.SYS"
         className="m-auto flex h-[777px] w-[1384px] max-w-full flex-col overflow-hidden"

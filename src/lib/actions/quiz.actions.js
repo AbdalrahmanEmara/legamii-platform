@@ -1,6 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
-import { getQuestion, getQuestions, getQuizById, solveQuestion, startQuiz, finishQuiz } from "../services/quiz.service";
+import { getQuestion, getQuestions, getQuizById, solveQuestion, startQuiz, finishQuiz, getQuizList } from "../services/quiz.service";
 
 export async function startQuizAction({ subject_id, difficulty, subjectTagsMasteryLevel }) {
   let res;
@@ -16,6 +16,16 @@ export async function startQuizAction({ subject_id, difficulty, subjectTagsMaste
 
   // 2. Redirect securely after the mutation is done
   redirect(`/practice/${res.quizId}`);
+}
+
+export async function getQuizListAction() {
+  try {
+    const res = await getQuizList();
+    return res;
+  } catch (err) {
+    console.error("Error getting quiz list:", err);
+    return null;
+  }
 }
 
 export async function getQuestionsAction(quiz_id) {
@@ -52,6 +62,7 @@ export async function solveQuestionAction(quiz_id, question_id, answer) {
 export async function finishQuizAction(quiz_id) {
   try {
     const res = await finishQuiz(quiz_id);
+    console.log(res);
     return res;
   } catch (err) {
     console.error("Error finishing quiz:", err);

@@ -1,7 +1,12 @@
 import { twMerge } from "tailwind-merge";
 import { clsx } from "clsx";
 
-// Helper to handle class merging cleanly
+// const sizeClasses = {
+//   sm: "px-sm py-zero text-xs font-bold leading-4",
+//   md: "px-md py-sm text-base font-bold",
+//   lg: "px-lg py-base text-lg font-bold",
+// };
+
 function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
@@ -11,10 +16,10 @@ export default function Btn1({
   disabled = false,
   isLoading = false,
   onClick,
+  size = "text-xs md:text-sm 2xl:text-base font-bold leading-5 px-md py-sm",
   className,
   ...props
 }) {
-  // Determine if the button should be non-interactive
   const isDisabled = disabled || isLoading;
 
   return (
@@ -23,14 +28,13 @@ export default function Btn1({
       disabled={isDisabled}
       onClick={onClick}
       className={cn(
-        // Base stylestrue
-        "bg-primary-500 border-text text-text px-md py-sm font-primary rounded border text-base font-bold uppercase transition-all",
+        "bg-primary-500 border-text text-text font-primary rounded border uppercase transition-all",
         "shadow-[2px_3px_4px_0px_rgba(0,0,0,1.00)] focus-within:shadow-[0_4px_8px_rgba(0,0,0,0.2)]",
         "cursor-pointer active:translate-y-0.25",
-        // State-based styles
+        size,
         isDisabled && "cursor-not-allowed opacity-50",
         isLoading && "cursor-wait",
-        className // Allows user to override anything above
+        className
       )}
     >
       <span className="flex items-center justify-center gap-2">

@@ -18,11 +18,13 @@ export const ENDPOINTS = {
     delete: (school_id) => `${v}/school/${school_id}`,
   },
   teacher: {},
-  student: {},
+  student: {
+    updateAcademic: `${v}/student/academic`,
+  },
   cloudinary: {},
   student_contest: {
-    list: (classId, status) => `${v}/student-contest?classId=${classId}&status=${status}`,
-    lobby: (classId, contestId) => `${v}/student-contest/class/${classId}/contest/${contestId}`,
+    list: (classId, status) => `${v}/contests`,
+    lobby: (classId, contestId) => `${v}/contests/class/${classId}/contest/${contestId}`,
     register: (classId, contestId) =>
       `${v}/student-contest/class/${classId}/contest/${contestId}/register`,
     start: (classId, contestId) =>
@@ -41,7 +43,9 @@ export const ENDPOINTS = {
     rank: (studentContestId) => `${v}/student-contest/${studentContestId}/rank`,
   },
   subject: {},
-  grade: {},
+  grade: {
+    list: `${v}/grades`
+  },
   quiz: {
     list: `${v}/quiz`, // GET
     start: `${v}/quiz`, // POST

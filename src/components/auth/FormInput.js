@@ -6,22 +6,26 @@ export default function FormInput({
   error,
   className,
   labelClassName,
+  InputClassName,
   endIcon,
   ...props
 }) {
   return (
     <div className={`gap-xs2 relative flex flex-col ${className || ""}`}>
+      {label && (
       <label
         htmlFor={id}
         className={`text-text font-primary text-sm leading-5 font-normal uppercase ${labelClassName || ""}`}
       >
         {label}
       </label>
+      )}
+
       <input
         type={type}
         id={id}
         placeholder={placeholder}
-        className="text-sec-text font-secondary rounded border border-neutral-400 p-4 text-sm leading-5 font-normal transition-all duration-200 outline-none focus:border-neutral-800"
+        className={`text-sec-text font-secondary rounded border border-neutral-400 font-normal transition-all duration-200 outline-none focus:border-neutral-800 ${InputClassName || "p-4 text-sm leading-5"}`}
         {...props}
       />
       {endIcon && (
