@@ -1,25 +1,12 @@
+import DoneIcon from "../icons/DoneIcon";
 import ReusableWindow from "../ui/ReusableWindow";
 
 const missions = [
-  { id: 1, title: "Complete 3 practice quizzes", current: 2, max: 3, xp: 40, completed: false },
-  { id: 2, title: "Answer 20 question correctly", current: 2, max: 3, xp: 120, completed: true },
-  { id: 3, title: "Maintain your streak", current: 1, max: 1, xp: 30, completed: true },
-  { id: 4, title: "Practice for 30 minutes", current: 17, max: 30, xp: 50, completed: false },
+  { id: 1, title: "Complete 3 practice quizzes", current: 2, max: 3, xp: 40, completed: false, percent: 66.67 },
+  { id: 2, title: "Answer 20 question correctly", current: 2, max: 3, xp: 120, completed: true, percent: 100 },
+  { id: 3, title: "Maintain your streak", current: 1, max: 1, xp: 30, completed: true, percent: 100 },
+  { id: 4, title: "Practice for 30 minutes", current: 17, max: 30, xp: 50, completed: false, percent: 56.67 },
 ];
-
-function DecorativeBlock({ size, rotation, color, borderWidth }) {
-  return (
-    <div
-      className="shrink-0"
-      style={{
-        width: size,
-        height: size,
-        border: `${borderWidth}px solid ${color}`,
-        transform: `rotate(${rotation}deg)`,
-      }}
-    />
-  );
-}
 
 export default function DailyMission() {
   return (
@@ -42,7 +29,7 @@ export default function DailyMission() {
   );
 }
 
-function MissionCard({ title, current, max, xp, completed }) {
+function MissionCard({ title, current, max, xp, completed, percent }) {
   return (
     <div
       className={`gap-xs p-sm flex flex-col rounded-sm border ${
@@ -52,50 +39,23 @@ function MissionCard({ title, current, max, xp, completed }) {
       }`}
     >
       <div className="gap-xs flex items-center">
-        <DecorativeBlock
-          size={13.61}
-          rotation={4}
-          color={completed ? "#22FF7B" : "#E5E5E5"}
-          borderWidth={3}
-        />
-        <DecorativeBlock
-          size={3.58}
-          rotation={-5}
-          color={completed ? "#00993D" : "#A3A3A3"}
-          borderWidth={2.5}
-        />
-        <DecorativeBlock
-          size={3.58}
-          rotation={-5}
-          color={completed ? "#22FF7B" : "#E5E5E5"}
-          borderWidth={2.5}
-        />
-        <span className="font-secondary text-body-1 text-text flex-1 leading-7">{title}</span>
+        <DoneIcon color={completed ? "#99ffc2" : "#e5e5e5"} />
+        <span className="font-secondary text-sm text-text flex-1 leading-7">{title}</span>
       </div>
 
       <div className="gap-xxs pl-base flex flex-col">
         <div className="relative h-[16px]">
           <div
-            className="absolute"
-            style={{
-              width: 6.59,
-              height: 6.59,
-              left: 1.45,
-              top: 1.12,
-              background: completed ? "#00993D" : "#791A7F",
-            }}
-          />
-          <div
-            className="absolute"
-            style={{
-              width: 6.59,
-              height: 6.59,
-              left: 0.44,
-              top: 0.12,
-              background: completed ? "#22FF7B" : "#D865E0",
-            }}
-          />
+            className={`absolute inset-0 w-[6.59px] h-[6.59px] top-[-1.5] left-[-1.5] ${completed ? "bg-green-500" : "bg-primary-500"} border-white border`} />
+          <div className={`w-full h-[60%] border ${completed ? "bg-[#99FFC226] border-green-500" : "bg-neutral-50 border-primary-500"}`}>
+            <div className={`h-full ${completed ? "bg-green-500" : "bg-primary-500"}`} style={{
+              width: `${percent}%`
+            }}>
+            </div>
+          </div>
         </div>
+
+        {/* </div> */}
         <div className="flex items-center justify-between">
           <span className="font-secondary text-caption-1 text-sec-text leading-none">
             {current} / {max}

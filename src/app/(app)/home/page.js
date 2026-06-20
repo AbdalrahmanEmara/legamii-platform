@@ -6,7 +6,7 @@ import Leaderboard from "@/components/ui/Leaderboard";
 
 export default function HomePage() {
   return (
-    <div className="mx-auto max-w-[1512px] px-base md:px-md xl:px-xl3">
+    <div className="mx-auto px-base md:px-md xl:px-xl3">
       {/*
        * Mobile  (< 768): 1 col, stack in DOM order
        * iPad    (md 768): 2 col [1fr 258px] — WelcomeBack/UpcomingContests/Leaderboard span both, DailyMission+Streak side by side
