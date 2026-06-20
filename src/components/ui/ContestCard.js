@@ -4,6 +4,7 @@ import { Trophy, ArrowRight } from "lucide-react";
 import Button from "./Button";
 import { useRouter } from "next/navigation";
 
+
 export default function ContestCard({
   classId,
   contestId,
@@ -15,8 +16,11 @@ export default function ContestCard({
   status = "Live",
   isRegistered = false,
   timeText,
-  friendsJoining = 0,
+  // friendsJoining = 0,
+  joinedFriends = [],
+  
 }) {
+  const friendsJoining = joinedFriends.length;
   const router = useRouter();
   //Helper function to get status of contests appeared
   const normalizedStatus = status.toUpperCase();
@@ -25,7 +29,8 @@ export default function ContestCard({
 
   const isUpcoming = normalizedStatus === "UPCOMING";
 
-  const isFinished = normalizedStatus === "FINISHED";
+  // const isFinished = normalizedStatus === "FINISHED";
+  const isHistory = normalizedStatus === "HISTORY";
 
   let buttonText = "";
 
@@ -35,7 +40,7 @@ export default function ContestCard({
     buttonText = "REGISTERED";
   } else if (isUpcoming) {
     buttonText = "REGISTER";
-  } else {
+  } else if (isHistory) {
     buttonText = "VIEW RESULT";
   }
 
@@ -103,8 +108,13 @@ export default function ContestCard({
           {friendsJoining > 0 && (
             <div className="mt-xs2 gap-xs2 flex items-center">
               <div className="flex -space-x-2">
-                {[...Array(3)].map((_, i) => (
-                  <div key={i} className="border-text bg-primary-200 h-6 w-6 rounded-full border" />
+                {joinedFriends.slice(0, 3).map((friend) => (
+                  <img
+                    key={friend.id}
+                    src={friend.avatarUrl}
+                    alt={friend.first_name}
+                    className="border-text h-6 w-6 rounded-full border object-cover"
+                  />
                 ))}
               </div>
               <span className="font-secondary text-sec-text text-xs">

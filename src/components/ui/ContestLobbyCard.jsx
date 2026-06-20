@@ -5,8 +5,73 @@ import ReusableWindow from "./ReusableWindow";
 import ContestFilters from "./ContestFilters";
 import Button from "./Button";
 import { BookOpen, FlaskConical, Cpu, Calendar, Clock, Hourglass } from "lucide-react";
+import {
+  registerContestAction,
+  startContestAction,
+} from "@/lib/actions/contests.actions";
+import { useRouter } from "next/navigation";
 
-export default function ContestLobbyCard() {
+export default function ContestLobbyCard({
+  contest,
+  classId,
+  contestId,
+}) {
+
+  const router = useRouter();
+  const startDate = contest?.contestStartingTime
+    ? new Date(contest.contestStartingTime)
+    : null;
+
+
+  let buttonText = "";
+  let isDisabled = false;
+
+  if (contest.contestStatus === "UPCOMING") {
+    if (contest.isRegistered) {
+      buttonText = "REGISTERED";
+      isDisabled = true;
+    } else {
+      buttonText = "REGISTER";
+    }
+  } else if (contest.contestStatus === "ONGOING") {
+    buttonText = "JOIN NOW";
+  } else {
+    buttonText = "FINISHED";
+    isDisabled = true;
+  }
+
+  async function handleContestAction() {
+    if (
+      contest.contestStatus === "UPCOMING" &&
+      !contest.isRegistered
+    ) {
+      await registerContestAction(
+        classId,
+        contestId
+      );
+
+      router.refresh();
+      return;
+    }
+
+    if (contest.contestStatus === "ONGOING") {
+      const res = await startContestAction(
+        classId,
+        contestId
+      );
+
+      if (!res?.studentContestId) return;
+
+      router.push(
+        `/contests/play/${res.studentContestId}`
+      );
+    }
+  }
+
+  const handleBackToContest = () => {
+    router.back();
+  }
+
   return (
     <ReusableWindow title="CONTESTS_CHALLENGES.SYS" className="w-full max-w-[950px] flex-1">
       <div className="flex h-full rounded-br-lg rounded-bl-lg bg-white">
@@ -25,7 +90,7 @@ export default function ContestLobbyCard() {
             <h2 className="font-primary text-text text-[22px] font-bold tracking-wide uppercase">
               CONTEST LOBBY
             </h2>
-            <button className="font-secondary text-text flex items-center text-[14px] font-bold hover:underline">
+            <button className="font-secondary text-text flex items-center text-[14px] font-bold hover:underline" onClick={handleBackToContest}>
               Back to Contests &gt;
             </button>
           </div>
@@ -45,11 +110,13 @@ export default function ContestLobbyCard() {
 
                 {/* Info */}
                 <div className="flex flex-col justify-center gap-1">
-                  <div className="font-primary w-fit rounded-sm border border-black bg-green-600 px-2 py-1 text-[11px] text-white uppercase shadow-[1px_1px_0px_0px_#000]">
-                    Live 00:29
-                  </div>
+                  {contest.contestStatus === "ONGOING" && (
+                    <div className="font-primary w-fit rounded-sm border border-black bg-green-600 px-2 py-1 text-[11px] text-white uppercase shadow-[1px_1px_0px_0px_#000]">
+                      LIVE
+                    </div>
+                  )}
                   <h1 className="font-primary text-text mt-1 text-[24px] font-bold uppercase">
-                    SCIENCE FAIR PREP
+                    {contest.contestTitle}
                   </h1>
                   <div className="mt-1 flex gap-2">
                     <span className="text-sec-text font-secondary rounded-sm bg-neutral-100 px-3 py-1 text-[12px]">
@@ -64,7 +131,7 @@ export default function ContestLobbyCard() {
 
               {/* Badge */}
               <div className="font-primary mt-4 mr-2 -rotate-3 border-2 border-[#EAB308] bg-white px-4 py-2 text-[14px] font-bold text-[#EAB308]">
-                INTERMEDIATE
+                {contest.difficulty?.toUpperCase()}
               </div>
             </div>
 
@@ -74,17 +141,17 @@ export default function ContestLobbyCard() {
               <div className="grid grid-cols-3 gap-4">
                 <DetailBox
                   icon={<BookOpen className="text-text h-6 w-6" strokeWidth={1.5} />}
-                  title="Science"
+                  title={contest.subject}
                   subtitle="Subject"
                 />
                 <DetailBox
                   icon={<FlaskConical className="text-text h-6 w-6" strokeWidth={1.5} />}
-                  title="Physics, Scientific Thinking"
+                  title={contest.skills?.join(", ") || "No Skills"}
                   subtitle="Skills"
                 />
                 <DetailBox
                   icon={<Cpu className="text-text h-6 w-6" strokeWidth={1.5} />}
-                  title="Energy Transfer"
+                  title={contest.subject}
                   subtitle="Topic"
                 />
               </div>
@@ -96,17 +163,24 @@ export default function ContestLobbyCard() {
               <div className="grid grid-cols-3 gap-4">
                 <DetailBox
                   icon={<Calendar className="text-text h-6 w-6" strokeWidth={1.5} />}
-                  title="Monday, Feb 2"
+                  title={startDate.toLocaleDateString("en-US", {
+                    weekday: "long",
+                    month: "short",
+                    day: "numeric",
+                  })}
                   subtitle="Start Date"
                 />
                 <DetailBox
                   icon={<Clock className="text-text h-6 w-6" strokeWidth={1.5} />}
-                  title="08:00 PM"
+                  title={startDate.toLocaleTimeString("en-US", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                   subtitle="Start Time (EGY)"
                 />
                 <DetailBox
                   icon={<Hourglass className="text-text h-6 w-6" strokeWidth={1.5} />}
-                  title="30 Min"
+                  title={`${contest.contestTimeLimit} Min`}
                   subtitle="Duration"
                 />
               </div>
@@ -115,7 +189,7 @@ export default function ContestLobbyCard() {
             {/* Friends Joining Section */}
             <div className="my-8 flex flex-col">
               <h3 className="font-primary text-text mb-3 text-[15px] font-bold">Friends Joining</h3>
-              <div className="flex -space-x-3">
+              {/* <div className="flex -space-x-3">
                 <img
                   src="/avatars/a1.png"
                   alt="Friend 1"
@@ -131,16 +205,37 @@ export default function ContestLobbyCard() {
                   alt="Friend 3"
                   className="border-text h-12 w-12 rounded-full border-[1.5px] bg-neutral-200 object-cover"
                 />
+              </div> */}
+              <div className="flex -space-x-3">
+                {contest.joinedFriends?.map((friend) => (
+                  <img
+                    key={friend.id}
+                    src={friend.avatarUrl}
+                    alt={friend.first_name}
+                    className="border-text h-12 w-12 rounded-full border-[1.5px] bg-neutral-200 object-cover"
+                  />
+                ))}
               </div>
             </div>
 
             <div className="font-primary text-text text-[14px] font-bold">
-              Participating Bonus: <span className="text-primary-500">+240xp</span>
+              Participating Bonus: <span className="text-primary-500">+{contest.xpGained}xp</span>
             </div>
 
             {/* Bottom Section */}
             <div className="mt-auto flex items-end justify-between pt-12 pb-4">
-              <Button className="font-primary text-[16px] text-white">JOIN NOW</Button>
+              {/* <Button className="font-primary text-[16px] text-white">
+                {contest.isRegistered
+                  ? "JOIN NOW"
+                  : "REGISTER"}
+              </Button> */}
+              <Button
+                disabled={isDisabled}
+                onClick={handleContestAction}
+                className="font-primary text-[16px] text-white"
+              >
+                {buttonText}
+              </Button>
             </div>
           </div>
         </div>
@@ -148,6 +243,7 @@ export default function ContestLobbyCard() {
     </ReusableWindow>
   );
 }
+
 
 function DetailBox({ icon, title, subtitle }) {
   return (

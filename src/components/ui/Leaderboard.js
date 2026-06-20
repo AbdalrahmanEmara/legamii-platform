@@ -6,93 +6,94 @@ import ReusableWindow from "./ReusableWindow";
 import CustomScroll from "./CustomScroll";
 
 // 🔹 Fake Data (Replace later with API data)
-const leaderboardData = [
-  {
-    id: 1,
-    name: "HELENA",
-    level: 20,
-    avatar: "/avatars/a1.png", // 🔸 Replace with your real images
-  },
-  {
-    id: 2,
-    name: "TYHHYT",
-    level: 20,
-    avatar: "/avatars/a2.png",
-  },
-  {
-    id: 3,
-    name: "FARAH",
-    level: 20,
-    avatar: "/avatars/a3.png",
-  },
-  {
-    id: 4,
-    name: "HENNA",
-    level: 20,
-    avatar: "/avatars/a4.png",
-  },
-  {
-    id: 5,
-    name: "SALMA",
-    level: 20,
-    avatar: "/avatars/a5.png",
-  },
-  {
-    id: 6,
-    name: "YOU",
-    level: 8,
-    avatar: "/avatars/a6.png",
-  },
-  {
-    id: 7,
-    name: "ALI",
-    level: 20,
-    avatar: "/avatars/a7.png",
-  },
-  {
-    id: 8,
-    name: "HELENA",
-    level: 20,
-    avatar: "/avatars/a1.png", // 🔸 Replace with your real images
-  },
-  {
-    id: 9,
-    name: "TYHHYT",
-    level: 20,
-    avatar: "/avatars/a2.png",
-  },
-  {
-    id: 10,
-    name: "FARAH",
-    level: 20,
-    avatar: "/avatars/a3.png",
-  },
-  {
-    id: 11,
-    name: "HENNA",
-    level: 20,
-    avatar: "/avatars/a4.png",
-  },
-  {
-    id: 12,
-    name: "SALMA",
-    level: 20,
-    avatar: "/avatars/a5.png",
-  },
-];
+// const leaderboardData = [
+//   {
+//     id: 1,
+//     name: "HELENA",
+//     level: 20,
+//     avatar: "/avatars/a1.png", // 🔸 Replace with your real images
+//   },
+//   {
+//     id: 2,
+//     name: "TYHHYT",
+//     level: 20,
+//     avatar: "/avatars/a2.png",
+//   },
+//   {
+//     id: 3,
+//     name: "FARAH",
+//     level: 20,
+//     avatar: "/avatars/a3.png",
+//   },
+//   {
+//     id: 4,
+//     name: "HENNA",
+//     level: 20,
+//     avatar: "/avatars/a4.png",
+//   },
+//   {
+//     id: 5,
+//     name: "SALMA",
+//     level: 20,
+//     avatar: "/avatars/a5.png",
+//   },
+//   {
+//     id: 6,
+//     name: "YOU",
+//     level: 8,
+//     avatar: "/avatars/a6.png",
+//   },
+//   {
+//     id: 7,
+//     name: "ALI",
+//     level: 20,
+//     avatar: "/avatars/a7.png",
+//   },
+//   {
+//     id: 8,
+//     name: "HELENA",
+//     level: 20,
+//     avatar: "/avatars/a1.png", // 🔸 Replace with your real images
+//   },
+//   {
+//     id: 9,
+//     name: "TYHHYT",
+//     level: 20,
+//     avatar: "/avatars/a2.png",
+//   },
+//   {
+//     id: 10,
+//     name: "FARAH",
+//     level: 20,
+//     avatar: "/avatars/a3.png",
+//   },
+//   {
+//     id: 11,
+//     name: "HENNA",
+//     level: 20,
+//     avatar: "/avatars/a4.png",
+//   },
+//   {
+//     id: 12,
+//     name: "SALMA",
+//     level: 20,
+//     avatar: "/avatars/a5.png",
+//   },
+// ];
 
-export default function Leaderboard() {
+export default function Leaderboard({ students = [] }) { 
   return (
     <ReusableWindow
       className="flex h-[1004px] w-[413px] flex-col items-start items-stretch"
       title="Global_Leaderboard.sys"
     >
       <CustomScroll>
-        {leaderboardData.map((user, index) => {
+        {students.map((user, index) => {
           const isTopOne = index === 0;
           const isTopTwo = index === 1;
           const isTopThree = index === 2;
-          const isYou = user.name === "YOU";
+          // const isYou = `${user.firstName} ${user.lastName}` === "YOU";
+          const isYou = false;
 
           return (
             <div
@@ -108,13 +109,14 @@ export default function Leaderboard() {
               } ${isYou ? "border-y-2 border-black shadow-inner" : ""}`}
             >
               {/* Rank */}
-              <div className="label-1 w-10 font-bold">#{user.id}</div>
+              {/* <div className="label-1 w-10 font-bold">#{user.id}</div> */}
+              <div className="label-1 w-10 font-bold">#{index+1}</div>
 
               {/* Avatar */}
               <div className="border-border relative h-[50.304px] w-[50.304px] self-stretch">
                 <Image
-                  src={user.avatar}
-                  alt={user.name}
+                  src={user.avatarUrl}
+                  alt={`${user.firstName} ${user.lastName}`}
                   fill
                   className="rounded-full object-cover"
                 />
@@ -122,7 +124,7 @@ export default function Leaderboard() {
 
               {/* Name + Level */}
               <div className="gap-xxs flex flex-col items-start justify-center">
-                <span className="label-1 font-bold">{user.name}</span>
+                <span className="label-1 font-bold">{`${user.firstName} ${user.lastName}`}</span>
 
                 <span className="body-2">Lvl {user.level}</span>
               </div>
@@ -132,12 +134,12 @@ export default function Leaderboard() {
       </CustomScroll>
 
       {/* ================= FOOTER ================= */}
-      <div className="p-sm border-border flex items-center justify-between self-stretch bg-black font-bold">
+      {/* <div className="p-sm border-border flex items-center justify-between self-stretch bg-black font-bold">
         <span className="label-1 font-bold text-neutral-50">Your Rank</span>
         <span className="text-primary-300 label-1 font-bold">
-          # {leaderboardData.findIndex((user) => user.name === "YOU") + 1}
+          # {students.findIndex((user) => `${user.firstName} ${user.lastName}` === "YOU") + 1}
         </span>
-      </div>
+      </div> */}
     </ReusableWindow>
   );
 }

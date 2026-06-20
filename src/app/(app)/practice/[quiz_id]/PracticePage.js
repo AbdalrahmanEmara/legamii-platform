@@ -99,7 +99,7 @@ function PracticePage({ questions, quiz_id }) {
   if (loading) return <SystemLoading />;
   else
     return (
-    <div>
+    <div className="flex w-full max-w-[1384px] items-start justify-center gap-6 m-auto">
       <ReusableWindow title="AI_TUTOR.SYS" className="m-auto flex w-[1384px] max-w-full flex-col">
         <div className="flex flex-1 self-stretch">
           {/* Left Sidebar */}

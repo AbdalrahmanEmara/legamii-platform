@@ -152,68 +152,68 @@ export default async function ContestsPage({ searchParams }) {
   }
 
   console.log(contestsData);
-  // console.log(contestsData?.data);
-  // console.log(contestsData?.data?.data);
+  console.log(contestsData?.data);
+  console.log(contestsData?.data?.data);
 
-  // const contests = contestsData.data.map((contest) => ({
-  //   contestId: contest.contestId,
-  //   classId: contest.classId,
+  const contests = contestsData.data.map((contest) => ({
+    contestId: contest.contestId,
+    classId: contest.classId,
 
-  //   title: contest.title,
+    title: contest.title,
 
-  //   tags: [contest.gradeLevel, contest.subject, `${contest.playersCount} Player`],
+    tags: [contest.gradeLevel, contest.subject, `${contest.playersCount} Player`],
 
-  //   status: contest.status,
-  //   isRegistered: contest.isRegistered,
+    status: contest.status,
+    isRegistered: contest.isRegistered,
 
-  //   timeText: contest.startTime,
+    timeText: contest.startTime,
 
-  //   friendsJoining: contest.friendsJoining || 0,
-  // }));
+    joinedFriends: contest.joinedFriends || 0,
+  }));
 
   return (
-    // <ReusableWindow
-    //   title="Contests_Challenges.sys"
-    //   className="m-auto flex h-[777px] w-[1384px] max-w-full flex-col overflow-hidden"
-    // >
-    //   <div className="flex flex-1 overflow-hidden">
-    //     {/* ── Sidebar ───────────────────────────────────────────────── */}
-    //     <aside className="border-text bg-el-bg flex w-[240px] shrink-0 flex-col border-r">
-    //       <div className="border-border py-xs2 px-base flex items-center justify-center self-stretch border font-bold">
-    //         <span className="heading-h7 text-text font-primary font-normal">Filter</span>
-    //       </div>
+    <ReusableWindow
+      title="Contests_Challenges.sys"
+      className="m-auto flex h-[777px] w-[1384px] max-w-full flex-col overflow-hidden"
+    >
+      <div className="flex flex-1 overflow-hidden">
+        {/* ── Sidebar ───────────────────────────────────────────────── */}
+        <aside className="border-text bg-el-bg flex w-[240px] shrink-0 flex-col border-r">
+          <div className="border-border py-xs2 px-base flex items-center justify-center self-stretch border font-bold">
+            <span className="heading-h7 text-text font-primary font-normal">Filter</span>
+          </div>
 
-    //       <ContestFilters current={status} />
-    //     </aside>
+          <ContestFilters current={status} />
+        </aside>
 
-    //     {/* ── Main Content Area (unchanged) ────────────────────────── */}
-    //     <div className="relative flex flex-1 flex-col overflow-hidden bg-neutral-50">
-    //       <div
-    //         className="pointer-events-none absolute inset-0 z-0 opacity-[0.03]"
-    //         style={{
-    //           backgroundImage:
-    //             "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
-    //           backgroundSize: "20px 20px",
-    //         }}
-    //       ></div>
-    //       <div className="border-text p-base z-10 flex items-center justify-between border-b bg-white">
-    //         <h1 className="heading-h5-primary text-text m-0 leading-none uppercase">Contests</h1>
-    //         <div className="gap-xs flex items-center">
-    //           <button className="border-secondary-500 px-sm py-xs2 font-primary text-secondary-500 rounded border-2 text-sm font-bold shadow-[2px_2px_0px_0px_#0059ff] transition-transform hover:-translate-y-0.5">
-    //             {status}
-    //           </button>
-    //         </div>
-    //       </div>
-    //       <CustomScroll className="p-base lg:p-lg z-10 flex-1">
-    //         <div className="gap-base p-base flex flex-col">
-    //           {contests.map((contest) => (
-    //             <ContestCard key={contest.contestId} {...contest} />
-    //           ))}
-    //         </div>
-    //       </CustomScroll>
-    //     </div>
-    //   </div>
-    // </ReusableWindow>
-    <div>Contests</div>
+        {/* ── Main Content Area (unchanged) ────────────────────────── */}
+        <div className="relative flex flex-1 flex-col overflow-hidden bg-neutral-50">
+          <div
+            className="pointer-events-none absolute inset-0 z-0 opacity-[0.03]"
+            style={{
+              backgroundImage:
+                "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
+              backgroundSize: "20px 20px",
+            }}
+          ></div>
+          <div className="border-text p-base z-10 flex items-center justify-between border-b bg-white">
+            <h1 className="heading-h5-primary text-text m-0 leading-none uppercase">Contests</h1>
+            <div className="gap-xs flex items-center">
+              <button className="border-secondary-500 px-sm py-xs2 font-primary text-secondary-500 rounded border-2 text-sm font-bold shadow-[2px_2px_0px_0px_#0059ff] transition-transform hover:-translate-y-0.5">
+                {status}
+              </button>
+            </div>
+          </div>
+          <CustomScroll className="p-base lg:p-lg z-10 flex-1">
+            <div className="gap-base p-base flex flex-col">
+              {contests.map((contest) => (
+                <ContestCard key={contest.contestId} {...contest} />
+              ))}
+            </div>
+          </CustomScroll>
+        </div>
+      </div>
+    </ReusableWindow>
+    //<div>Contests</div>
   );
 }
