@@ -13,12 +13,14 @@ import {
   getContestSummary,
   getContestDetailedSummary,
   getContestRank,
+  getStudentContestsHistory,
+  getStudentStatistics,
 } from "../services/student_contest.service";
 
 // ================= GET CONTESTS =================
-export async function getContestsAction(status) {
+export async function getContestsAction(classId, status) {
   try {
-    const res = await getContests(status);
+    const res = await getContests(classId, status);
     console.log("Contests:", res);
     return res;
   } catch (err) {
@@ -157,6 +159,30 @@ export async function getContestRankAction(studentContestId) {
     return res;
   } catch (err) {
     console.error("Error getting contest rank:", err);
+    return null;
+  }
+}
+
+// ================= HISTORY =================
+export async function getStudentContestsHistoryAction() {
+  try {
+    const res = await getStudentContestsHistory();
+    console.log("Student Contests History:", res);
+    return res;
+  } catch (err) {
+    console.error("Error getting student contests history:", err);
+    return null;
+  }
+}
+
+// ================= STATISTICS =================
+export async function getStudentStatisticsAction() {
+  try {
+    const res = await getStudentStatistics();
+    console.log("Student Statistics:", res);
+    return res;
+  } catch (err) {
+    console.error("Error getting student statistics:", err);
     return null;
   }
 }

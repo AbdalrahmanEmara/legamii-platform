@@ -140,10 +140,11 @@ export default async function ContestsPage({ searchParams }) {
   const params = await searchParams;
 
   const status = params?.status || "ONGOING";
+  const classId = params?.classId || undefined;
 
   let contestsData = [];
   try {
-    contestsData = await getContests(status);
+    contestsData = await getContests(classId, status);
     if (!contestsData.data) {
       throw new Error("No data");
     }

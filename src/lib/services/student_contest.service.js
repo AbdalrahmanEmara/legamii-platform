@@ -2,12 +2,8 @@ import "server-only";
 import { api } from "../api/client";
 import { ENDPOINTS } from "../api/endPoints";
 
-// GET all contests
-// export async function getContests(classId, status) {
-//   return api.get(ENDPOINTS.student_contest.list(classId, status));
-// }
-export async function getContests(status) {
-  return api.get(ENDPOINTS.student_contest.list(status));
+export async function getContests(classId, status) {
+  return api.get(ENDPOINTS.student_contest.list(classId, status));
 }
 
 // GET contest lobby/details
@@ -63,4 +59,14 @@ export async function getContestDetailedSummary(studentContestId) {
 // GET student rank
 export async function getContestRank(studentContestId) {
   return api.get(ENDPOINTS.student_contest.rank(studentContestId));
+}
+
+// GET student contest history
+export async function getStudentContestsHistory() {
+  return api.get(ENDPOINTS.student.contests);
+}
+
+// GET student statistics
+export async function getStudentStatistics() {
+  return api.get(ENDPOINTS.student.statistics);
 }

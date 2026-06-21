@@ -18,10 +18,18 @@ export const ENDPOINTS = {
     delete: (school_id) => `${v}/school/${school_id}`,
   },
   teacher: {},
-  student: {},
+  student: {
+    contests: `${v}/student/me/contests`,
+    statistics: `${v}/student/me/statistics`,
+  },
   cloudinary: {},
   student_contest: {
-    list: (status) => `${v}/student-contest?status=${status}`,
+    list: (classId, status) => {
+      const params = new URLSearchParams();
+      if (classId) params.append("classId", classId);
+      if (status) params.append("status", status);
+      return `${v}/student-contest?${params.toString()}`;
+    },
     lobby: (classId, contestId) => `${v}/student-contest/class/${classId}/contest/${contestId}`,
     register: (classId, contestId) =>
       `${v}/student-contest/class/${classId}/contest/${contestId}/register`,
