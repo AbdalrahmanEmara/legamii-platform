@@ -24,7 +24,7 @@ export const ENDPOINTS = {
   cloudinary: {},
   student_contest: {
     list: (classId, status) => `${v}/student-contest?classId=${classId || ""}&status=${status || ""}`,
-    lobby: (classId, contestId) => `${v}/contests/class/${classId}/contest/${contestId}`,
+    lobby: (classId, contestId) => `${v}/student-contest/class/${classId}/contest/${contestId}`,
     register: (classId, contestId) =>
       `${v}/student-contest/class/${classId}/contest/${contestId}/register`,
     start: (classId, contestId) =>
