@@ -1,5 +1,4 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 
 const FILTERS = [
@@ -90,12 +89,4 @@ export default function ContestFilters({ current }) {
       ))}
     </nav>
   );
-}
-
-{
-  /*onClick={() =>
-         item.children
-          ? handleFilter("ONGOING")
-         :  handleFilter(item.id)
-         }*/
 }

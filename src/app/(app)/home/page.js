@@ -14,7 +14,7 @@ export default function HomePage() {
        * iPad    (md 768): 2 col [1fr 258px] — WelcomeBack/UpcomingContests/Leaderboard span both, DailyMission+Streak side by side
        * Desktop (xl 1280): 2 col [1fr 435px] — left col: Welcome→Daily→Upcoming; right col: Streak row1, Leaderboard rows 2-3
        */}
-      <div className="grid grid-cols-1 gap-base md:grid-cols-[1fr_258px] lg:grid-cols-[1fr_350px]  xl:grid-cols-[1fr_435px] xl:gap-md">
+      <div className="grid grid-cols-1 gap-base md:grid-cols-[1fr_258px] lg:grid-cols-[1fr_350px]  2xl:grid-cols-[1fr_435px] 2xl:gap-md">
         <div className="md:col-span-2 xl:col-span-1 xl:col-start-1 xl:row-start-1 xl:row-end-3">
           {/* <Suspense fallback={<WelcomeBackSkeleton />}> */}
           <WelcomeBack />

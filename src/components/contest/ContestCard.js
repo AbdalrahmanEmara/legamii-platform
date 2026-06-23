@@ -12,9 +12,9 @@ const SubjectIcons = {
   "Science": <ScienceIcon />,
 }
 
-export default async function ContestCard({ contest }) {
+export default function ContestCard({ contest }) {
   return (
-    <div className="self-stretch p-6 bg-Element-Background rounded-lg shadow-[2px_3px_4px_0px_rgba(0,0,0,1.00)] outline outline-1 outline-offset-[-1px] outline-Border inline-flex flex-col justify-start items-start gap-4">
+    <div key={contest.contestId} className={`p-base flex flex-col 2xl:flex-row justify-between gap-sm border border-border rounded-lg shadow-[2px_3px_4px_0px_rgba(0,0,0,1.00)]`}>
       <div className="flex flex-col gap-xs">
         {/* Status */}
         <div className="w-fit bg-sec-el flex items-center rounded-lg">
@@ -45,14 +45,17 @@ export default async function ContestCard({ contest }) {
         </div>
         {/* Friends */}
         {contest.joinedFriends.length > 0 && (
-          <div className="flex gap-sm md:gap-base flex-wrap text-sec-text text-xs font-medium font-secondary">
-            {contest.joinedFriends.map((friend) => (
+          <div className="flex gap-sm md:gap-base flex-wrap text-sec-text text-xs font-medium font-secondary col-span-2 row-span-1 md:col-span-1 md:row-span-1">
+            {contest.joinedFriends.length > 0 && contest.joinedFriends.map((friend) => (
               <div key={friend.id} className="bg-sec-el p-xs2 leading-4 ">
                 <Image src={friend.avatar} alt={friend.name} width={24} height={24} className="rounded-full" />
               </div>
             ))}
           </div>
         )}
+        <div>
+
+        </div>
       </div>
       <Btn1
         link={`/contests/${contest.classId}/${contest.contestId}`}

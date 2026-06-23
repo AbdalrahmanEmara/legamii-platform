@@ -4,7 +4,7 @@ import "server-only";
 import { getContestLobby, getContests, getContestDetailedSummary, getContestQuestions, getContestRank, getContestSummary, registerContest, startContest, submitContestAnswer, toggleQuestionFlag, getContestQuestion, finishContest } from "../services/student_contest.service";
 
 // GET all contests
-export async function getContestsAction(classId = "ac024334-d92b-4b84-904a-dad5ad389970", status) {
+export async function getContestsAction(classId, status) {
   try {
     const res = await getContests(classId, status);
     return res;
