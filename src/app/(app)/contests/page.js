@@ -156,20 +156,21 @@ export default async function ContestsPage({ searchParams }) {
   console.log(contestsData?.data);
   console.log(contestsData?.data?.data);
 
-  const contests = contestsData.data.map((contest) => ({
+  const contests = (contestsData?.data || []).map((contest) => ({
     contestId: contest.contestId,
     classId: contest.classId,
+    studentContestId: contest.studentContestId,
 
     title: contest.title,
 
-    tags: [contest.gradeLevel, contest.subject, `${contest.playersCount} Player`],
+    tags: [contest.grade, contest.subject, `${contest.playersCount} Player`],
 
     status: contest.status,
     isRegistered: contest.isRegistered,
 
     timeText: contest.startTime,
 
-    joinedFriends: contest.joinedFriends || 0,
+    joinedFriends: contest.joinedFriends || [],
   }));
 
   return (
@@ -215,6 +216,5 @@ export default async function ContestsPage({ searchParams }) {
         </div>
       </div>
     </ReusableWindow>
-    //<div>Contests</div>
   );
 }

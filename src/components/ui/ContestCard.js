@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 export default function ContestCard({
   classId,
   contestId,
+  studentContestId,
   title,
   tags = [],
   icon: Icon = Trophy,
@@ -47,7 +48,16 @@ export default function ContestCard({
   const isDisabled = isUpcoming && isRegistered;
 
   function handleContestClick() {
-    router.push(`/contests/${classId}/${contestId}`);
+    if (isHistory) {
+      // Handle history: go to summary page with studentContestId
+      // Note: contestId is the contest's public ID
+      // studentContestId is the user's specific contest record ID
+      // We need studentContestId from the contest object to go to the summary
+      router.push(`/contests/summary/${studentContestId}`);
+    } else {
+      // Handle ongoing/upcoming: go to lobby page
+      router.push(`/contests/${classId}/${contestId}`);
+    }
   }
   return (
     <div className="border-text p-base flex w-full items-center justify-between rounded-lg border-[1.5px] bg-white shadow-[2px_3px_4px_0_rgba(0,0,0,1)]">
@@ -134,7 +144,9 @@ export default function ContestCard({
         {/* <span className="label-1 font-primary uppercase text-white tracking-widest">
           {status.toLowerCase() === "live" ? "JOIN NOW" : "REGISTER"}
         </span> */}
+        <span className="label-1 font-primary font-bold uppercase text-white tracking-widest">
         {buttonText}
+        </span>
       </Button>
     </div>
   );
