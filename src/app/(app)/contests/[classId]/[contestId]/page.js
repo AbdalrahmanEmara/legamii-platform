@@ -10,11 +10,9 @@ export default async function ContestPage({ params }) {
   console.log(params)
   console.log("End")
 
+  try {
+  }
 
-  // const contest = await getContestLobbyAction(
-  //   classId,
-  //   contestId
-  // );
   const res = await getContestLobby(
     classId,
     contestId

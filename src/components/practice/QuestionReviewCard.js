@@ -6,12 +6,12 @@ import { useState } from "react";
 
 const LETTERS = ["A)", "B)", "C)", "D)"];
 const arrange = ["a", "b", "c", "d"];
-function QuestionReviewCard({ question, index, userAnswer }) {
+function QuestionReviewCard({ question, index, userAnswer, width = "w-[1032px]", }) {
   const [showTutor, setShowTutor] = useState(false);
 
   return (
     <>
-      <ReusableWindow title={`QUESTION_${index + 1}.SYS`} className="w-[1032px] p-px">
+      <ReusableWindow title={`QUESTION_${index + 1}.SYS`} className={`${width} p-px`}>
         <div className="p-base">
           {/* Title + difficulty badge */}
           <div className="flex items-center justify-between">
@@ -28,16 +28,18 @@ function QuestionReviewCard({ question, index, userAnswer }) {
             <p className="body-1 text-text mb-sm">{question?.questionText}</p>
 
             {/* Tags */}
-            {/* <div className="gap-base flex flex-wrap">
-              {question.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="bg-sec-el py-xs2 px-sm body-2 font-regular text-sec-text rounded-sm border border-gray-200"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div> */}
+            {question?.tags && question.tags.length > 0 && (
+              <div className="gap-xs flex flex-wrap mt-sm mb-sm">
+                {question.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="bg-neutral-50 py-xs px-sm body-3 font-medium text-neutral-500 rounded-sm border border-neutral-200"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Options */}

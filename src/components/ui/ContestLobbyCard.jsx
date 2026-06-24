@@ -12,7 +12,13 @@ import Btn1 from "./Btn1";
 export default function ContestLobbyCard({ contest, classId, contestId }) {
   const router = useRouter();
   const startDate = contest?.contestStartingTime ? new Date(contest.contestStartingTime) : null;
-  const [buttonText, setButtonText] = useState(contest?.isRegistered ? "Join Now" : "Register");
+  const [buttonText, setButtonText] = useState(
+    !contest?.isRegistered
+      ? "Register"
+      : contest?.contestStatus === "ONGOING"
+        ? "JOIN NOW"
+        : "Registered"
+  );
 
   async function handleContestAction() {
     console.log("BUTTON CLICKED");
@@ -41,6 +47,7 @@ export default function ContestLobbyCard({ contest, classId, contestId }) {
   const handleBackToContest = () => {
     router.back();
   };
+
 
   return (
     <ReusableWindow title="CONTESTS_CHALLENGES.SYS" className="w-full max-w-[950px] flex-1">
@@ -199,12 +206,17 @@ export default function ContestLobbyCard({ contest, classId, contestId }) {
             <div className="mt-auto flex items-end justify-between pt-12 pb-4">
               <form
                 action={
-                  contest?.isRegistered
-                    ? startContestAction.bind(null, classId, contestId)
-                    : registerContestAction.bind(null, classId, contestId)
+                  !contest?.isRegistered
+                    ? registerContestAction.bind(null, classId, contestId)
+                    : contest?.contestStatus === "ONGOING"
+                      ? startContestAction.bind(null, classId, contestId)
+                      : ""
                 }
               >
-                <Btn1 title={buttonText} />
+                <Btn1
+                  title={buttonText}
+                  disabled={contest?.isRegistered && contest?.contestStatus === "UPCOMING"}
+                />
               </form>
             </div>
           </div>
