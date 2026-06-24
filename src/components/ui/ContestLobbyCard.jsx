@@ -26,47 +26,57 @@ export default function ContestLobbyCard({
   let buttonText = "";
   let isDisabled = false;
 
-  if (contest.contestStatus === "UPCOMING") {
-    if (contest.isRegistered) {
-      buttonText = "REGISTERED";
-      isDisabled = true;
-    } else {
-      buttonText = "REGISTER";
-    }
-  } else if (contest.contestStatus === "ONGOING") {
+  // if (contest.contestStatus === "UPCOMING") {
+  //   if (contest.isRegistered) {
+  //     buttonText = "REGISTERED";
+  //     //isDisabled = true;
+  //   } else {
+  //     buttonText = "REGISTER";
+  //   }
+  // } else if (contest.contestStatus === "ONGOING") {
+  //   buttonText = "JOIN NOW";
+  // } else {
+  //   buttonText = "FINISHED";
+  //   // isDisabled = true;
+  // }
+  if (contest.isRegistered) {
     buttonText = "JOIN NOW";
-  } else {
-    buttonText = "FINISHED";
-    isDisabled = true;
   }
+  else
+    buttonText = "REGISTER";
 
-  async function handleContestAction() {
-    if (
-      contest.contestStatus === "UPCOMING" &&
-      !contest.isRegistered
-    ) {
-      await registerContestAction(
-        classId,
-        contestId
-      );
+  // async function handleContestAction() {
+  //   if (
+  //     contest.contestStatus === "UPCOMING" &&
+  //     !contest.isRegistered
+  //   ) {
+  //     const res = await registerContestAction(
+  //       classId,
+  //       contestId
+  //     );
+  //     console.log("REGISTER RES", res)
+  //     router.refresh();
+  //     return;
+  //   }
 
-      router.refresh();
-      return;
-    }
+  //    if (contest.contestStatus === "ONGOING") {
 
-    if (contest.contestStatus === "ONGOING") {
-      const res = await startContestAction(
-        classId,
-        contestId
-      );
+  //     console.log("START CLICKED");
+  //     const res = await startContestAction(
+  //       classId,
+  //       contestId
+  //     );
 
-      if (!res?.studentContestId) return;
+  //     console.log("START RES", res);
 
-      router.push(
-        `/contests/play/${res.studentContestId}`
-      );
-    }
-  }
+  //     if (!res?.studentContestId) return;
+
+  //     router.push(
+  //       `/contests/play/${res.studentContestId}`
+  //     );
+  //   }
+  // }
+
 
   const handleBackToContest = () => {
     router.back();

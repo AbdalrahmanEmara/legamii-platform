@@ -3,6 +3,7 @@ import { getContestQuestionsAction, getContestRankAction } from "@/lib/actions/c
 
 export default async function Page({ params }) {
   const resolvedParams = await params;
+  
   const studentContestId = resolvedParams.studentContestId;
 
   const questionsMetadata = await getContestQuestionsAction(studentContestId);
