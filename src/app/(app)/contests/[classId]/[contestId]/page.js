@@ -1,7 +1,6 @@
 import Leaderboard from "@/components/ui/Leaderboard";
 import ContestLobbyCard from "@/components/ui/ContestLobbyCard";
 
-// import { getContestLobbyAction } from "@/lib/actions/contests.actions";
 import { getContestLobby } from "@/lib/services/student_contest.service";
 
 export default async function ContestPage({ params }) {

@@ -21,7 +21,12 @@ export const ENDPOINTS = {
   student: {
     updateAcademic: `${v}/student/academic`,
   },
-  cloudinary: {},
+  studentProfile: {
+    profile: () => `${v}/student/me`,
+    // updateProfile: () => ``
+  },
+  // cloudinary: {},
+
   student_contest: {
     list: (classId, status) => `${v}/student-contest?classId=${classId || ""}&status=${status || ""}`,
     lobby: (classId, contestId) => `${v}/student-contest/class/${classId}/contest/${contestId}`,
