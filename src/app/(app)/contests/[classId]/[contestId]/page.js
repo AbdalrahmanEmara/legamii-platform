@@ -10,9 +10,6 @@ export default async function ContestPage({ params }) {
   console.log(params)
   console.log("End")
 
-  try {
-  }
-
   const res = await getContestLobby(
     classId,
     contestId
