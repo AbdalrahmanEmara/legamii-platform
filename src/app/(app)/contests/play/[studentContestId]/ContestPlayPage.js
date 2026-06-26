@@ -24,7 +24,7 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
 
   const [leaderboard] = useState(initialLeaderboard);
   const [questionsMetadata] = useState(initialQuestionsMetadata);
-  
+
   const [currentQuestionDetail, setCurrentQuestionDetail] = useState(null);
   const [isLoadingQuestion, setIsLoadingQuestion] = useState(true);
 
@@ -35,10 +35,14 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
     const meta = questionsMetadata[currentIndex];
     if (!meta) return;
     setIsLoadingQuestion(true);
+    // console.log("current meta : ", meta)
     const res = await getContestQuestionAction(studentContestId, meta.questionId);
+    // console.log("whole response : res.data : ")
+    // console.log(JSON.stringify(res.data, null, 2))
+    // console.log("res.data is : ",res.data);
     if (res) {
-      setCurrentQuestionDetail(res);
-      setSelected(res.answer || null); // if previously answered
+      setCurrentQuestionDetail(res.data);
+      setSelected(res.data.answer || null); // if previously answered
     }
     setIsLoadingQuestion(false);
   }, [currentIndex, questionsMetadata, studentContestId]);
@@ -63,22 +67,50 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
   }, [finished, isLoadingQuestion]);
 
   useEffect(() => {
-    if (finished) {
-      const finishContest = async () => {
-        await finishContestAction(studentContestId);
-        router.push(`/contests/summary/${studentContestId}`);
-      };
-      finishContest();
-    }
-  }, [finished, router, studentContestId]);
+    if (!finished) return;
 
-  const handleSelect = (letter) => {
-    setSelected(letter);
+    const finishContest = async () => {
+      try {
+        await finishContestAction(studentContestId);
+
+        router.push(
+          `/contests/summary/${studentContestId}`
+        );
+      } catch (error) {
+        console.error("Error finishing contest:", error);
+      }
+    };
+
+    finishContest();
+  }, [finished, studentContestId, router]);
+
+
+
+  const handleSelect = (answerText) => {
+    setSelected(answerText);
   };
 
   const processAnswer = async () => {
+    if (!selected && !isLast) return;
+
     if (selected && currentQuestionDetail) {
-      await submitContestAnswerAction(studentContestId, currentQuestionDetail.questionId, { answer: selected });
+      // console.log({
+      //   studentContestId,
+      //   questionId: currentQuestionDetail.questionId,
+      //   answer: selected,
+      // });
+      // console.log("currentQuestionDetail",currentQuestionDetail);
+      console.log("=== SUBMIT ===");
+      console.log("studentContestId:", studentContestId);
+      console.log("questionId:", currentQuestionDetail.questionId);
+      await submitContestAnswerAction(
+        studentContestId,
+        currentQuestionDetail.questionId,
+        {
+          answer: selected,
+        }
+      );
+      console.log("currentQuestionDetail", currentQuestionDetail);
     }
 
     if (isLast) {
@@ -98,11 +130,13 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
     }
   };
 
+  console.log("QUESTION DETAIL", currentQuestionDetail);
   return (
     <div className="flex w-full max-w-[1384px] items-start justify-center gap-6 m-auto">
       {/* LEFT: LEADERBOARD WINDOW */}
       <ContestLeaderboard
         students={leaderboard}
+        //currentUserId={currentUser?.id}
         currentUserId="you"
       />
 
@@ -129,7 +163,7 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
             <div className="flex flex-1 flex-col p-8 overflow-y-auto">
               {isLoadingQuestion || !currentQuestionDetail ? (
                 <div className="flex-1 flex items-center justify-center">
-                   <SystemLoading />
+                  <SystemLoading />
                 </div>
               ) : (
                 <>
@@ -144,36 +178,45 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
                       </div>
 
                       <div className="gap-sm flex flex-col items-stretch">
-                        {optionKeys.map((optKey, oi) => {
-                          const optText = currentQuestionDetail.options[optKey];
-                          if (!optText) return null;
-                          return (
-                            <AnswerOption
-                              key={oi}
-                              answer={optKey}
-                              letter={LETTERS[oi]}
-                              text={optText}
-                              selected={selected === optKey}
-                              onClick={() => handleSelect(optKey)}
-                            />
-                          );
-                        })}
+                        {currentQuestionDetail?.options?.map((option, index) => (
+                          <AnswerOption
+                            key={index}
+                            answer={option}
+                            letter={LETTERS[index]}
+                            text={option}
+                            selected={selected === option}
+                            onClick={() => handleSelect(option)}
+                          />
+                        ))}
+                        {console.log("QUESTION DETAIL", currentQuestionDetail)}
+
                       </div>
                     </div>
 
                     {/* Skip button right-aligned */}
                     <div className="mt-xl flex items-center justify-between">
                       <button
-                        onClick={handleSkip}
-                        className="border-border px-sm py-xs2 label-1 hover:border-primary-200 flex items-center justify-center rounded-md border font-medium transition-all"
+                        onClick={() =>
+                          setCurrentIndex((i) =>
+                            Math.max(0, i - 1)
+                          )
+                        }
+                        disabled={currentIndex === 0}
                       >
-                        SKIP &gt;|
+                        {"<"}
+                      </button>
+
+                      <button
+                        onClick={handleSkip}
+                      >
+                        SKIP  |&gt;
                       </button>
                     </div>
                   </div>
 
                   {/* Bottom row: progress bar + finish button */}
                   <div className="mt-8 flex w-full items-center gap-6 border-t border-gray-300 pt-6">
+                    {/** 1- Progress bar */}
                     <div className="flex-1">
                       <div className="flex items-center gap-4">
                         <div className="font-mono text-xs text-gray-500">
@@ -191,9 +234,16 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
                       </div>
                     </div>
 
+                    {/** 2- rank up */}
+                    <div className="w-[180px] flex justify-center">
+                      {/* score animation */}
+                    </div>
+
+                    {/** 3- Submit button */}
+
                     <button
                       onClick={processAnswer}
-                      disabled={!selected && !isLast} 
+                      disabled={!selected && !isLast}
                       className={`label-1 bg-primary-500 px-md py-sm flex flex-shrink-0 items-center justify-center rounded-md border border-black font-bold tracking-wide text-white shadow-[2px_3px_4px_0_#000] ${selected ? "bg-primary-300 text-black hover:bg-primary-400" : "bg-gray-200 text-gray-500 cursor-not-allowed"
                         }`}
                     >

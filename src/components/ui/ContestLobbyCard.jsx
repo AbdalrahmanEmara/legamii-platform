@@ -20,7 +20,7 @@ export default function ContestLobbyCard({ contest, classId, contestId }) {
         : "Registered"
   );
 
-  async function handleContestAction() {
+  /*async function handleContestAction() {
     console.log("BUTTON CLICKED");
     console.log("contest", contest);
     console.log("isRegistered", contest?.isRegistered);
@@ -43,6 +43,34 @@ export default function ContestLobbyCard({ contest, classId, contestId }) {
       console.log(res);
     }
   }
+*/
+const handleContestAction = async () => {
+  if (!contest?.isRegistered) {
+    await registerContestAction(classId, contestId);
+    router.refresh();
+    return;
+  }
+
+  if (
+    contest?.isRegistered &&
+    contest?.contestStatus === "ONGOING"
+  ) {
+    const res = await startContestAction(
+      classId,
+      contestId
+    );
+
+    if (!res?.studentContestId) return;
+
+    router.push(
+      `/contests/play/${res.studentContestId}`
+    );
+
+    return;
+  }
+
+  // Registered + Upcoming => do nothing
+};
 
   const handleBackToContest = () => {
     router.back();
@@ -204,7 +232,7 @@ export default function ContestLobbyCard({ contest, classId, contestId }) {
 
             {/* Bottom Section */}
             <div className="mt-auto flex items-end justify-between pt-12 pb-4">
-              <form
+           {/*   <form
                 action={
                   !contest?.isRegistered
                     ? registerContestAction.bind(null, classId, contestId)
@@ -212,12 +240,13 @@ export default function ContestLobbyCard({ contest, classId, contestId }) {
                       ? startContestAction.bind(null, classId, contestId)
                       : ""
                 }
-              >
+              >*/}
                 <Btn1
                   title={buttonText}
                   disabled={contest?.isRegistered && contest?.contestStatus === "UPCOMING"}
+                  onClick={handleContestAction}
                 />
-              </form>
+             {/** </form> */} 
             </div>
           </div>
         </div>

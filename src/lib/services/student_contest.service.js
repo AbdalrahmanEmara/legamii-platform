@@ -34,7 +34,10 @@ export async function getContestQuestion(studentContestId, questionId) {
 
 // SUBMIT answer
 export async function submitContestAnswer(studentContestId, questionId, body) {
-  return api.post(ENDPOINTS.student_contest.submit(studentContestId, questionId), body);
+  return api.post(
+    ENDPOINTS.student_contest.submit(studentContestId, questionId),
+    body
+  );
 }
 
 // TOGGLE question flag

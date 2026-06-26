@@ -80,6 +80,7 @@
 import Image from "next/image";
 import ReusableWindow from "./ReusableWindow";
 import CustomScroll from "./CustomScroll";
+import { User } from "lucide-react";
 
 export default function ContestLeaderboard({ students = [], currentUserId, scoreAnimationAmount = 0, scoreAnimationUserId = null, variant = "default", }) {
   // Sort students by score to determine rank
@@ -134,12 +135,23 @@ export default function ContestLeaderboard({ students = [], currentUserId, score
 
                 {/* Avatar */}
                 <div className="border-border relative h-[40px] w-[40px] flex-shrink-0">
-                  <Image
+                  {/*<Image
                     src={user.avatarUrl}
                     alt={`${user.firstName} ${user.lastName}`}
                     fill
                     className="rounded-full object-cover border border-black"
-                  />
+                  />*/}
+                  {user.avatarUrl ? (
+                    <Image
+                      src={user.avatarUrl}
+                      alt={`${user.firstName} ${user.lastName}`}
+                      fill
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-200">
+                      <User className="h-5 w-5" />
+                    </div>
+                  )}
                 </div>
 
                 {/* Name + Level */}
