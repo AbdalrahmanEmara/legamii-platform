@@ -9,6 +9,10 @@ const BADGE_STYLES = {
   MEDIUM: "outline-yellow-600 text-yellow-600 shadow-[2px_3px_2px_0px_rgba(153,138,0,1.00)]",
   HARD: "outline-red-600 text-red-600 shadow-[2px_3px_2px_0px_rgba(200,0,0,1.00)]",
   WEAK: "outline-red-600 text-red-600 shadow-[2px_3px_2px_0px_rgba(200,0,0,1.00)]",
+  NEW: "outline-blue-500 text-blue-500 shadow-[2px_3px_2px_0px_rgba(0,90,200,1.00)]",
+  SYSTEM: "outline-purple-500 text-purple-500 shadow-[2px_3px_2px_0px_rgba(128,0,128,1.00)]",
+  UPDATE: "outline-green-500 text-green-500 shadow-[2px_3px_2px_0px_rgba(0,128,0,1.00)]",
+  CONTEST: "outline-orange-500 text-orange-500 shadow-[2px_3px_2px_0px_rgba(200,80,0,1.00)]",
 };
 
 export function StatusBadge({ status }) {

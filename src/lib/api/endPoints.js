@@ -27,6 +27,18 @@ export const ENDPOINTS = {
   },
   // cloudinary: {},
 
+  notifications: {
+    list: (page = 1, limit = 20) => `${v}/notifications?page=${page}&limit=${limit}`,
+    unreadCount: `${v}/notifications/unread-count`,
+    read: (notificationId) => `${v}/notifications/${notificationId}/read`,
+    readAll: `${v}/notifications/read-all`,
+    broadcasts: `${v}/notifications/broadcasts`,
+    readBroadcast: (broadcastId) => `${v}/notifications/broadcasts/${broadcastId}/read`,
+    broadcast: `${v}/notifications/broadcast`, // Admin
+    sendContestClarification: `${v}/notifications/contest-clarification`, // Teacher
+    contestClarification: (contestId) => `${v}/notifications/contest-clarification/${contestId}`,
+  },
+
   student_contest: {
     list: (classId, status) => `${v}/student-contest?classId=${classId || ""}&status=${status || ""}`,
     lobby: (classId, contestId) => `${v}/student-contest/class/${classId}/contest/${contestId}`,

@@ -7,8 +7,10 @@ import FireIcon from "../icons/FireIcon";
 import BellIcon from "../icons/BellIcon";
 import Image from "next/image";
 import Logo from "../Logo";
+import { useRouter } from "next/navigation";
 
 function Header() {
+  const router = useRouter();
   const streak = 10;
   const level = 20;
   const xp = 6;
@@ -22,7 +24,7 @@ function Header() {
     if (active) return;
     setActive(true);
     setTimeout(() => setActive(false), 500);
-    console.log("Do nothing");
+    router.push("/notifications");
   };
   useEffect(() => {
     const handleScroll = () => {

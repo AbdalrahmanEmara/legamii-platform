@@ -1,4 +1,4 @@
-# Student Contest API Documentation
+<!-- # Student Contest API Documentation
 
 Base URL: `/api/v1`
 
@@ -408,5 +408,395 @@ GET /api/v1/student/me/statistics
     total_active_days: number;
     current_streak: number;
     best_streak: number;
+} -->
+```
+
+
+//////////////////////////////////////////////////////////////////////////////////
+
+
+
+```md
+# Notifications
+
+Base URL: `/api/v1`
+
+All endpoints require **JWT authentication**.
+
+Some endpoints additionally require elevated roles:
+- **Admin role** for broadcast creation
+- **Teacher role** for contest clarification creation
+
+---
+
+## Socket.IO Realtime
+
+Namespace: `/notifications`
+
+Connection URL:
+```ts
+ws://localhost:3000/notifications
+```
+
+Authentication format:
+```ts
+{
+  auth: {
+    token: "JWT_TOKEN"
+  }
 }
 ```
+
+### User Room
+After connection, the client automatically joins:
+
+```ts
+user:{userId}
+```
+
+### Contest Room
+Clients must manually join contest rooms to receive contest clarification events.
+
+#### Join
+```ts
+socket.emit('joinContestRoom', { contestId: string })
+```
+
+#### Leave
+```ts
+socket.emit('leaveContestRoom', { contestId: string })
+```
+
+### Server Events
+
+#### `notification`
+```ts
+{
+  id: string;
+  user_id: string;
+  title: string;
+  message: string;
+  type: string;
+  metadata: Record<string, any>;
+  is_read: boolean;
+  created_at: Date;
+}
+```
+
+#### `broadcast`
+```ts
+{
+  id: string;
+  title: string;
+  message: string;
+  type: string;
+  metadata: Record<string, any>;
+  created_at: Date;
+}
+```
+
+#### `contestClarification`
+```ts
+{
+  id: string;
+  contestId: string;
+  message: string;
+  teacherName: string;
+  createdAt: Date;
+}
+```
+
+---
+
+## Shared Response Types
+
+```ts
+interface ResponseNotificationDto {
+  id: string;
+  user_id: string;
+  title: string;
+  message: string;
+  type: string;
+  metadata: Record<string, any>;
+  is_read: boolean;
+  created_at: Date;
+}
+
+interface ResponseBroadcastDto {
+  id: string;
+  title: string;
+  message: string;
+  type: string;
+  metadata: Record<string, any>;
+  created_at: Date;
+  is_read?: boolean;
+}
+
+interface ResponseContestClarificationDto {
+  id: string;
+  contestId: string;
+  message: string;
+  teacherName: string;
+  createdAt: Date;
+}
+
+interface ResponsePaginatedNotificationsDto {
+  data: ResponseNotificationDto[];
+  page: number;
+  limit: number;
+  total: number;
+}
+
+interface ResponseUnreadCountDto {
+  count: number;
+}
+
+interface ResponseMessageDto {
+  message: string;
+}
+```
+
+---
+
+## Endpoints
+
+### 1. Get Notifications
+
+```http
+GET /api/v1/notifications?page=&limit=
+```
+
+| Query Param | Type | Required | Description |
+|-------------|------|----------|-------------|
+| `page` | number | No | Page number |
+| `limit` | number | No | Number of items per page |
+
+**Response:** `ResponsePaginatedNotificationsDto`
+
+```ts
+{
+  data: [
+    {
+      id: string;
+      user_id: string;
+      title: string;
+      message: string;
+      type: string;
+      metadata: Record<string, any>;
+      is_read: boolean;
+      created_at: Date;
+    }
+  ];
+  page: number;
+  limit: number;
+  total: number;
+}
+```
+
+---
+
+### 2. Get Unread Count
+
+```http
+GET /api/v1/notifications/unread-count
+```
+
+**Response:** `ResponseUnreadCountDto`
+
+```ts
+{
+  count: number;
+}
+```
+
+---
+
+### 3. Mark Notification as Read
+
+```http
+PATCH /api/v1/notifications/:notificationId/read
+```
+
+| Path Param | Type | Description |
+|------------|------|-------------|
+| `notificationId` | string | Notification ID |
+
+**Response:** `ResponseMessageDto`
+
+```ts
+{
+  message: string;
+}
+```
+
+---
+
+### 4. Mark All Notifications as Read
+
+```http
+PATCH /api/v1/notifications/read-all
+```
+
+**Response:** `ResponseMessageDto`
+
+```ts
+{
+  message: string;
+}
+```
+
+---
+
+### 5. Get Broadcasts
+
+```http
+GET /api/v1/notifications/broadcasts
+```
+
+**Response:** `ResponseBroadcastDto[]`
+
+```ts
+[
+  {
+    id: string;
+    title: string;
+    message: string;
+    type: string;
+    metadata: Record<string, any>;
+    created_at: Date;
+    is_read: boolean;
+  }
+]
+```
+
+---
+
+### 6. Mark Broadcast as Read
+
+```http
+PATCH /api/v1/notifications/broadcasts/:broadcastId/read
+```
+
+| Path Param | Type | Description |
+|------------|------|-------------|
+| `broadcastId` | string | Broadcast ID |
+
+**Response:** `ResponseMessageDto`
+
+```ts
+{
+  message: string;
+}
+```
+
+---
+
+### 7. Admin: Broadcast Notification
+
+```http
+POST /api/v1/notifications/broadcast
+```
+
+**Role:** Admin
+
+**Body:**
+```ts
+{
+  title: string;
+  message: string;
+  type: string;
+}
+```
+
+**Response:** `ResponseBroadcastDto`
+
+```ts
+{
+  id: string;
+  title: string;
+  message: string;
+  type: string;
+  metadata: Record<string, any>;
+  created_at: Date;
+}
+```
+
+**Realtime Effect:**
+Emits `broadcast` to connected users.
+
+---
+
+### 8. Teacher: Send Contest Clarification
+
+```http
+POST /api/v1/notifications/contest-clarification
+```
+
+**Role:** Teacher
+
+**Body:**
+```ts
+{
+  contestId: string;
+  message: string;
+}
+```
+
+**Response:** `ResponseContestClarificationDto`
+
+```ts
+{
+  id: string;
+  contestId: string;
+  message: string;
+  teacherName: string;
+  createdAt: Date;
+}
+```
+
+**Notes:**
+- Teacher must own the contest
+- Message is emitted to the contest room
+- Email is sent to all participants
+
+**Realtime Effect:**
+Emits `contestClarification` to the joined contest room.
+
+---
+
+### 9. Get Contest Clarification
+
+```http
+GET /api/v1/notifications/contest-clarification/:contestId
+```
+
+| Path Param | Type | Description |
+|------------|------|-------------|
+| `contestId` | string | Contest ID |
+
+**Response:** `ResponseContestClarificationDto`
+
+```ts
+{
+  id: string;
+  contestId: string;
+  message: string;
+  teacherName: string;
+  createdAt: Date;
+}
+```
+```
+
+A few important notes:
+- I used your preferred concise style.
+- I changed the base path from `{{baseUrl}}/...` to `/api/v1/...` to match your example.
+- I did not mark all endpoints as student-only, because the folder clearly contains:
+  - normal authenticated user endpoints
+  - admin-only endpoint
+  - teacher-only endpoint
+
+If you want, I can now do either of these next:
+- make this into 9 separate `.md` files, one per endpoint
+- make the same style docs for another folder
+- refine this further with exact DTO names and enums for notifications, broadcasts, and clarification types
+
