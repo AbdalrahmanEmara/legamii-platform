@@ -2,7 +2,6 @@
 
 import React from "react";
 import ReusableWindow from "@/components/ui/ReusableWindow";
-// import ContestLeaderboard from "@/components/ui/ContestLeaderboard";
 import QuestionReviewCard from "@/components/practice/QuestionReviewCard";
 import ContestLeaderboard from "@/components/ui/ContestLeaderboard";
 
@@ -110,10 +109,8 @@ export default function DetailedSummaryPage() {
 
   return (
     <div className="w-full">
-      {/* ===================== TOP SECTION ===================== */}
       <div className="mx-auto max-w-[1519px] px-[64px]">
         <div className="flex justify-center gap-[32px]">
-          {/* Summary Window */}
           <ReusableWindow
             title="CONTEST/SCIENCE FAIR PREP SUMMARY.SYS"
             className="w-[786px] flex-shrink-0"
@@ -122,12 +119,10 @@ export default function DetailedSummaryPage() {
               <h2 className="heading-h5-primary mb-sm font-semibold uppercase text-text">
                 SCIENCE FAIR PREP SUMMARY
               </h2>
-
               <p className="body-1 mb-lg font-medium text-text">
                 Your results are in! Review your score, understand your
                 mistakes, and see how your skills are improving
               </p>
-
               <div className="grid grid-cols-2 gap-md">
                 {[
                   {
@@ -158,7 +153,6 @@ export default function DetailedSummaryPage() {
                     <span className="label-3 uppercase text-text">
                       {stat.label}
                     </span>
-
                     <div
                       className={`heading-h5-primary font-bold ${stat.color}`}
                     >
@@ -170,7 +164,6 @@ export default function DetailedSummaryPage() {
             </div>
           </ReusableWindow>
 
-          {/* Leaderboard */}
           <ContestLeaderboard
             students={leaderboardData}
             currentUserId={currentUserId}
@@ -179,7 +172,6 @@ export default function DetailedSummaryPage() {
         </div>
       </div>
 
-      {/* ===================== QUESTIONS ===================== */}
       <div className="mx-auto mt-[32px] max-w-[1519px] px-[64px]">
         <div className="flex flex-col gap-md">
           {detailedSummaryData.questions.map((q, i) => {

@@ -4,7 +4,13 @@ import Link from "next/link";
 import ContestList from "../contest/ContestList";
 
 export default async function UpcomingContests() {
-  const data = await getContests(null, "UPCOMING");
+  let data = [];
+  try {
+    data = await getContests(null, "UPCOMING");
+  } catch (err) {
+    console.error("Error fetching upcoming contests, ", err);
+  }
+
   const contestData = data?.data?.slice(0, 3) || [];
 
   return (

@@ -38,7 +38,7 @@ export default function ContestLobbyCard({ contest, classId, contestId }) {
     if (contest.isRegistered) {
       console.log("START CLICKED");
 
-      const res = await startContestAction(classId, contestId);
+      const res = await startContestAction(classId, contestId, contest.contestTimeLimit);
 
       console.log(res);
     }
@@ -209,7 +209,7 @@ export default function ContestLobbyCard({ contest, classId, contestId }) {
                   !contest?.isRegistered
                     ? registerContestAction.bind(null, classId, contestId)
                     : contest?.contestStatus === "ONGOING"
-                      ? startContestAction.bind(null, classId, contestId)
+                      ? startContestAction.bind(null, classId, contestId, contest.contestTimeLimit)
                       : ""
                 }
               >

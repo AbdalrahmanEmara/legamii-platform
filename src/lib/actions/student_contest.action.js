@@ -1,6 +1,7 @@
 'use server';
 
 import "server-only";
+import { redirect } from "next/navigation";
 import { getContestLobby, getContests, getContestDetailedSummary, getContestQuestions, getContestRank, getContestSummary, registerContest, startContest, submitContestAnswer, toggleQuestionFlag, getContestQuestion, finishContest } from "../services/student_contest.service";
 
 // GET all contests
@@ -37,9 +38,14 @@ export async function registerContestAction(classId, contestId) {
 }
 
 // START contest
-export async function startContestAction(classId, contestId) {
+export async function startContestAction(classId, contestId, timeLimit) {
   try {
     const res = await startContest(classId, contestId);
+    const studentContestId = res?.data?.studentContestId ?? res?.studentContestId;
+    if (studentContestId) {
+      const params = timeLimit ? `?timeLimit=${timeLimit}` : "";
+      redirect(`/contests/play/${studentContestId}${params}`);
+    }
     return res;
   } catch (err) {
     console.error("Error starting contest:", err);
