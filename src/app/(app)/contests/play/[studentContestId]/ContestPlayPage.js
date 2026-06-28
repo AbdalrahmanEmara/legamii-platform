@@ -14,13 +14,12 @@ import { getContestQuestionAction, submitContestAnswerAction, finishContestActio
 const LETTERS = ["A)", "B)", "C)", "D)"];
 const optionKeys = ["a", "b", "c", "d"];
 
-export default function ContestPlayPage({ studentContestId, initialQuestionsMetadata, initialLeaderboard, timeLimit }) {
+export default function ContestPlayPage({ studentContestId, initialQuestionsMetadata, initialLeaderboard }) {
   const router = useRouter();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selected, setSelected] = useState(null);
-  const initialTime = timeLimit ? Number(timeLimit) * 60 : 600;
-  const [timeLeft, setTimeLeft] = useState(initialTime);
+  const [timeLeft, setTimeLeft] = useState(600); // 00:29 basically
   const [finished, setFinished] = useState(false);
 
   const [leaderboard] = useState(initialLeaderboard);
