@@ -1,4 +1,4 @@
-import "server only";
+import "server-only";
 import { api } from "../api/client";
 import { ENDPOINTS } from "../api/endPoints";
 

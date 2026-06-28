@@ -23,7 +23,13 @@ export const ENDPOINTS = {
   },
   studentProfile: {
     profile: () => `${v}/student/me`,
-    // updateProfile: () => ``
+    updateProfile: () => `${v}/student/me`,
+    statistics: () => `${v}/student/me/statistics`,
+    badges: () => `${v}/student/me/badges`,
+    classes: () => `${v}/student/me/classes`,
+    contests: () => `${v}/student/me/contests`,
+    activity: () => `${v}/student/me/activity`,
+    subjectTags: () => `${v}/student/me/subject-tags`,
   },
   // cloudinary: {},
 
@@ -40,7 +46,8 @@ export const ENDPOINTS = {
   },
 
   student_contest: {
-    list: (classId, status) => `${v}/student-contest?classId=${classId || ""}&status=${status || ""}`,
+    list: (classId, status) =>
+      `${v}/student-contest?classId=${classId || ""}&status=${status || ""}`,
     lobby: (classId, contestId) => `${v}/student-contest/class/${classId}/contest/${contestId}`,
     register: (classId, contestId) =>
       `${v}/student-contest/class/${classId}/contest/${contestId}/register`,
@@ -61,7 +68,7 @@ export const ENDPOINTS = {
   },
   subject: {},
   grade: {
-    list: `${v}/grades`
+    list: `${v}/grades`,
   },
   quiz: {
     list: `${v}/quiz`, // GET
@@ -71,5 +78,12 @@ export const ENDPOINTS = {
     question: (quiz_id, question_id) => `${v}/quiz/${quiz_id}/question/${question_id}`,
     solve: (quiz_id, question_id) => `${v}/quiz/${quiz_id}/question/${question_id}`,
     byId: (quiz_id) => `${v}/quiz/${quiz_id}`,
+  },
+  streak: {
+    get: `${v}/streak/me`,
+  },
+  missions: {
+    daily: `${v}/missions/daily`,
+    claim: (id) => `${v}/missions/${id}/claim`,
   },
 };

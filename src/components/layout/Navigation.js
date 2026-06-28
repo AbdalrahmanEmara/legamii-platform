@@ -14,7 +14,7 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="px-base hidden lg:block">
+    <nav className="px-base hidden md:block">
       <ul className="flex items-center gap-8">
         {links.map(({ href, label }) => {
           const active = pathname === href;
@@ -23,7 +23,7 @@ export default function Navigation() {
             <li key={href}>
               <Link
                 href={href}
-                className={`font-primary text-sm leading-5 text-neutral-50 transition ${
+                className={`font-primary text-xs font-normal leading-4 2xl:text-sm 2xl:font-bold 2xl:leading-5 text-neutral-50 transition ${
                   active
                     ? "font-bold text-neutral-50"
                     : "font-normal text-neutral-400 hover:text-neutral-50"

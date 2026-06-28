@@ -101,12 +101,12 @@ function PracticePage({ questions, quiz_id }) {
     return (
     <div>
       <ReusableWindow title="AI_TUTOR.SYS" className="m-auto flex w-[1384px] max-w-full flex-col">
-        <div className="flex flex-1 self-stretch">
+        <div className="flex flex-1 flex-col self-stretch md:flex-row">
           {/* Left Sidebar */}
           <QuestionList questions={questions} currentIndex={currentIndex}  />
 
           {/* Right Side */}
-          <div className="flex flex-1 flex-col border-l border-border">
+          <div className="flex flex-1 flex-col border-t border-border md:border-t-0 md:border-l">
             {/* Subject Header */}
             <div className="flex w-full items-center justify-between border-b border-[#020203] px-6 py-4">
               <h2 className="heading-h5-primary font-bold">Math Quiz</h2>

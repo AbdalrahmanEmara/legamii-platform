@@ -1,0 +1,23 @@
+interface HamburgerIconProps {
+  className?: string;
+  size?: number;
+  color?: string;
+}
+
+export default function HamburgerIcon({ className, size = 24, color = "#FAFAFA" }: HamburgerIconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden={true}
+    >
+      <rect x="2" y="2" width="20" height="2" fill={color} />
+      <rect x="2" y="11" width="20" height="2" fill={color} />
+      <rect x="2" y="20" width="20" height="2" fill={color} />
+    </svg>
+  );
+}

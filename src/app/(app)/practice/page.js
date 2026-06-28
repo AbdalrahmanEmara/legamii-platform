@@ -49,7 +49,7 @@ async function page() {
     <div> 
       <ReusableWindow
         title=" AI_TUTOR.SYS"
-        className="m-auto flex h-[777px] w-[1384px] max-w-full flex-col overflow-hidden"
+        className="m-auto flex min-h-screen w-[1384px] max-w-full flex-col overflow-hidden md:min-h-0 md:h-[777px]"
       >
         {/**Heading */}
         <div className="px-base py-sm border-border flex w-full items-center justify-between border-b bg-white">
@@ -58,7 +58,7 @@ async function page() {
 
         <CustomScroll className="flex-1 overflow-auto rounded-lg">
           {/* <div className="grid grid-cols-2 items-start gap-[var(--spacing-base)] self-stretch bg-white p-[var(--spacing-base)]"> */}
-          <div className="p-base grid grid-cols-2 items-start gap-[var(--spacing-base)] self-stretch bg-white">
+          <div className="p-base grid grid-cols-1 items-start gap-[var(--spacing-base)] self-stretch bg-white md:grid-cols-2">
             {subjects.map((item, index) => (
               // <ContentBox key={index} className="w-full p-[var(--spacing-base)]">
               <ContentBox key={index} className="p-base w-full">
@@ -73,7 +73,7 @@ async function page() {
                   </div>
                   <StatusBadge status={item.status} />
                 </div>
-                <div className="flex-column gap-xs pt-base flex items-start self-stretch">
+                <div className="flex-column gap-xs pt-base flex flex-wrap items-start self-stretch">
                   <ContentBox className="p-sm bg-el-bg flex items-center justify-center gap-[16px] rounded-md border text-center shadow-none">
                     <div className="flex-none">
                       <p className="body-2 font-medium">{Math.round(item.lastAttemptAccuracy)}%</p>
@@ -102,7 +102,7 @@ async function page() {
                 </div>
 
                 {/* <div className="gap-sm my-xl2 flex w-[360px] flex-col items-start"> */}
-                <div className="gap-sm my-base flex w-[360px] flex-col items-start">
+                <div className="gap-sm my-base flex w-full flex-col items-start md:w-[360px]">
                   {item.tags.map((tag) => (
                     <div key={tag.tagId} className="gap-xs2 flex w-full flex-col">
                       <div className="body-3 flex justify-between font-medium">

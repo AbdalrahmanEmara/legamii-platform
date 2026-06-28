@@ -49,3 +49,7 @@ export const resetPasswordSchema = z
 export const forgetPasswordSchema = z.object({
   email: z.string().email({ message: "Invalid email" }),
 });
+
+export const claimMissionSchema = z.object({
+  id: z.string().min(1, { message: "Mission ID is required" }),
+});
