@@ -1,36 +1,41 @@
 "use client";
 
-import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useMemo, useState, useTransition } from "react";
 import ReusableWindow from "@/components/ui/ReusableWindow";
 import { cn } from "@/lib/utils";
-import {
-  editableDifficulties,
-  editableSubjects,
-  type QuestionItem,
-} from "@/components/teacher/question-bank/questionBankData";
+import { createQuestionAction, updateQuestionAction, deleteQuestionAction } from "@/lib/actions/qbank.actions";
 
 interface TeacherQuestionEditorModalProps {
   mode: "add" | "edit";
-  question?: QuestionItem;
+  question?: any;
+  subjects?: any[];
+  grades?: any[];
 }
 
 const answerLetters = ["A", "B", "C", "D"] as const;
+const editableDifficulties = ["easy", "medium", "hard"];
 
 export default function TeacherQuestionEditorModal({
   mode,
   question,
+  subjects = [],
+  grades = [],
 }: TeacherQuestionEditorModalProps) {
-  const [questionText, setQuestionText] = useState(question?.title ?? "");
-  const [grade, setGrade] = useState(String(question?.grade ?? 8));
-  const [term, setTerm] = useState<"1" | "2">(question?.term ?? "1");
-  const [subject, setSubject] = useState(question?.subject ?? "Math");
-  const [topic, setTopic] = useState(question?.topic ?? "Quadratic Equations");
-  const [difficulty, setDifficulty] = useState(question?.difficulty ?? "Medium");
-  const [correctAnswerIndex, setCorrectAnswerIndex] = useState(question?.correctAnswerIndex ?? 0);
-  const [answers, setAnswers] = useState(
-    question?.answers ?? ["", "", "", ""],
-  );
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
+  const initialAnswers = question?.options ?? ["", "", "", ""];
+  const initialCorrectIndex = question ? initialAnswers.indexOf(question.correct_answer) : 0;
+
+  const [questionText, setQuestionText] = useState(question?.question_text ?? "");
+  const [gradeId, setGradeId] = useState(question?.grade_id ?? grades?.[0]?.id ?? "");
+  const [term, setTerm] = useState<"1" | "2">(question?.term ? String(question.term) as "1"|"2" : "1");
+  const [subjectId, setSubjectId] = useState(question?.subject_id ?? subjects?.[0]?.id ?? "");
+  const [topic, setTopic] = useState(question?.lesson ?? "Quadratic Equations");
+  const [difficulty, setDifficulty] = useState(question?.difficulty ?? "medium");
+  const [correctAnswerIndex, setCorrectAnswerIndex] = useState(initialCorrectIndex !== -1 ? initialCorrectIndex : 0);
+  const [answers, setAnswers] = useState(initialAnswers);
 
   const skillTags = useMemo(() => {
     return [
@@ -46,6 +51,45 @@ export default function TeacherQuestionEditorModal({
 
   const title = mode === "edit" ? "EDIT_QUESTION.SYS" : "ADD_QUESTION.SYS";
   const primaryLabel = mode === "edit" ? "Save" : "Create";
+
+  const handleSave = () => {
+    const payload = {
+      subject_id: subjectId,
+      grade_id: gradeId,
+      difficulty,
+      lesson: topic,
+      term: parseInt(term, 10),
+      question_text: questionText,
+      options: answers,
+      correct_answer: answers[correctAnswerIndex],
+      tags: [topic]
+    };
+
+    startTransition(async () => {
+      try {
+        if (mode === "add") {
+          await createQuestionAction(payload);
+        } else if (question?.id) {
+          await updateQuestionAction(question.id, payload);
+        }
+        router.push("/teacher/question-bank");
+      } catch (err) {
+        console.error("Failed to save question", err);
+      }
+    });
+  };
+
+  const handleDelete = () => {
+    if (!question?.id) return;
+    startTransition(async () => {
+      try {
+        await deleteQuestionAction(question.id);
+        router.push("/teacher/question-bank");
+      } catch (err) {
+        console.error("Failed to delete question", err);
+      }
+    });
+  };
 
   return (
     <div className="pointer-events-none absolute inset-0 z-20 flex items-start justify-center px-base py-md md:px-xl">
@@ -68,13 +112,13 @@ export default function TeacherQuestionEditorModal({
             <div className="space-y-xxs">
               <label className="font-primary text-[11px] uppercase text-text">Grade</label>
               <select
-                value={grade}
-                onChange={(event) => setGrade(event.target.value)}
+                value={gradeId}
+                onChange={(event) => setGradeId(event.target.value)}
                 className="h-11 w-full rounded-none border border-neutral-300 bg-white px-sm font-secondary text-sm text-text outline-none focus:border-primary-300"
               >
-                {[4, 5, 6, 7, 8, 9, 10, 11, 12].map((value) => (
-                  <option key={value} value={value}>
-                    Grade {value}
+                {grades.map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {g.name}
                   </option>
                 ))}
               </select>
@@ -106,13 +150,13 @@ export default function TeacherQuestionEditorModal({
             <div className="space-y-xxs">
               <label className="font-primary text-[11px] uppercase text-text">Subject</label>
               <select
-                value={subject}
-                onChange={(event) => setSubject(event.target.value as typeof subject)}
+                value={subjectId}
+                onChange={(event) => setSubjectId(event.target.value)}
                 className="h-11 w-full rounded-none border border-neutral-300 bg-white px-sm font-secondary text-sm text-text outline-none focus:border-primary-300"
               >
-                {editableSubjects.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
+                {subjects.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.name}
                   </option>
                 ))}
               </select>
@@ -144,9 +188,9 @@ export default function TeacherQuestionEditorModal({
                   onClick={() => setDifficulty(option)}
                   className={cn(
                     "px-sm py-xs font-primary text-[11px] uppercase transition-colors",
-                    option === "Easy" && difficulty === option && "bg-green-50 text-green-700",
-                    option === "Medium" && difficulty === option && "bg-yellow-50 text-yellow-700",
-                    option === "Hard" && difficulty === option && "bg-red-100 text-red-600",
+                    option === "easy" && difficulty === option && "bg-green-50 text-green-700",
+                    option === "medium" && difficulty === option && "bg-yellow-50 text-yellow-700",
+                    option === "hard" && difficulty === option && "bg-red-100 text-red-600",
                     difficulty !== option && "bg-white text-neutral-500",
                   )}
                 >
@@ -196,7 +240,9 @@ export default function TeacherQuestionEditorModal({
             {mode === "edit" ? (
               <button
                 type="button"
-                className="inline-flex min-w-[128px] items-center justify-center border border-red-300 bg-white px-base py-xs font-primary text-[11px] uppercase text-red-500 shadow-[2px_3px_0_0_rgba(255,0,85,0.08)]"
+                onClick={handleDelete}
+                disabled={isPending}
+                className="inline-flex min-w-[128px] items-center justify-center border border-red-300 bg-white px-base py-xs font-primary text-[11px] uppercase text-red-500 shadow-[2px_3px_0_0_rgba(255,0,85,0.08)] disabled:opacity-50"
               >
                 Delete
               </button>
@@ -205,17 +251,20 @@ export default function TeacherQuestionEditorModal({
             )}
 
             <div className="flex flex-wrap gap-xs2">
-              <Link
-                href="/teacher/question-bank"
-                className="inline-flex min-w-[128px] items-center justify-center border border-neutral-400 bg-white px-base py-xs font-primary text-[11px] uppercase text-neutral-700 shadow-[2px_3px_0_0_rgba(0,0,0,0.08)]"
-              >
-                Cancel
-              </Link>
               <button
                 type="button"
-                className="inline-flex min-w-[128px] items-center justify-center border border-text bg-primary-500 px-base py-xs font-primary text-[11px] uppercase text-neutral-950 shadow-[2px_3px_0_0_rgba(0,0,0,0.18)]"
+                onClick={() => router.push("/teacher/question-bank")}
+                className="inline-flex min-w-[128px] items-center justify-center border border-neutral-400 bg-white px-base py-xs font-primary text-[11px] uppercase text-neutral-700 shadow-[2px_3px_0_0_rgba(0,0,0,0.08)] disabled:opacity-50"
               >
-                {primaryLabel}
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleSave}
+                disabled={isPending}
+                className="inline-flex min-w-[128px] items-center justify-center border border-text bg-primary-500 px-base py-xs font-primary text-[11px] uppercase text-neutral-950 shadow-[2px_3px_0_0_rgba(0,0,0,0.18)] disabled:opacity-50"
+              >
+                {isPending ? "Saving..." : primaryLabel}
               </button>
             </div>
           </div>

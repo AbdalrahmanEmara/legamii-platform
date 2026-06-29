@@ -1,32 +1,42 @@
 import Link from "next/link";
-import { BookText, FlaskConical, Globe2, ScrollText, Sigma } from "lucide-react";
+import { BookText, FlaskConical, Globe2, ScrollText, Sigma, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { QuestionItem } from "@/components/teacher/question-bank/questionBankData";
 
 interface TeacherQuestionCardProps {
-  question: QuestionItem;
+  question: any;
   selected?: boolean;
+  subjects?: any[];
+  grades?: any[];
 }
 
-const difficultyStyles = {
-  Easy: "text-green-600",
-  Medium: "text-yellow-600",
-  Hard: "text-red-500",
+const difficultyStyles: Record<string, string> = {
+  easy: "text-green-600",
+  medium: "text-yellow-600",
+  hard: "text-red-500",
+  extra_hard: "text-purple-600",
 };
 
-const subjectIconMap = {
+const subjectIconMap: Record<string, any> = {
   Math: { icon: Sigma, className: "bg-red-100 text-red-500" },
+  Mathematics: { icon: Sigma, className: "bg-red-100 text-red-500" },
   Science: { icon: FlaskConical, className: "bg-secondary-50 text-secondary-500" },
   History: { icon: ScrollText, className: "bg-yellow-50 text-yellow-700" },
   Geography: { icon: Globe2, className: "bg-green-50 text-green-700" },
   English: { icon: BookText, className: "bg-primary-50 text-primary-600" },
 };
 
+const defaultSubjectVisual = { icon: HelpCircle, className: "bg-neutral-100 text-neutral-500" };
+
 export default function TeacherQuestionCard({
   question,
   selected = false,
+  subjects = [],
+  grades = [],
 }: TeacherQuestionCardProps) {
-  const subjectVisual = subjectIconMap[question.subject];
+  const subjectName = subjects.find(s => s.id === question.subject_id)?.name || "Unknown Subject";
+  const gradeName = grades.find(g => g.id === question.grade_id)?.name || "Unknown Grade";
+  
+  const subjectVisual = subjectIconMap[subjectName] || defaultSubjectVisual;
   const SubjectIcon = subjectVisual.icon;
 
   return (
@@ -47,11 +57,11 @@ export default function TeacherQuestionCard({
 
       <div className="space-y-xs2 min-w-0">
         <h2 className="font-secondary text-text text-[14px] leading-6 font-medium md:text-[16px]">
-          {question.title}
+          {question.question_text}
         </h2>
 
         <div className="gap-xs2 text-text grid text-[12px] leading-5 md:grid-cols-2 xl:grid-cols-4">
-          {question.answers.map((answer, index) => (
+          {(question.options || []).map((answer: string, index: number) => (
             <p key={`${question.id}-${index}`} className="font-secondary truncate">
               <span className="mr-1 text-neutral-700">{String.fromCharCode(65 + index)})</span>
               {answer}
@@ -60,16 +70,24 @@ export default function TeacherQuestionCard({
         </div>
 
         <div className="gap-xs2 pt-xxs flex flex-wrap items-center text-[10px] text-neutral-500">
-          <span className="px-xs2 py-xxs rounded-sm bg-neutral-100">Grade {question.grade}</span>
-          <span className="px-xs2 py-xxs rounded-sm bg-neutral-100">Term {question.term}</span>
-          <span className="px-xs2 py-xxs rounded-sm bg-neutral-100">{question.subject}</span>
-          <span className="px-xs2 py-xxs rounded-sm bg-neutral-100">{question.topic}</span>
-          <span className={cn("px-xs2 py-xxs rounded-sm", difficultyStyles[question.difficulty])}>
-            {question.difficulty}
-          </span>
-          <span className="px-xs2 py-xxs rounded-sm bg-neutral-100">
-            Used x{question.usedCount}
-          </span>
+          <span className="px-xs2 py-xxs rounded-sm bg-neutral-100">{gradeName}</span>
+          {question.term && (
+            <span className="px-xs2 py-xxs rounded-sm bg-neutral-100">Term {question.term}</span>
+          )}
+          <span className="px-xs2 py-xxs rounded-sm bg-neutral-100">{subjectName}</span>
+          {question.lesson && (
+            <span className="px-xs2 py-xxs rounded-sm bg-neutral-100">{question.lesson}</span>
+          )}
+          {question.difficulty && (
+            <span className={cn("px-xs2 py-xxs rounded-sm uppercase", difficultyStyles[question.difficulty] || "text-neutral-500")}>
+              {question.difficulty.replace('_', ' ')}
+            </span>
+          )}
+          {question.usedCount !== undefined && (
+            <span className="px-xs2 py-xxs rounded-sm bg-neutral-100">
+              Used x{question.usedCount}
+            </span>
+          )}
         </div>
       </div>
 

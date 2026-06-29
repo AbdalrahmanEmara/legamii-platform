@@ -59,9 +59,28 @@ export const ENDPOINTS = {
       `${v}/student-contest/${studentContestId}/detailed-summary`,
     rank: (studentContestId) => `${v}/student-contest/${studentContestId}/rank`,
   },
-  subject: {},
+  subject: {
+    list: `${v}/subjects`,
+    listStudent: `${v}/subjects/student`,
+  },
   grade: {
-    list: `${v}/grades`
+    list: `${v}/grades`,
+    subjects: (id) => `${v}/grades/${id}/subjects`,
+  },
+  questions: {
+    create: `${v}/questions`,
+    aiGenerate: `${v}/questions/ai-generate`,
+    list: (query = "") => `${v}/questions${query ? `?${query}` : ""}`,
+    myList: (query = "") => `${v}/questions/me${query ? `?${query}` : ""}`,
+    byIdStudent: (id) => `${v}/questions/${id}/student`,
+    byIdAdmin: (id) => `${v}/questions/${id}/admin`,
+    update: (id) => `${v}/questions/${id}`,
+    delete: (id) => `${v}/questions/${id}`,
+    addToContest: (contestId) => `${v}/questions/contest/${contestId}`,
+    createAndAttachToContest: (contestId) => `${v}/questions/contest/${contestId}/add-and-attach`,
+    stats: (questionId, contestId) => `${v}/questions/${questionId}/contest/${contestId}/stats`,
+    listByContest: (contestId) => `${v}/questions/contest/${contestId}`,
+    getByContestOrder: (contestId, order) => `${v}/questions/contest/${contestId}/${order}`,
   },
   quiz: {
     list: `${v}/quiz`, // GET
