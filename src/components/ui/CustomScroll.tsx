@@ -1,12 +1,17 @@
 "use client";
 import { useRef, useState } from "react";
-
+import { cn } from "@/lib/utils";
 interface CustomScrollProps {
   children: React.ReactNode;
-  thumbHeight?: number; // default 279
+  thumbHeight?: number;
+  className?: string;
 }
 
-export default function CustomScroll({ children, thumbHeight = 279 }: CustomScrollProps) {
+export default function CustomScroll({
+  children,
+  thumbHeight = 279,
+  className,
+}: CustomScrollProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [thumbTop, setThumbTop] = useState(0);
 
@@ -22,7 +27,12 @@ export default function CustomScroll({ children, thumbHeight = 279 }: CustomScro
   };
 
   return (
-    <div className="relative flex min-h-0 flex-1">
+    <div
+      className={cn(
+        "relative flex min-h-0 flex-1",
+        className
+      )}
+    >
       {/* Scrollable Content */}
       <div
         ref={contentRef}

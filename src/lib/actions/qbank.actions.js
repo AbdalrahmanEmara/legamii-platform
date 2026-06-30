@@ -24,7 +24,12 @@ export async function aiGenerateQuestionAction(data) {
 
 export async function getQuestionsAction(query) {
   try {
+    console.log("GET /questions query:", query);
+
     const res = await qbankService.getQuestions(query);
+
+    console.log("GET /questions response:", res);
+
     return res;
   } catch (err) {
     console.error("Error getting questions:", err);
@@ -34,7 +39,12 @@ export async function getQuestionsAction(query) {
 
 export async function getMyQuestionsAction(query) {
   try {
+    console.log("GET /questions/me query:", query);
+
     const res = await qbankService.getMyQuestions(query);
+
+    console.log("GET /questions/me response:", res);
+
     return res;
   } catch (err) {
     console.error("Error getting my questions:", err);

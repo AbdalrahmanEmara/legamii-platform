@@ -5,7 +5,8 @@ import { useMemo, useState, useTransition } from "react";
 import ReusableWindow from "@/components/ui/ReusableWindow";
 import { cn } from "@/lib/utils";
 import { createQuestionAction, updateQuestionAction, deleteQuestionAction } from "@/lib/actions/qbank.actions";
-
+import SystemConfirm from "@/components/ui/SystemConfirm";
+import SystemValidation from "@/components/ui/SystemValidation";
 interface TeacherQuestionEditorModalProps {
   mode: "add" | "edit";
   question?: any;
@@ -14,8 +15,8 @@ interface TeacherQuestionEditorModalProps {
 }
 
 const answerLetters = ["A", "B", "C", "D"] as const;
+//const editableDifficulties = ["easy", "medium", "hard","extra hard"];
 const editableDifficulties = ["easy", "medium", "hard"];
-
 export default function TeacherQuestionEditorModal({
   mode,
   question,
@@ -29,43 +30,102 @@ export default function TeacherQuestionEditorModal({
   const initialCorrectIndex = question ? initialAnswers.indexOf(question.correct_answer) : 0;
 
   const [questionText, setQuestionText] = useState(question?.question_text ?? "");
-  const [gradeId, setGradeId] = useState(question?.grade_id ?? grades?.[0]?.id ?? "");
-  const [term, setTerm] = useState<"1" | "2">(question?.term ? String(question.term) as "1"|"2" : "1");
-  const [subjectId, setSubjectId] = useState(question?.subject_id ?? subjects?.[0]?.id ?? "");
+  const [term, setTerm] = useState<"1" | "2">(question?.term ? String(question.term) as "1" | "2" : "1");
+  const [gradeId, setGradeId] = useState(
+    question?.grade?.id ?? grades?.[0]?.id ?? ""
+  );
+
+  const [subjectId, setSubjectId] = useState(
+    question?.subject?.id ?? subjects?.[0]?.id ?? ""
+  );
   const [topic, setTopic] = useState(question?.lesson ?? "Quadratic Equations");
   const [difficulty, setDifficulty] = useState(question?.difficulty ?? "medium");
   const [correctAnswerIndex, setCorrectAnswerIndex] = useState(initialCorrectIndex !== -1 ? initialCorrectIndex : 0);
   const [answers, setAnswers] = useState(initialAnswers);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [validationError, setValidationError] = useState("");
 
-  const skillTags = useMemo(() => {
-    return [
-      "Quadratic Equations",
-      "Calculus",
-      "Chemistry",
-      "Algebra",
-      "Climate",
-      "Ancient Civilizations",
-      "Literary Devices",
-    ];
-  }, []);
+  //const skillTags = useMemo(() => {
+  //  return [
+  //    "Quadratic Equations",
+  //   "Calculus",
+  //   "Chemistry",
+  //    "Algebra",
+  //    "Climate",
+  //    "Ancient Civilizations",
+  //    "Literary Devices",
+  //  ];
+  //}, []);
+  const skillTags = [
+    "Problem Solving",
+    "Critical Thinking",
+    "Programming",
+    "Algorithms",
+    "Data Structures",
+    "Database",
+    "Networking",
+    "Operating Systems",
+    "Cybersecurity",
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Mathematics",
+    "Geometry",
+    "Algebra",
+    "Calculus",
+    "Statistics",
+    "Physics",
+    "Chemistry",
+    "Biology",
+    "History",
+    "Geography",
+    "Grammar",
+    "Reading",
+    "Writing",
+  ];
 
   const title = mode === "edit" ? "EDIT_QUESTION.SYS" : "ADD_QUESTION.SYS";
   const primaryLabel = mode === "edit" ? "Save" : "Create";
 
   const handleSave = () => {
-    const payload = {
-      subject_id: subjectId,
-      grade_id: gradeId,
-      difficulty,
-      lesson: topic,
-      term: parseInt(term, 10),
-      question_text: questionText,
-      options: answers,
-      correct_answer: answers[correctAnswerIndex],
-      tags: [topic]
-    };
+    if (!questionText.trim()) {
+      setValidationError("Please enter the question text.");
+      return;
+    }
+
+    if (answers.some((a) => !a.trim())) {
+      setValidationError("Please fill in all answer choices.");
+      return;
+    }
+    if (new Set(answers.map(a => a.trim())).size !== answers.length) {
+      setValidationError("Answer choices must be different.");
+      return;
+    }
+    if (!gradeId || !subjectId) {
+      setValidationError("Please select a grade and subject.");
+      return;
+    }
+    if (questionText.trim().length < 10) {
+      setValidationError("Question text is too short.");
+      return;
+    }
+
+    if (answers.every(a => !a.trim())) {
+      setValidationError("At least one answer is required.");
+      return;
+    }
 
     startTransition(async () => {
+      const payload = {
+        subject_id: subjectId,
+        grade_id: gradeId,
+        difficulty,
+        lesson: topic,
+        term: parseInt(term, 10),
+        question_text: questionText,
+        options: answers,
+        correct_answer: answers[correctAnswerIndex],
+        tags: [topic]
+      };
       try {
         if (mode === "add") {
           await createQuestionAction(payload);
@@ -79,8 +139,10 @@ export default function TeacherQuestionEditorModal({
     });
   };
 
+
   const handleDelete = () => {
     if (!question?.id) return;
+
     startTransition(async () => {
       try {
         await deleteQuestionAction(question.id);
@@ -240,7 +302,7 @@ export default function TeacherQuestionEditorModal({
             {mode === "edit" ? (
               <button
                 type="button"
-                onClick={handleDelete}
+                onClick={() => setShowDeleteDialog(true)}
                 disabled={isPending}
                 className="inline-flex min-w-[128px] items-center justify-center border border-red-300 bg-white px-base py-xs font-primary text-[11px] uppercase text-red-500 shadow-[2px_3px_0_0_rgba(255,0,85,0.08)] disabled:opacity-50"
               >
@@ -267,9 +329,28 @@ export default function TeacherQuestionEditorModal({
                 {isPending ? "Saving..." : primaryLabel}
               </button>
             </div>
+            {showDeleteDialog && (
+              <SystemConfirm
+                title="DELETE_QUESTION.SYS"
+                danger
+                loading={isPending}
+                message="This question will be permanently deleted. This action cannot be undone."
+                confirmText="Delete"
+                cancelText="Cancel"
+                onCancel={() => setShowDeleteDialog(false)}
+                onConfirm={handleDelete}
+              />
+            )}
+            {validationError && (
+              <SystemValidation
+                message={validationError}
+                onClose={() => setValidationError("")}
+              />
+            )}
           </div>
         </div>
       </ReusableWindow>
+
     </div>
   );
 }

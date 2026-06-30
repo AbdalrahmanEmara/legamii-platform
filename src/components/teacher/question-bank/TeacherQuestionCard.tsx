@@ -33,12 +33,18 @@ export default function TeacherQuestionCard({
   subjects = [],
   grades = [],
 }: TeacherQuestionCardProps) {
-  const subjectName = subjects.find(s => s.id === question.subject_id)?.name || "Unknown Subject";
-  const gradeName = grades.find(g => g.id === question.grade_id)?.name || "Unknown Grade";
-  
+  const subjectName = question.subject?.name ?? "Unknown Subject";
+  const gradeName = question.grade?.name ?? "Unknown Grade";
+
   const subjectVisual = subjectIconMap[subjectName] || defaultSubjectVisual;
   const SubjectIcon = subjectVisual.icon;
 
+  console.log({
+    subject_id: question.subject_id,
+    grade_id: question.grade_id,
+    subjectFound: subjects.find(s => s.id === question.subject_id),
+    gradeFound: grades.find(g => g.id === question.grade_id),
+  });
   return (
     <article
       className={cn(

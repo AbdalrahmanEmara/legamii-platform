@@ -17,11 +17,22 @@ const resetPasswordSchemaFields = () => {
     });
 };
 
-export const signupSchema = z.object({
+export const studentSignupSchema = z.object({
+  firstName: z.string().min(1, { message: "First name is required" }),
+  middleName: z.string().optional(),
+  lastName: z.string().min(1, { message: "Last name is required" }),
+  email: z.string().email({ message: "Invalid email" }),
+  grade_id: z.string().min(1, { message: "Grade is required" }),
+  password: resetPasswordSchemaFields(),
+  role: z.enum(["student"]),
+});
+
+export const teacherSignupSchema = z.object({
   firstName: z.string().min(1, { message: "First name is required" }),
   lastName: z.string().min(1, { message: "Last name is required" }),
   email: z.string().email({ message: "Invalid email" }),
   password: resetPasswordSchemaFields(),
+  role: z.enum(["teacher"]),
 });
 
 export const verifyEmailSchema = z.object({
@@ -48,4 +59,8 @@ export const resetPasswordSchema = z
 
 export const forgetPasswordSchema = z.object({
   email: z.string().email({ message: "Invalid email" }),
+});
+
+export const claimMissionSchema = z.object({
+  id: z.string().min(1, { message: "Mission ID is required" }),
 });

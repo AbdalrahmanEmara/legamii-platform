@@ -9,6 +9,7 @@ import ReusableWindow from "@/components/ui/ReusableWindow";
 import { cn } from "@/lib/utils";
 import TeacherQuestionCard from "@/components/teacher/question-bank/TeacherQuestionCard";
 import CustomScroll from "@/components/ui/CustomScroll";
+import { useRef} from "react";
 
 function FilterPill({
   label,
@@ -49,6 +50,8 @@ interface TeacherQuestionBankWorkspaceProps {
   subjects?: any[];
   grades?: any[];
   searchParams?: Record<string, string>;
+  currentPage?: number;
+  pageLimit?: number;
 }
 
 export default function TeacherQuestionBankWorkspace({
@@ -61,10 +64,13 @@ export default function TeacherQuestionBankWorkspace({
   subjects = [],
   grades = [],
   searchParams = {},
+  currentPage,
+  pageLimit,
+
 }: TeacherQuestionBankWorkspaceProps) {
   const router = useRouter();
   const pathname = usePathname();
-
+  
   // Local state for search input to allow typing without immediate navigation
   const [searchInput, setSearchInput] = useState(searchParams.search || "");
 
@@ -76,7 +82,7 @@ export default function TeacherQuestionBankWorkspace({
       }
     }, 500);
     return () => clearTimeout(timer);
-  }, [searchInput]);
+  }, [searchInput, searchParams.search]);
 
   const createQueryString = (name: string, value: string) => {
     const params = new URLSearchParams(searchParams);
@@ -101,8 +107,8 @@ export default function TeacherQuestionBankWorkspace({
   const difficulty = searchParams.difficulty || "All";
   const gradeId = searchParams.grade_id || "All";
   const term = searchParams.term || "All";
-  const page = parseInt(searchParams.page || "1", 10);
-  const limit = parseInt(searchParams.limit || "20", 10);
+  const page = currentPage ?? parseInt(searchParams.page || "1", 10);
+  const limit = pageLimit ?? parseInt(searchParams.limit || "20", 10);
 
   // Constants
   const scopes = ["Custom Made", "Public Questions"];
@@ -124,8 +130,11 @@ export default function TeacherQuestionBankWorkspace({
   return (
     <div className="mx-auto max-w-[1240px]">
       <div className="relative">
-        <ReusableWindow title="Q.BANK.SYS" className="overflow-hidden">
-          <div className="space-y-base p-sm md:p-base">
+        <ReusableWindow
+          title="Q.BANK.SYS"
+          className="flex h-[1100px] flex-col overflow-hidden"
+        >
+          <div className="flex flex-1 flex-col space-y-base p-sm md:p-base min-h-0">
             <div className="flex flex-col gap-sm border-b border-neutral-300 pb-base lg:flex-row lg:items-center lg:justify-between">
               <div className="space-y-xs2">
                 <h1 className="font-primary text-[28px] leading-none uppercase text-text md:text-[32px]">
@@ -233,29 +242,29 @@ export default function TeacherQuestionBankWorkspace({
               </div>
             </div>
 
-            <CustomScroll>
+            <CustomScroll className="min-h-0 flex-1">
 
-              <div className="max-h-[560px] space-y-sm overflow-y-auto pr-1 [scrollbar-color:#d4d4d4_transparent] [scrollbar-width:thin]">
-                {initialQuestions.length > 0 ? (
-                  initialQuestions.map((question) => (
-                    <TeacherQuestionCard
-                      key={question.id}
-                      question={question}
-                      selected={selectedQuestionId === question.id}
-                      subjects={subjects}
-                      grades={grades}
-                    />
-                  ))
-                ) : (
-                  <div className="rounded-lg border border-dashed border-neutral-300 bg-neutral-50 px-base py-xl text-center">
-                    <p className="font-primary text-[11px] uppercase text-text">No questions found</p>
-                    <p className="mt-xs2 font-secondary text-sm text-neutral-600">
-                      Try another filter combination or create a new question.
-                    </p>
-                  </div>
-                )}
-              </div>
-            </CustomScroll>
+                <div className="space-y-sm pr-1">
+                  {initialQuestions.length > 0 ? (
+                    initialQuestions.map((question) => (
+                      <TeacherQuestionCard
+                        key={question.id}
+                        question={question}
+                        selected={selectedQuestionId === question.id}
+                        subjects={subjects}
+                        grades={grades}
+                      />
+                    ))
+                  ) : (
+                    <div className="rounded-lg border border-dashed border-neutral-300 bg-neutral-50 px-base py-xl text-center">
+                      <p className="font-primary text-[11px] uppercase text-text">No questions found</p>
+                      <p className="mt-xs2 font-secondary text-sm text-neutral-600">
+                        Try another filter combination or create a new question.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </CustomScroll>
           </div>
         </ReusableWindow>
 

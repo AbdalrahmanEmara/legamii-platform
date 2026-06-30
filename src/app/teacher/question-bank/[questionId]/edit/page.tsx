@@ -15,7 +15,10 @@ export default async function EditTeacherQuestionPage({
   const resolvedParams = await params;
   const { questionId } = resolvedParams;
   const resolvedSearchParams = await searchParams;
-  const query = new URLSearchParams(resolvedSearchParams).toString();
+  const apiParams = new URLSearchParams(resolvedSearchParams);
+  apiParams.delete("scope");
+
+  const query = apiParams.toString();
   const scope = resolvedSearchParams?.scope || "Custom Made";
 
   const [publicRes, customRes, subjectsRes, gradesRes, questionRes] = await Promise.all([
@@ -46,11 +49,11 @@ export default async function EditTeacherQuestionPage({
       grades={gradesRes || []}
       searchParams={resolvedSearchParams}
       overlay={
-        <TeacherQuestionEditorModal 
-          mode="edit" 
-          question={question} 
-          subjects={subjectsRes || []} 
-          grades={gradesRes || []} 
+        <TeacherQuestionEditorModal
+          mode="edit"
+          question={question}
+          subjects={subjectsRes || []}
+          grades={gradesRes || []}
         />
       }
     />
