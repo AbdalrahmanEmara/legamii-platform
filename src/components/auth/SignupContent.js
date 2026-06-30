@@ -3,37 +3,54 @@ import { signupAction } from "@/lib/actions/auth.actions";
 import Btn1 from "../ui/Btn1";
 import GoogleBtn from "../ui/GoogleBtn";
 import FormInput from "./FormInput";
-// import GradeSelect from "./GradeSelect";
 import SigningContentHeader from "./SigningContentHeader";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useForm } from "react-hook-form";
-import { signupSchema } from "@/lib/validators";
+import { useForm, Controller } from "react-hook-form";
+import { studentSignupSchema, teacherSignupSchema } from "@/lib/validators";
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
+import GradeSelect from "./GradeSelect";
 
-export default function SignupContent() {
+const studentDefaultValues = {
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  grade_id: "",
+};
+
+const teacherDefaultValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+}
+
+export default function SignupContent({ grades, currentRole }) {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm({
-    resolver: zodResolver(signupSchema),
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-    },
+    resolver: zodResolver(currentRole === 'student' ? studentSignupSchema : teacherSignupSchema),
+    defaultValues: currentRole === "student" ? {
+      ...studentDefaultValues, role: "student"
+    } : { ...teacherDefaultValues, role: "teacher" },
   });
 
   const onSubmit = async (data) => {
     try {
-      const res = await signupAction(data);
+      const schema = currentRole === "student" ? studentSignupSchema : teacherSignupSchema;
+      const payload = schema.parse(data);
+
+      const res = await signupAction(payload);
 
       if (res?.success) {
         toast.success(res?.message);
@@ -54,22 +71,33 @@ export default function SignupContent() {
       />
 
       <form className="gap-base flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           <FormInput
             type="text"
             placeholder="First Name"
             label="First Name"
             id="firstName"
-            className="flex-1"
+            className="w-40 flex-1"
             {...register("firstName")}
             error={errors["firstName"]?.message}
           />
+          {currentRole === "student" &&
+            <FormInput
+              type="text"
+              placeholder="Middle Name"
+              label="Middle Name"
+              id="middleName"
+              className="w-40 flex-1"
+              {...register("middleName")}
+              error={errors["middleName"]?.message}
+            />
+          }
           <FormInput
             type="text"
             placeholder="Last Name"
             label="Last Name"
             id="lastName"
-            className="flex-1"
+            className="w-40 flex-1"
             {...register("lastName")}
             error={errors["lastName"]?.message}
           />
@@ -100,8 +128,15 @@ export default function SignupContent() {
             </button>
           }
         />
-        {/* <GradeSelect label="Grade" placeholder="Select your grade" /> */}
-
+        {currentRole === "student" &&
+          <Controller
+            name="grade_id"
+            control={control}
+            render={({ field }) => (
+              <GradeSelect grades={grades} label="Grade" placeholder="Select your grade" value={field.value} onChange={field.onChange} />
+            )}
+          />
+        }
         <Btn1 title="Sign Up" disabled={isSubmitting} className="bg-primary-500 mt-xs2" />
 
         <div className="inline-flex items-center justify-start gap-2 self-stretch">

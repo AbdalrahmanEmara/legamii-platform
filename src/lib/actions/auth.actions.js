@@ -10,14 +10,15 @@ import {
 import {
   forgetPasswordSchema,
   resetPasswordSchema,
-  signupSchema,
   loginSchema,
   verifyEmailSchema,
+  studentSignupSchema,
+  teacherSignupSchema,
 } from "../validators";
 
-export async function signupAction(payload) {
+export async function signupAction(payload, role) {
   try {
-    const validateSignup = signupSchema.safeParse(payload);
+    const validateSignup = role === "student" ? studentSignupSchema.safeParse(payload) : teacherSignupSchema.safeParse(payload);
     if (!validateSignup.success) {
       return { success: false, message: validateSignup.error.errors[0].message };
     }
@@ -54,8 +55,15 @@ export async function loginAction(payload) {
 
     const res = await login(validated.data);
 
+    // decode the JWT payload - no library needed
+    const [, payloadBase64] = res.token.split(".");
+    const { role } = JSON.parse(atob(payloadBase64));
+
+
+    // console.log("role: ----------------------------------------", role);
+
     const cookieStore = await cookies();
-    console.log("TOKEN: ", res?.token);
+    // console.log("TOKEN: ", res?.token);
     cookieStore.set("token", res?.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -63,7 +71,14 @@ export async function loginAction(payload) {
       maxAge: 60 * 60 * 24 * 7,
     });
 
-    return { success: true, message: res?.message };
+    cookieStore.set("role", role, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 7,
+    })
+
+    return { success: true, message: res?.message, role };
   } catch (err) {
     return { success: false, message: err?.message || "Failed Login" };
   }

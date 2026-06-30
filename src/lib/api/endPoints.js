@@ -69,6 +69,8 @@ export const ENDPOINTS = {
   subject: {},
   grade: {
     list: `${v}/grades`,
+    create: `${v}/grades`,
+    gradeSubject: ({ gradeId }) => `${v}/grades/${gradeId}/subjects`
   },
   quiz: {
     list: `${v}/quiz`, // GET
