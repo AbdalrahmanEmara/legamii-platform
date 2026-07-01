@@ -91,4 +91,8 @@ export const ENDPOINTS = {
     solve: (quiz_id, question_id) => `${v}/quiz/${quiz_id}/question/${question_id}`,
     byId: (quiz_id) => `${v}/quiz/${quiz_id}`,
   },
+  leaderboard: {
+    global: `${v}/leaderboard/global`,
+  },
+
 };

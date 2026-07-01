@@ -5,8 +5,14 @@ import UpcomingContests from "@/components/home/UpcomingContests";
 import WelcomeBack from "@/components/home/WelcomeBack";
 import Leaderboard from "@/components/ui/Leaderboard";
 import UpcomingContestsSkeleton from "@/components/Skeletons/UpcomingContestSkeleton";
+import { getGlobalLeaderboardAction } from "@/lib/actions/leaderboard.action";
+import GlobalLeaderboard from "@/components/home/GlobalLeaderboard";
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Load the first 100 students before rendering the page.
+  // This gives us an immediate leaderboard without waiting for the socket.
+  const leaderboardRes = await getGlobalLeaderboardAction(1, 100);
+    console.log(leaderboardRes);
   return (
     <div className="mx-auto px-base md:px-md xl:px-xl3">
       {/*
@@ -37,7 +43,9 @@ export default function HomePage() {
         </div>
         <div className="md:col-span-2 xl:col-start-2 xl:row-start-4 xl:row-end-11">
           {/* <Suspense fallback={<LeaderboardSkeleton />}> */}
-          <Leaderboard />
+          <GlobalLeaderboard
+            initialStudents={leaderboardRes.data.leaderboard}
+          />
           {/* </Suspense> */}
         </div>
       </div>

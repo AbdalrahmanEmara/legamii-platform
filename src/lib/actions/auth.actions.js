@@ -65,14 +65,14 @@ export async function loginAction(payload) {
     const cookieStore = await cookies();
     // console.log("TOKEN: ", res?.token);
     cookieStore.set("token", res?.token, {
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 60 * 60 * 24 * 7,
     });
 
     cookieStore.set("role", role, {
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 60 * 60 * 24 * 7,
