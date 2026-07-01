@@ -9,6 +9,10 @@ import Image from "next/image";
 import Logo from "../Logo";
 import { getProfileAction } from "@/lib/actions/student_profile.action";
 import MobileMenu from "./MobileMenu";
+import Btn1 from "../ui/Btn1";
+import { logoutAction } from "@/lib/actions/auth.actions";
+import { Router } from "next/router";
+import LogoutButton from "../auth/LogoutButton";
 
 function Header() {
   const [profile, setProfile] = useState(null);
@@ -75,6 +79,8 @@ function Header() {
             <Navigation />
           </div>
         </div>
+
+        <LogoutButton />
 
         {/* Mobile right — bell, hamburger */}
         <div className="flex items-center gap-6 md:hidden">

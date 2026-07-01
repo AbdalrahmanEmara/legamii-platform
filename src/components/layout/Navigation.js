@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
-  { href: "/home", label: "Home" },
-  { href: "/contests", label: "Contests" },
-  { href: "/practice", label: "Practice" },
-  { href: "/aiChat", label: "AI Chat" },
+  { href: "/student/home", label: "Home" },
+  { href: "/student/contests", label: "Contests" },
+  { href: "/student/practice", label: "Practice" },
+  { href: "/student/aiChat", label: "AI Chat" },
 ];
 
 export default function Navigation() {

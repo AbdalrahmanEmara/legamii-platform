@@ -59,11 +59,7 @@ export async function loginAction(payload) {
     const [, payloadBase64] = res.token.split(".");
     const { role } = JSON.parse(atob(payloadBase64));
 
-
-    // console.log("role: ----------------------------------------", role);
-
     const cookieStore = await cookies();
-    // console.log("TOKEN: ", res?.token);
     cookieStore.set("token", res?.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -111,5 +107,16 @@ export async function forgetPasswordAction(payload) {
     return { success: true, message: res?.message };
   } catch (err) {
     return { success: false, message: err?.message || "Failed Forget Password" };
+  }
+}
+
+export async function logoutAction() {
+  try {
+    const cookieStore = await cookies();
+    cookieStore.delete("token");
+    cookieStore.delete("role");
+    return { success: true };
+  } catch (err) {
+    return { success: false, message: err?.message || "Failed Logout" };
   }
 }

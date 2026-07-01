@@ -30,7 +30,7 @@ export default function ContestFilters({ current }) {
   const router = useRouter();
 
   function handleFilter(status) {
-    router.push(`/contests?status=${status}`);
+    router.push(`/student/contests?status=${status}`);
   }
   return (
     <nav className="p-xs pt-sm flex flex-1 flex-col gap-y-1">
