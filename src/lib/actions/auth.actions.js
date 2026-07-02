@@ -14,10 +14,14 @@ import {
   verifyEmailSchema,
   studentSignupSchema,
   teacherSignupSchema,
+  studentSignupSchema,
+  teacherSignupSchema,
 } from "../validators";
 
 export async function signupAction(payload, role) {
+export async function signupAction(payload, role) {
   try {
+    const validateSignup = role === "student" ? studentSignupSchema.safeParse(payload) : teacherSignupSchema.safeParse(payload);
     const validateSignup = role === "student" ? studentSignupSchema.safeParse(payload) : teacherSignupSchema.safeParse(payload);
     if (!validateSignup.success) {
       return { success: false, message: validateSignup.error.errors[0].message };
@@ -61,7 +65,7 @@ export async function loginAction(payload) {
 
     const cookieStore = await cookies();
     cookieStore.set("token", res?.token, {
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 60 * 60 * 24 * 7,

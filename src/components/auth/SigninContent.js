@@ -33,7 +33,7 @@ export default function SigninContent() {
         toast.success("Login successful");
         if (res?.role === "STUDENT")
           router.replace("/student/home");
-        else router.replace("/teacher/home")
+        else router.replace("/teacher/dashboard")
       } else {
         toast.error(res?.message);
       }
