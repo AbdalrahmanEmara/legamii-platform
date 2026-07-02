@@ -117,7 +117,7 @@ export default function GlobalLeaderboard({
             <div className="p-base">
 
                 <Link
-                    href="/features/leaderboard"
+                    href="/student/leaderboard"
                     className="flex justify-center rounded-lg border border-border py-sm text-text font-primary uppercase"
                 >
                     View Full Leaderboard

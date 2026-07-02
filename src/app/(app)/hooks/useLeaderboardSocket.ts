@@ -42,7 +42,7 @@ import {
   unsubscribeFromLeaderboard,
 } from "@/lib/sockets/leaderboard.socket";
 
-import { LeaderboardStudent } from "@/app/(app)/features/leaderboard/types";
+import { LeaderboardStudent } from "@/app/(app)/student/leaderboard/types";
 
 interface UseLeaderboardSocketProps {
   token?: string;

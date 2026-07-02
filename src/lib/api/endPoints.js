@@ -97,9 +97,6 @@ export const ENDPOINTS = {
     stats: (questionId, contestId) => `${v}/questions/${questionId}/contest/${contestId}/stats`,
     listByContest: (contestId) => `${v}/questions/contest/${contestId}`,
     getByContestOrder: (contestId, order) => `${v}/questions/contest/${contestId}/${order}`,
-    list: `${v}/grades`,
-    create: `${v}/grades`,
-    gradeSubject: ({ gradeId }) => `${v}/grades/${gradeId}/subjects`
   },
   quiz: {
     list: `${v}/quiz`, // GET

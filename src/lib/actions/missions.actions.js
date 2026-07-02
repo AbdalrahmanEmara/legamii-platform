@@ -1,4 +1,6 @@
 "use server";
+import "server-only";
+
 import { getDailyMissions, claimMission } from "../services/missions.service";
 import { claimMissionSchema } from "../validators";
 

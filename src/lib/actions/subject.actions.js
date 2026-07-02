@@ -1,4 +1,5 @@
 'use server';
+import "server-only";
 
 import { getAllSubjects, getStudentSubjects } from "../services/subject.service";
 

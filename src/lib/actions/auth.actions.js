@@ -1,4 +1,6 @@
 "use server";
+import "server-only";
+
 import { cookies } from "next/headers";
 import {
   forgetPassword,
@@ -14,14 +16,10 @@ import {
   verifyEmailSchema,
   studentSignupSchema,
   teacherSignupSchema,
-  studentSignupSchema,
-  teacherSignupSchema,
 } from "../validators";
 
 export async function signupAction(payload, role) {
-export async function signupAction(payload, role) {
   try {
-    const validateSignup = role === "student" ? studentSignupSchema.safeParse(payload) : teacherSignupSchema.safeParse(payload);
     const validateSignup = role === "student" ? studentSignupSchema.safeParse(payload) : teacherSignupSchema.safeParse(payload);
     if (!validateSignup.success) {
       return { success: false, message: validateSignup.error.errors[0].message };

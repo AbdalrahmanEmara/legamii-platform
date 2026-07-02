@@ -4,7 +4,6 @@ import "..//../globals.css";
 import CustomScroll from "@/components/ui/CustomScroll";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { getQuizList } from "@/lib/services/quiz.service";
 import FireIcon from "@/components/icons/FireIcon";
 import StartQuizButton from "@/components/practice/StartQuizButton";
 import { getAllGradesAction } from "@/lib/actions/grade.actions";

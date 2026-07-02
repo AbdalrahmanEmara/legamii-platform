@@ -6,7 +6,7 @@ export * from "./notifications.service";
 export * from "./quiz.service";
 export * from "./school.service";
 export * from "./streak.service";
-export * from "./students.servicee";
+export * from "./students.service";
 export * from "./student_contest.service";
 export * from "./student_profile.service";
 export * from "./subject.service";

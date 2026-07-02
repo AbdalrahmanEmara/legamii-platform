@@ -11,7 +11,7 @@ function SummaryPage({ quiz_id }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function fetch() {
+    async function loadQuizData() {
       try {
         const res = await getQuizByIdAction(quiz_id);
         console.log("Fetched quiz result:", res);
@@ -25,7 +25,7 @@ function SummaryPage({ quiz_id }) {
         setError(`Error fetching quiz: ${error}`);
       }
     }
-    fetch();
+    loadQuizData();
   }, [quiz_id]);
 
   if (!quizData) {

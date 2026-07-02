@@ -53,11 +53,8 @@ export default async function HomePage() {
           <GlobalLeaderboard
             initialStudents={leaderboardRes.data.leaderboard}
           />
-          {/* </Suspense> */}
-          <div className="md:col-span-2 xl:col-span-1 xl:col-start-2 xl:row-start-4 xl:row-end-11">
-            <Leaderboard />
-          </div>
         </div>
       </div>
-      );
+    </div>
+  );
 }

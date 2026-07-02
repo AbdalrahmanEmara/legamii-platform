@@ -1,4 +1,5 @@
 'use server';
+import "server-only";
 
 import { getAllGrades, getGradeSubjects } from "../services/grade.service";
 

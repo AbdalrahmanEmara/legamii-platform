@@ -1,4 +1,6 @@
 "use server";
+import "server-only";
+
 import { redirect } from "next/navigation";
 import { getQuestion, getQuestions, getQuizById, solveQuestion, startQuiz, finishQuiz, getQuizList } from "../services/quiz.service";
 

@@ -1,11 +1,12 @@
 "use server";
+import "server-only";
 
 import { getGlobalLeaderboard } from "../services/leaderboard.service";
 
 export async function getGlobalLeaderboardAction(page = 1, limit = 50) {
   try {
     const response = await getGlobalLeaderboard(page, limit);
-
+    console.log("getGlobalLeaderboardAction response:", response.data);
     return {
       success: true,
       data: response.data,

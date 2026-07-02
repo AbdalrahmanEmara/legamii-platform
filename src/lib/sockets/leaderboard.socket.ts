@@ -23,7 +23,7 @@
 // export const getLeaderboardSocket = () => socket;
 
 import { io, Socket } from "socket.io-client";
-import { LeaderboardStudent } from "@/app/(app)/features/leaderboard/types";
+import { LeaderboardStudent } from "@/app/(app)/student/leaderboard/types";
 
 let socket: Socket | null = null;
 
