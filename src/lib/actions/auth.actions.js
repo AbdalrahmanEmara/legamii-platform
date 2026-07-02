@@ -120,3 +120,19 @@ export async function logoutAction() {
     return { success: false, message: err?.message || "Failed Logout" };
   }
 }
+
+export async function getSessionAction() {
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+    const role = cookieStore.get("role")?.value;
+
+    if (!token || !role) {
+      return { success: false, message: "No session found" };
+    }
+
+    return { success: true, token, role };
+  } catch (err) {
+    return { success: false, message: err?.message || "Failed to get session" };
+  }
+}

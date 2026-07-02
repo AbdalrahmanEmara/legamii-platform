@@ -8,22 +8,24 @@ import HamburgerIcon from "../icons/HamburgerIcon";
 import Image from "next/image";
 import Logo from "../Logo";
 import { getProfileAction } from "@/lib/actions/student_profile.action";
+import { getProfileAction as getTeacherProfileAction } from "@/lib/actions/teacher_profile.action";
 import MobileMenu from "./MobileMenu";
-import Btn1 from "../ui/Btn1";
-import { logoutAction } from "@/lib/actions/auth.actions";
-import { Router } from "next/router";
 import LogoutButton from "../auth/LogoutButton";
+import BellButton from "../ui/BellButton";
 
-function Header() {
+function Header({ variant = "student" }) {
   const [profile, setProfile] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const isStudent = variant === "student";
 
   useEffect(() => {
     let mounted = true;
 
     async function loadProfile() {
       try {
-        const p = await getProfileAction();
+        const p = isStudent
+          ? await getProfileAction()
+          : await getTeacherProfileAction();
         if (mounted) {
           setProfile(p);
         }
@@ -37,9 +39,9 @@ function Header() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [isStudent]);
 
-  const current_streak = profile?.current_streak ?? 0;
+  const currentStreak = profile?.current_streak ?? 0;
   const level = profile?.level ?? 0;
   const points = profile?.points ?? 0;
 
@@ -70,13 +72,13 @@ function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 z-50 flex h-xl4 w-full items-center justify-between border-b bg-neutral-950 px-md 2xl:px-xl3 py-2xl transition-transform duration-300 ${visible ? "translate-y-0" : "-translate-y-full"}`}
+        className={`h-xl4 px-md 2xl:px-xl3 py-2xl fixed top-0 left-0 z-50 flex w-full items-center justify-between border-b bg-neutral-950 transition-transform duration-300 ${visible ? "translate-y-0" : "-translate-y-full"}`}
       >
         {/* Left */}
         <div className="flex items-center">
-          <Logo textClass={'md:hidden 2xl:flex'} />
+          <Logo textClass={"md:hidden 2xl:flex"} />
           <div className="hidden md:block">
-            <Navigation />
+            <Navigation variant={variant} />
           </div>
         </div>
 
@@ -84,92 +86,101 @@ function Header() {
 
         {/* Mobile right — bell, hamburger */}
         <div className="flex items-center gap-6 md:hidden">
-          <button
-            onClick={handleClick}
-            className={`trophy-color ${active ? "trophy-ring" : ""}`}
-            style={{
-              color: active ? "#a855f7" : "#FAFAFA",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              transformOrigin: "top center",
-              display: "inline-block",
-            }}
-          >
-            <BellIcon size={24} color="currentColor" />
-          </button>
+          <BellButton active={active} onClick={handleClick} />
           <button
             onClick={() => setMenuOpen(true)}
-            className="flex size-6 items-center justify-center cursor-pointer"
+            className="flex size-6 cursor-pointer items-center justify-center"
           >
             <HamburgerIcon size={24} />
           </button>
         </div>
 
-        {/* Tablet+ right — fire, bell, level/xp, avatar */}
-        <div className="hidden md:flex flex-1 h-10 items-center justify-end gap-base">
-          {/* Fire + Streak */}
-          <div className="flex items-center gap-xxs">
-            <FireIcon />
-            <span className="font-primary text-xs font-bold text-neutral-50">
-              {current_streak} Days
-            </span>
-          </div>
-
-          {/* Bell with ring animation */}
-          <button
-            onClick={handleClick}
-            className={`trophy-color ${active ? "trophy-ring" : ""}`}
-            style={{
-              color: active ? "#a855f7" : "#FAFAFA",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              transformOrigin: "top center",
-              display: "inline-block",
-            }}
-          >
-            <BellIcon size={32} color="currentColor" />
-          </button>
-
-          {/* Level + Progress — desktop only */}
-          <div className="hidden lg:flex h-full flex-col justify-between">
-            <div className="flex items-end justify-between">
-              <span className="font-primary text-xs font-bold leading-4 text-neutral-50">
-                Lvl {level}
-              </span>
-              <span className="text-caption-1 font-secondary font-bold leading-3 text-neutral-50">
-                {points} XP
+        {/* Tablet+ right */}
+        {isStudent ? (
+          <div className="gap-base hidden h-10 flex-1 items-center justify-end md:flex">
+            <div className="gap-xxs flex items-center">
+              <FireIcon />
+              <span className="font-primary text-xs font-bold text-neutral-50">
+                {currentStreak} Days
               </span>
             </div>
-            <ProgressBar
-              progress={points / 1000 * 100}
-              height={3}
-              borderSquareColor="black"
-              squareSize="3"
-              className="w-43.5"
-            />
-          </div>
 
-          {/* Avatar — tablet+ */}
-          <button
-            onClick={() => { }}
-            className="overflow-hidden rounded-full"
-          >
-            <Image
-              src={profile?.avatar || "/images/avatar.png"}
-              alt="Avatar"
-              width={40}
-              height={40}
-              className="min-w-[40px]"
-            />
-          </button>
-        </div>
+            <button
+              onClick={handleClick}
+              className={`trophy-color ${active ? "trophy-ring" : ""}`}
+              style={{
+                color: active ? "#a855f7" : "#FAFAFA",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                transformOrigin: "top center",
+                display: "inline-block",
+              }}
+            >
+              <BellIcon size={32} color="currentColor" />
+            </button>
+
+            <div className="hidden h-full flex-col justify-between lg:flex">
+              <div className="flex items-end justify-between">
+                <span className="font-primary text-xs leading-4 font-bold text-neutral-50">
+                  Lvl {level}
+                </span>
+                <span className="text-caption-1 font-secondary leading-3 font-bold text-neutral-50">
+                  {points} XP
+                </span>
+              </div>
+              <ProgressBar
+                progress={(points / 1000) * 100}
+                height={3}
+                borderSquareColor="black"
+                squareSize="3"
+                className="w-43.5"
+              />
+            </div>
+
+            <button onClick={() => {}} className="overflow-hidden rounded-full">
+              <Image
+                src={profile?.avatar || "/images/avatar.png"}
+                alt="Avatar"
+                width={40}
+                height={40}
+                className="min-w-[40px]"
+              />
+            </button>
+          </div>
+        ) : (
+          <div className="gap-base hidden h-10 flex-1 items-center justify-end md:flex">
+            <button
+              onClick={handleClick}
+              className={`trophy-color ${active ? "trophy-ring" : ""}`}
+              style={{
+                color: active ? "#a855f7" : "#FAFAFA",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                transformOrigin: "top center",
+                display: "inline-block",
+              }}
+            >
+              <BellIcon size={32} color="currentColor" />
+            </button>
+
+            <button onClick={() => {}} className="overflow-hidden rounded-full">
+              <Image
+                src={profile?.avatar_url || "/images/avatar.png"}
+                alt="Avatar"
+                width={40}
+                height={40}
+                className="min-w-[40px]"
+              />
+            </button>
+          </div>
+        )}
       </header>
 
       {/* Mobile menu overlay */}
       {menuOpen && (
-        <MobileMenu profile={profile} onClose={() => setMenuOpen(false)} />
+        <MobileMenu profile={profile} variant={variant} onClose={() => setMenuOpen(false)} />
       )}
     </>
   );

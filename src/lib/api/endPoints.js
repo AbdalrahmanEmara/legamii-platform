@@ -17,7 +17,16 @@ export const ENDPOINTS = {
     update: (school_id) => `${v}/school/${school_id}`,
     delete: (school_id) => `${v}/school/${school_id}`,
   },
-  teacher: {},
+  teacher: {
+    profile: () => `${v}/teacher/me`,
+    updateProfile: () => `${v}/teacher/me`,
+    classes: () => `${v}/teacher/me/classes`,
+    statistics: () => `${v}/teacher/me/statistics`,
+    list: `${v}/teacher`,
+    byId: (id) => `${v}/teacher/${id}`,
+    update: (id) => `${v}/teacher/${id}`,
+    delete: (id) => `${v}/teacher/${id}`,
+  },
   student: {
     updateAcademic: `${v}/student/academic`,
   },
