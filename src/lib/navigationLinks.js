@@ -9,5 +9,5 @@ export const TEACHER_LINKS = [
   { href: "/teacher/dashboard", label: "Dashboard" },
   { href: "/teacher/classes", label: "Classes" },
   { href: "/teacher/contests", label: "Contests" },
-  { href: "/teacher/qBank", label: "QBank" },
+  { href: "/teacher/question-bank", label: "QBank" },
 ];

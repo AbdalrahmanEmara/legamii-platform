@@ -142,12 +142,23 @@ export default function TeacherQuestionBankWorkspace({
                 </h1>
               </div>
 
-              <Link
-                href="/teacher/question-bank/add"
-                className="inline-flex h-12 items-center justify-center self-start border border-text bg-primary-500 px-base font-primary text-[12px] uppercase text-neutral-950 shadow-[2px_3px_0_0_rgba(0,0,0,0.18)] transition-transform hover:-translate-y-0.5 lg:self-auto"
-              >
-                + Add Question
-              </Link>
+              <div className="flex flex-wrap gap-xs2 self-start lg:self-auto">
+                <Link
+                  href="/teacher/question-bank/add"
+                  className="inline-flex h-12 items-center justify-center border border-text bg-primary-500 px-base font-primary text-[12px] uppercase text-neutral-950 shadow-[2px_3px_0_0_rgba(0,0,0,0.18)] transition-transform hover:-translate-y-0.5"
+                >
+                  + Add Question
+                </Link>
+                <Link
+                  href="/teacher/question-bank/add-ai"
+                  className="inline-flex h-12 items-center justify-center gap-xs2 border border-neutral-400 bg-white px-base font-primary text-[12px] uppercase text-neutral-700 shadow-[2px_3px_0_0_rgba(0,0,0,0.08)] transition-transform hover:-translate-y-0.5"
+                >
+                  <span className="inline-flex h-5 items-center justify-center bg-neutral-950 px-xs2 font-primary text-[9px] text-white">
+                    AI
+                  </span>
+                  Generate
+                </Link>
+              </div>
             </div>
 
             <div className="space-y-sm border-b border-neutral-300 pb-sm">

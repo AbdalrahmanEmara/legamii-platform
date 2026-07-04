@@ -39,12 +39,6 @@ export default function TeacherQuestionCard({
   const subjectVisual = subjectIconMap[subjectName] || defaultSubjectVisual;
   const SubjectIcon = subjectVisual.icon;
 
-  console.log({
-    subject_id: question.subject_id,
-    grade_id: question.grade_id,
-    subjectFound: subjects.find(s => s.id === question.subject_id),
-    gradeFound: grades.find(g => g.id === question.grade_id),
-  });
   return (
     <article
       className={cn(
@@ -69,7 +63,7 @@ export default function TeacherQuestionCard({
         <div className="gap-xs2 text-text grid text-[12px] leading-5 md:grid-cols-2 xl:grid-cols-4">
           {(question.options || []).map((answer: string, index: number) => (
             <p key={`${question.id}-${index}`} className="font-secondary truncate">
-              <span className="mr-1 text-neutral-700">{String.fromCharCode(65 + index)})</span>
+              <span className="mr-1 text-neutral-700">{String.fromCharCode(65 + index)}</span>
               {answer}
             </p>
           ))}

@@ -28,8 +28,8 @@ async function request(method, endpoint, { body, params } = {}) {
   });
 
   if (!res.ok) {
-    const error = await res.json().catch(() => {});
-    throw new Error(error?.message ?? `HTTP ${res.status}: ${endpoint}`);
+    const error = await res.json().catch(() => { });
+    throw new Error(Array.isArray(error?.message) ? error.message.join(", ") : (error?.message ?? `HTTP ${res.status}: ${endpoint}`));
   }
 
   return res.json();
