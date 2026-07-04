@@ -1,6 +1,13 @@
 import "../../app/globals.css";
+import { FlagIcon } from "../icons/FlagIcon";
 
-export default function ContestQuestionList({ questions, currentIndex }) {
+
+
+export default function ContestQuestionList({
+  questions,
+  currentIndex,
+  onQuestionClick,
+}) {
   return (
     <div className="flex h-full w-[230px] flex-col  border-[#020203] bg-el-bg">
       {/* Header Tab-like */}
@@ -23,22 +30,30 @@ export default function ContestQuestionList({ questions, currentIndex }) {
           <div className="absolute left-[8px] top-[12px] bottom-0 w-[1px] bg-gray-300"></div>
 
           {questions.map((q, i) => {
-            const isSkipped = i < currentIndex;
             const isCurrent = i === currentIndex;
+            const isAnswered = q.isAnswered;
+
             return (
               <div key={q.questionId} className="relative mb-3 flex items-center">
                 {/* Horizontal line */}
                 <div className="absolute left-[-8px] w-[16px] h-[1px] bg-gray-300"></div>
-                <div
-                  className={`ml-3 cursor-default rounded px-1 body-3 transition-all duration-200 ${isCurrent
-                      ? "text-black font-bold"
-                      : isSkipped
+
+                <button
+                  onClick={() => onQuestionClick(i)}
+                  className={`ml-3 flex w-full items-center justify-between rounded px-1 body-3 transition-all duration-200
+          ${isCurrent
+                      ? "font-bold text-black"
+                      : isAnswered
                         ? "text-gray-400 line-through"
                         : "text-gray-600"
                     }`}
                 >
-                  #{` Question_${i + 1}`}
-                </div>
+                  <span>{`Question_${i + 1}`}</span>
+
+                  {q.isFlaged && (
+                    <FlagIcon className="shrink-0 w-[24px] h-[24px]" />
+                  )}
+                </button>
               </div>
             );
           })}

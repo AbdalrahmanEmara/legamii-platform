@@ -15,7 +15,7 @@ export default async function ContestsPage({ searchParams }) {
   } catch (error) {
     console.error(error);
   }
-
+  console.log(contestData)
   return (
     <ReusableWindow
       title="Contests_Challenges.sys"

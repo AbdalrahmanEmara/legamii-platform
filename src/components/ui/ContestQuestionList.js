@@ -1,4 +1,5 @@
-export default function ContestQuestionList({ questions, currentIndex }) {
+import { FlagIcon } from "../icons/FlagIcon";
+export default function ContestQuestionList({ questions, currentIndex, onQuestionClick }) {
   return (
     <div className="flex h-full w-[230px] flex-col border-[#020203] bg-el-bg">
       <div className="bg-color-white flex items-center justify-center border-b border-[#020203] px-6 py-2">
@@ -13,15 +14,30 @@ export default function ContestQuestionList({ questions, currentIndex }) {
         </div>
 
         {questions.map((q, i) => {
-          const isSkipped = i <= currentIndex;
           const isCurrent = i === currentIndex;
+          const isAnswered = q.isAnswered;
+
           return (
-            <div
-              key={q.questionId || i}
-              className={`mb-0.5 cursor-default rounded px-1 py-0.5 pl-4 font-mono text-xs transition-all duration-200 ${isCurrent ? "bg-purple-100 text-purple-600" : isSkipped ? "text-gray-400 line-through" : "text-gray-600"}`}
+            <button
+              key={q.questionId}
+              onClick={() => onQuestionClick(i)}
+              className={`
+        mb-1 flex w-full items-center justify-between rounded px-3 py-2
+        text-left font-mono text-xs transition-all duration-200
+        ${isCurrent
+                  ? "bg-purple-100 text-purple-600"
+                  : isAnswered
+                    ? "text-gray-400 line-through"
+                    : "text-gray-600"
+                }
+      `}
             >
-              #{`Question_${i + 1}`}
-            </div>
+              <span>{`Question_${i + 1}`}</span>
+
+              {q.isFlaged && (
+                <FlagIcon className="h-[.25px] w-[.25px]" />
+              )}
+            </button>
           );
         })}
       </div>

@@ -1,7 +1,14 @@
 import ContestPlayPage from "./ContestPlayPage";
 import { getContestQuestionsAction, getContestRankAction } from "@/lib/actions/student_contest.action";
 
-export default async function Page({ params }) {
+export default async function Page({ params, searchParams }) {
+  searchParams = await searchParams;
+
+  const title = searchParams.title;
+  const start = searchParams.start;
+  const duration = Number(searchParams.duration);
+
+
   const resolvedParams = await params;
 
   const studentContestId = resolvedParams.studentContestId;
@@ -11,24 +18,6 @@ export default async function Page({ params }) {
 
   const questionsMetadata =
     questionsResponse?.data ?? [];
-  /*let initialLeaderboard = await getContestRankAction(studentContestId);
-
-  if (!questionsMetadata) {
-    return <div className="p-8 text-center text-white">Failed to load contest questions.</div>;
-  }
-  if (!initialLeaderboard) {
-    initialLeaderboard = [];
-  }
-
-  console.log("initialLeaderboard", initialLeaderboard);
-  console.log("type", typeof initialLeaderboard);
-  console.log("isArray", Array.isArray(initialLeaderboard));
-  // Map first_name to firstName for the leaderboard
-  const mappedLeaderboard = (initialLeaderboard?.data ?? []).map((user) => ({
-    ...user,
-    firstName: user.first_name || user.firstName,
-  }));
-*/
 
   let initialLeaderboard = await getContestRankAction(studentContestId);
 
@@ -45,6 +34,9 @@ export default async function Page({ params }) {
         studentContestId={studentContestId}
         initialQuestionsMetadata={questionsMetadata}
         initialLeaderboard={mappedLeaderboard}
+        title={title}
+        start={start}
+        duration={duration}
       />
     </div>
   );

@@ -235,7 +235,7 @@ export default function LeaderboardPage() {
           </div>
 
           <Link
-            href="/home"
+            href="/student/home"
             className="h-9 border-2 border-black bg-primary-100 px-3 leading-9 label-1 hover:bg-primary-200"
           >
             ← BACK

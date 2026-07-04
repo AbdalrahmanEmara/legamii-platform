@@ -38,15 +38,23 @@ export async function registerContestAction(classId, contestId) {
 }
 
 // START contest
-export async function startContestAction(classId, contestId, timeLimit) {
+// export async function startContestAction(classId, contestId, timeLimit) {
+//   try {
+//     const res = await startContest(classId, contestId);
+//     const studentContestId = res?.data?.studentContestId ?? res?.studentContestId;
+//     if (studentContestId) {
+//       const params = timeLimit ? `?timeLimit=${timeLimit}` : "";
+//       redirect(`/student/contests/play/${studentContestId}${params}`);
+//     }
+//     return res;
+//   } catch (err) {
+//     console.error("Error starting contest:", err);
+//     throw err;
+//   }
+// }
+export async function startContestAction(classId, contestId) {
   try {
-    const res = await startContest(classId, contestId);
-    const studentContestId = res?.data?.studentContestId ?? res?.studentContestId;
-    if (studentContestId) {
-      const params = timeLimit ? `?timeLimit=${timeLimit}` : "";
-      redirect(`/contests/play/${studentContestId}${params}`);
-    }
-    return res;
+    return await startContest(classId, contestId);
   } catch (err) {
     console.error("Error starting contest:", err);
     throw err;
