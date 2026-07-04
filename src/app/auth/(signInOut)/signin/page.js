@@ -10,7 +10,7 @@ export default function SignIn() {
       <ReusableWindow title="Sing_Up.sys" className="min-h-217 w-200 max-w-full">
         <AuthHeader
           prompt={"Don't have account yet?"}
-          to={"/auth/signup"}
+          to={"/auth/role"}
           linkTitle={"Create one"}
         />
 

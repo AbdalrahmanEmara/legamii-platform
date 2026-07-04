@@ -5,15 +5,15 @@ import LogoWord from "@/components/ui/LogoWord";
 import ReusableWindow from "@/components/ui/ReusableWindow";
 import { getAllGrades } from "@/lib/services/grade.service";
 
-export default async function page() {
+export default async function Page({ searchParams }) {
+  const params = await searchParams;
+  const role = params?.role || "student";
   let grades = [];
-  const role = 'student';
 
   if (role === "student") {
     try {
       const res = await getAllGrades();
       grades = res?.data;
-      console.log(grades);
     } catch (err) {
       console.error("Error fetching grades. ", err);
     }

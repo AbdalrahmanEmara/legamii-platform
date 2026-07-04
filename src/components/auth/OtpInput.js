@@ -1,13 +1,38 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Btn1 from "../ui/Btn1";
 import { useRouter } from "next/navigation";
 
 export default function OtpInput({ length = 6, onComplete, email }) {
+  const router = useRouter();
   const [otp, setOtp] = useState(new Array(length).fill(""));
+  const [timeLeft, setTimeLeft] = useState(3600);
+  const [expired, setExpired] = useState(false);
   const inputRefs = useRef([]);
-  // const [timer, setTimer] = useState(60);
+
+  useEffect(() => {
+    if (expired) return;
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          setExpired(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [expired]);
+
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+  };
 
   const handleChange = (el, index) => {
     if (isNaN(el.value)) return;
@@ -16,15 +41,13 @@ export default function OtpInput({ length = 6, onComplete, email }) {
     newOtp[index] = el.value.substring(el.value.length - 1);
     setOtp(newOtp);
 
-    // Move focus to the next input
     if (el.value && index < length - 1) {
       inputRefs.current[index + 1].focus();
     }
   };
 
   const handleOnClick = () => {
-    // Trigger callback if the OTP is complete
-    if (otp.join("").length === length) {
+    if (otp.join("").length === length && !expired) {
       onComplete(email, otp.join(""));
     }
   };
@@ -37,7 +60,7 @@ export default function OtpInput({ length = 6, onComplete, email }) {
 
   const handlePaste = (e) => {
     const data = e.clipboardData.getData("text").split("");
-    if (data.length === length) {
+    if (data.length === length && !expired) {
       setOtp(data);
       inputRefs.current[length - 1].focus();
       onComplete(email, data.join(""));
@@ -63,14 +86,33 @@ export default function OtpInput({ length = 6, onComplete, email }) {
           />
         ))}
       </div>
-      <p className="text-primary-600 font-secondary mt-4 flex justify-end text-sm leading-5 font-normal">
-        Otp expires in 60min
-      </p>
+      {expired ? (
+        <p className="mt-4 text-right text-sm leading-5 font-normal text-red-500">
+          OTP expired
+        </p>
+      ) : (
+        <p className="text-primary-600 font-secondary mt-4 text-right text-sm leading-5 font-normal">
+          OTP expires in {formatTime(timeLeft)}
+        </p>
+      )}
+      {expired && (
+        <p className="font-secondary mt-2 text-center text-sm leading-5 font-normal text-sec-text">
+          Please{" "}
+          <button
+            type="button"
+            onClick={() => router.push("/auth/role")}
+            className="text-primary-600 font-primary text-xs font-bold uppercase underline"
+          >
+            sign up again
+          </button>{" "}
+          to get a new OTP
+        </p>
+      )}
       <Btn1
-        title={"continue"}
-        className={"mt-8 w-full"}
+        title="continue"
+        className="mt-8 w-full"
         onClick={handleOnClick}
-        disabled={!otp.every((d) => d)}
+        disabled={!otp.every((d) => d) || expired}
       />
     </div>
   );
