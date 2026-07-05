@@ -81,7 +81,7 @@ export default function ContestCard({ contest }) {
         </div>
       </div>
       <Btn1
-        link={contest.status === "HISTORY" ? `/student/contests/summary/${contest.studentContestId}` : `/student/contests/${contest.classId}/${contest.contestId}`}
+        link={contest.status === "HISTORY" ? `/student/contests/detailed-summary/${contest.studentContestId}` : `/student/contests/${contest.classId}/${contest.contestId}`}
         // title={contest.status === "LIVE" ? "Join Now" : contest.isRegistered ? "View Details" : "Register"}
         title={buttonText}
         className="2xl:self-end 2xl:justify-self-end"

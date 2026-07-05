@@ -7,6 +7,7 @@ export async function createQuestion(data) {
 }
 
 export async function aiGenerateQuestion(data) {
+  console.log("data in service : " , data)
   return await api.post(ENDPOINTS.questions.aiGenerate, data);
 }
 

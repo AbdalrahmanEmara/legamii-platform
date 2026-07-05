@@ -15,6 +15,7 @@ export async function createQuestionAction(data) {
 
 export async function aiGenerateQuestionAction(data) {
   try {
+    console.log("data : ", data)
     const res = await qbankService.aiGenerateQuestion(data);
     return res;
   } catch (err) {

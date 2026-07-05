@@ -106,7 +106,7 @@ export default function ContestSummaryPage({
 
                     {/* Action Button */}
                     <button
-                        onClick={() => router.push("/home")}
+                        onClick={() => router.push("/student/home")}
                         className="label-1 w-full rounded border border-border bg-white py-sm px-md font-medium text-text transition-colors hover:bg-neutral-50"
                     >
                         Return Home

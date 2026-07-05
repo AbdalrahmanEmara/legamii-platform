@@ -44,7 +44,7 @@ export default function TeacherAIQuestionModal({
       const payload = {
         subject_id: subjectId,
         grade_id: gradeId,
-        term,
+        term: String(term),
         lesson: lesson.trim(),
         difficulty,
       };
