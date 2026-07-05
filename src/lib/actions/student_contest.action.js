@@ -44,7 +44,7 @@ export async function startContestAction(classId, contestId, timeLimit) {
     const studentContestId = res?.data?.studentContestId ?? res?.studentContestId;
     if (studentContestId) {
       const params = timeLimit ? `?timeLimit=${timeLimit}` : "";
-      redirect(`/contests/play/${studentContestId}${params}`);
+      redirect(`/student/contests/play/${studentContestId}${params}`);
     }
     return res;
   } catch (err) {

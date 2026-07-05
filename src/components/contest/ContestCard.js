@@ -58,7 +58,7 @@ export default function ContestCard({ contest }) {
         </div>
       </div>
       <Btn1
-        link={`/contests/${contest.classId}/${contest.contestId}`}
+        link={`/student/contests/${contest.classId}/${contest.contestId}`}
         title={contest.status === "LIVE" ? "Join Now" : contest.isRegistered ? "View Details" : "Register"}
         className="2xl:self-end 2xl:justify-self-end"
       />

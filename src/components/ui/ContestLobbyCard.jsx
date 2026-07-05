@@ -63,7 +63,7 @@ const handleContestAction = async () => {
     if (!res?.studentContestId) return;
 
     router.push(
-      `/contests/play/${res.studentContestId}`
+      `/student/contests/play/${res.studentContestId}`
     );
 
     return;

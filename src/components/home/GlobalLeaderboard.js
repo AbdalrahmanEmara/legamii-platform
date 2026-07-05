@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 
 import ReusableWindow from "../ui/ReusableWindow";
@@ -9,39 +9,37 @@ import CustomScroll from "../ui/CustomScroll";
 import Image from "next/image";
 
 import { useLeaderboardSocket } from "@/app/(app)/hooks/useLeaderboardSocket";
+import { getSessionAction } from "@/lib/actions/auth.actions";
 
-export default function GlobalLeaderboard({
-    initialStudents,
-}) {
 
+export default function GlobalLeaderboard({ initialStudents }) {
     // Holds the current Top 100 leaderboard.
     // Initially filled from the server response.
     const [students, setStudents] = useState(initialStudents);
     const [token, setToken] = useState("");
 
-    useEffect(() => {
-        const cookieToken =
-            document.cookie
-                .split("; ")
-                .find((row) => row.startsWith("token="))
-                ?.split("=")[1] ?? "";
-
-        setToken(cookieToken);
+    const handleLeaderboardUpdate = useCallback((updatedStudents) => {
+        setStudents(updatedStudents);
     }, []);
 
-    // const token = document.cookie
-    //     .split("; ")
-    //     .find((row) => row.startsWith("token="))
-    //     ?.split("=")[1] ?? "";
+    useEffect(() => {
+        const fetchSession = async () => {
+            const res = await getSessionAction();
+            if (!res.success) {
+                console.error("Failed to get session:", res.message);
+                return;
+            }
+            setToken(res.token);
+        };
+
+        fetchSession();
+    }, []);
 
     useLeaderboardSocket({
         token,
-
         // Whenever the backend broadcasts a new leaderboard,
         // simply replace the current state.
-        onLeaderboardUpdate: (updatedStudents) => {
-            setStudents(updatedStudents);
-        },
+        onLeaderboardUpdate: handleLeaderboardUpdate,
     });
 
     return (
@@ -62,7 +60,6 @@ export default function GlobalLeaderboard({
                         <div
                             key={student.student_id}
                             className={`px-sm py-base gap-base flex
-
                 ${isTopOne
                                     ? "bg-primary-300"
                                     : isTopTwo
@@ -70,9 +67,7 @@ export default function GlobalLeaderboard({
                                         : isTopThree
                                             ? "bg-primary-50"
                                             : "bg-white"
-                                }
-
-              `}
+                                }`}
                         >
 
                             {/* Rank */}

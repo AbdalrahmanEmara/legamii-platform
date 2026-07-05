@@ -74,7 +74,7 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
         await finishContestAction(studentContestId);
 
         router.push(
-          `/contests/summary/${studentContestId}`
+          `/student/contests/summary/${studentContestId}`
         );
       } catch (error) {
         console.error("Error finishing contest:", error);

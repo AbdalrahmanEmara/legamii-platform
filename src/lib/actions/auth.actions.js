@@ -63,7 +63,7 @@ export async function loginAction(payload) {
 
     const cookieStore = await cookies();
     cookieStore.set("token", res?.token, {
-      httpOnly: false,
+      httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 60 * 60 * 24 * 7,
