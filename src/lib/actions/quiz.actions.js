@@ -17,7 +17,7 @@ export async function startQuizAction({ subject_id, difficulty, subjectTagsMaste
   }
 
   // 2. Redirect securely after the mutation is done
-  redirect(`/practice/${res.quizId}`);
+  redirect(`/student/practice/${res.quizId}`);
 }
 
 export async function getQuizListAction() {

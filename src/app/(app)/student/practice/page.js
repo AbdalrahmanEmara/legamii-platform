@@ -1,6 +1,6 @@
 import ContentBox from "@/components/ui/ContentBox";
 import ReusableWindow from "@/components/ui/ReusableWindow";
-import "..//../globals.css";
+import "src/app/globals.css";
 import CustomScroll from "@/components/ui/CustomScroll";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { StatusBadge } from "@/components/ui/StatusBadge";
