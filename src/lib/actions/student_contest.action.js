@@ -43,8 +43,10 @@ export async function startContestAction(classId, contestId, timeLimit) {
     const res = await startContest(classId, contestId);
     const studentContestId = res?.data?.studentContestId ?? res?.studentContestId;
     if (studentContestId) {
-      const params = timeLimit ? `?timeLimit=${timeLimit}` : "";
-      redirect(`/student/contests/play/${studentContestId}${params}`);
+      const params = new URLSearchParams();
+      if (timeLimit) params.set("timeLimit", timeLimit);
+      params.set("contestId", contestId);
+      redirect(`/student/contests/play/${studentContestId}?${params.toString()}`);
     }
     return res;
   } catch (err) {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { useContestSocket } from "@/app/(app)/hooks/useContestSocket";
 import AnswerOption from "@/components/practice/AnswerOption";
 import ContestQuestionList from "@/components/ui/ContestQuestionList";
 import ReusableWindow from "@/components/ui/ReusableWindow";
@@ -10,25 +11,65 @@ import SystemLoading from "@/components/ui/SystemLoading";
 import ContestLeaderboard from "@/components/ui/ContestLeaderboard";
 import { useRouter } from "next/navigation";
 import { getContestQuestionAction, submitContestAnswerAction, finishContestAction } from "@/lib/actions/student_contest.action";
+import { X } from "lucide-react";
+import toast from "react-hot-toast";
+import { getSessionAction } from "@/lib/actions/auth.actions";
 
 const LETTERS = ["A)", "B)", "C)", "D)"];
-const optionKeys = ["a", "b", "c", "d"];
+// const optionKeys = ["a", "b", "c", "d"];
 
-export default function ContestPlayPage({ studentContestId, initialQuestionsMetadata, initialLeaderboard }) {
+export default function ContestPlayPage({ studentContestId, contestId, initialQuestionsMetadata, initialLeaderboard }) {
   const router = useRouter();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selected, setSelected] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(600); // 00:29 basically
+  const [timeLeft, setTimeLeft] = useState(600);
   const [finished, setFinished] = useState(false);
 
-  const [leaderboard] = useState(initialLeaderboard);
+  const [leaderboard, setLeaderboard] = useState(initialLeaderboard);
   const [questionsMetadata] = useState(initialQuestionsMetadata);
+
+  const [token, setToken] = useState(null);
+  const [currentUserId, setCurrentUserId] = useState("you");
+  const [clarifications, setClarifications] = useState([]);
+  const [finishReason, setFinishReason] = useState(null);
 
   const [currentQuestionDetail, setCurrentQuestionDetail] = useState(null);
   const [isLoadingQuestion, setIsLoadingQuestion] = useState(true);
 
+  // Fetch session token
+  useEffect(() => {
+    const fetchToken = async () => {
+      const res = await getSessionAction();
+      if (!res.success) return;
+      setToken(res.token);
+      if (res.user?.id) setCurrentUserId(res.user.id);
+    };
+    fetchToken();
+  }, []);
+
   const isLast = currentIndex === questionsMetadata.length - 1;
+
+  // Real-time socket connection
+  useContestSocket({
+    token,
+    contestId,
+    studentContestId,
+    onJoined: (data) => {
+      if (data.remainingSeconds) setTimeLeft(data.remainingSeconds);
+    },
+    onStarted: (data) => {
+      const remaining = Math.floor((new Date(data.endsAt).getTime() - Date.now()) / 1000);
+      if (remaining > 0) setTimeLeft(remaining);
+    },
+    onLeaderboard: (data) => setLeaderboard(data.leaderboard),
+    onClarification: (data) => setClarifications((prev) => [...prev, data]),
+    onFinished: (data) => {
+      setFinishReason(data.reason);
+      setFinished(true);
+    },
+    onError: (msg) => console.error("Socket error:", msg),
+  });
 
   // Load current question detail
   const fetchCurrentQuestion = useCallback(async () => {
@@ -69,12 +110,18 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
   useEffect(() => {
     if (!finished) return;
 
+    const isTimeExpired = finishReason === "TIME_EXPIRED";
+    toast.success(
+      isTimeExpired ? "Time expired!" : "Contest Finished!",
+      { duration: 3000 }
+    );
+
     const finishContest = async () => {
       try {
         await finishContestAction(studentContestId);
-
+        await new Promise((r) => setTimeout(r, 1500));
         router.push(
-          `/student/contests/summary/${studentContestId}`
+          `/student/contests/detailed-summary/${studentContestId}`
         );
       } catch (error) {
         console.error("Error finishing contest:", error);
@@ -82,7 +129,7 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
     };
 
     finishContest();
-  }, [finished, studentContestId, router]);
+  }, [finished, finishReason, studentContestId, router]);
 
 
 
@@ -130,14 +177,12 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
     }
   };
 
-  console.log("QUESTION DETAIL", currentQuestionDetail);
   return (
     <div className="flex w-full max-w-[1384px] items-start justify-center gap-6 m-auto">
       {/* LEFT: LEADERBOARD WINDOW */}
       <ContestLeaderboard
         students={leaderboard}
-        //currentUserId={currentUser?.id}
-        currentUserId="you"
+        currentUserId={currentUserId}
       />
 
       {/* RIGHT: CONTEST CHALLENGE WINDOW */}
@@ -158,6 +203,30 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
               </h2>
               <Timer seconds={timeLeft} />
             </div>
+
+            {/* Clarification banner */}
+            {clarifications.length > 0 && (
+              <div className="flex flex-col">
+                {clarifications.map((c) => (
+                  <div
+                    key={c.id}
+                    className="flex items-center gap-3 bg-yellow-100 border-b border-yellow-300 px-6 py-3 text-sm"
+                  >
+                    <span className="font-bold shrink-0">📢</span>
+                    <span className="flex-1">{c.message}</span>
+                    <button
+                      onClick={() =>
+                        setClarifications((prev) =>
+                          prev.filter((item) => item.id !== c.id)
+                        )
+                      }
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* Question + Options Area */}
             <div className="flex flex-1 flex-col p-8 overflow-y-auto">
@@ -188,8 +257,6 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
                             onClick={() => handleSelect(option)}
                           />
                         ))}
-                        {console.log("QUESTION DETAIL", currentQuestionDetail)}
-
                       </div>
                     </div>
 
