@@ -27,12 +27,7 @@ export default function CustomScroll({
   };
 
   return (
-    <div
-      className={cn(
-        "relative flex min-h-0 flex-1",
-        className
-      )}
-    >
+    <div className={cn("relative flex min-h-0 flex-1", className)}>
       {/* Scrollable Content */}
       <div
         ref={contentRef}
@@ -43,7 +38,7 @@ export default function CustomScroll({
       </div>
 
       {/* Custom Scrollbar */}
-      <div className="bg-el-bg flex w-8 justify-center border-l border-[#262626]">
+      <div className="bg-el-bg flex w-8 justify-center rounded-br-2xl border-l border-[#262626]">
         <div className="relative h-full w-4">
           <div
             className="absolute w-full rounded-[4px] bg-[#D4D4D4]"

@@ -12,20 +12,20 @@ import { getProfileAction as getTeacherProfileAction } from "@/lib/actions/teach
 import MobileMenu from "./MobileMenu";
 import LogoutButton from "../auth/LogoutButton";
 import BellButton from "../ui/BellButton";
+import { useRouter } from "next/navigation";
 
 function Header({ variant = "student" }) {
   const [profile, setProfile] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const isStudent = variant === "student";
+  const router = useRouter();
 
   useEffect(() => {
     let mounted = true;
 
     async function loadProfile() {
       try {
-        const p = isStudent
-          ? await getProfileAction()
-          : await getTeacherProfileAction();
+        const p = isStudent ? await getProfileAction() : await getTeacherProfileAction();
         if (mounted) {
           setProfile(p);
         }
@@ -47,12 +47,9 @@ function Header({ variant = "student" }) {
 
   const [visible, setVisible] = useState(true);
   const lastScrollY = useRef(0);
-  const [active, setActive] = useState(false);
 
-  const handleClick = () => {
-    if (active) return;
-    setActive(true);
-    setTimeout(() => setActive(false), 500);
+  const handleNotificationClick = () => {
+    router.push("/student/notifications");
   };
 
   useEffect(() => {
@@ -86,7 +83,7 @@ function Header({ variant = "student" }) {
 
         {/* Mobile right — bell, hamburger */}
         <div className="flex items-center gap-6 md:hidden">
-          <BellButton active={active} onClick={handleClick} />
+          <BellButton onClick={handleNotificationClick} />
           <button
             onClick={() => setMenuOpen(true)}
             className="flex size-6 cursor-pointer items-center justify-center"
@@ -106,10 +103,9 @@ function Header({ variant = "student" }) {
             </div>
 
             <button
-              onClick={handleClick}
-              className={`trophy-color ${active ? "trophy-ring" : ""}`}
+              onClick={handleNotificationClick}
+              className="trophy-color"
               style={{
-                color: active ? "#a855f7" : "#FAFAFA",
                 background: "none",
                 border: "none",
                 cursor: "pointer",
@@ -117,7 +113,7 @@ function Header({ variant = "student" }) {
                 display: "inline-block",
               }}
             >
-              <BellIcon size={32} color="currentColor" />
+              <BellIcon size={32} color="#FAFAFA" />
             </button>
 
             <div className="hidden h-full flex-col justify-between lg:flex">
@@ -151,10 +147,9 @@ function Header({ variant = "student" }) {
         ) : (
           <div className="gap-base hidden h-10 flex-1 items-center justify-end md:flex">
             <button
-              onClick={handleClick}
-              className={`trophy-color ${active ? "trophy-ring" : ""}`}
+              onClick={handleNotificationClick}
+              className="trophy-color"
               style={{
-                color: active ? "#a855f7" : "#FAFAFA",
                 background: "none",
                 border: "none",
                 cursor: "pointer",
@@ -162,7 +157,7 @@ function Header({ variant = "student" }) {
                 display: "inline-block",
               }}
             >
-              <BellIcon size={32} color="currentColor" />
+              <BellIcon size={32} color="#FAFAFA" />
             </button>
 
             <button onClick={() => {}} className="overflow-hidden rounded-full">
