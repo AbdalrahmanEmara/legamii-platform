@@ -5,98 +5,22 @@ import Image from "next/image";
 import ReusableWindow from "./ReusableWindow";
 import CustomScroll from "./CustomScroll";
 
-// 🔹 Fake Data (Replace later with API data)
-// const leaderboardData = [
-//   {
-//     id: 1,
-//     name: "HELENA",
-//     level: 20,
-//     avatar: "/avatars/a1.png", // 🔸 Replace with your real images
-//   },
-//   {
-//     id: 2,
-//     name: "TYHHYT",
-//     level: 20,
-//     avatar: "/avatars/a2.png",
-//   },
-//   {
-//     id: 3,
-//     name: "FARAH",
-//     level: 20,
-//     avatar: "/avatars/a3.png",
-//   },
-//   {
-//     id: 4,
-//     name: "HENNA",
-//     level: 20,
-//     avatar: "/avatars/a4.png",
-//   },
-//   {
-//     id: 5,
-//     name: "SALMA",
-//     level: 20,
-//     avatar: "/avatars/a5.png",
-//   },
-//   {
-//     id: 6,
-//     name: "YOU",
-//     level: 8,
-//     avatar: "/avatars/a6.png",
-//   },
-//   {
-//     id: 7,
-//     name: "ALI",
-//     level: 20,
-//     avatar: "/avatars/a7.png",
-//   },
-//   {
-//     id: 8,
-//     name: "HELENA",
-//     level: 20,
-//     avatar: "/avatars/a1.png", // 🔸 Replace with your real images
-//   },
-//   {
-//     id: 9,
-//     name: "TYHHYT",
-//     level: 20,
-//     avatar: "/avatars/a2.png",
-//   },
-//   {
-//     id: 10,
-//     name: "FARAH",
-//     level: 20,
-//     avatar: "/avatars/a3.png",
-//   },
-//   {
-//     id: 11,
-//     name: "HENNA",
-//     level: 20,
-//     avatar: "/avatars/a4.png",
-//   },
-//   {
-//     id: 12,
-//     name: "SALMA",
-//     level: 20,
-//     avatar: "/avatars/a5.png",
-//   },
-// ];
-
-export default function Leaderboard({ students = [] }) { 
+export default function Leaderboard({ students = [] }) {
   return (
     <ReusableWindow
       className="flex h-[1004px] w-[413px] flex-col items-start items-stretch"
-      title="Global_Leaderboard.sys"
+      title="PARTICIPANT_LIST.sys"
     >
       <CustomScroll>
         {students.map((user, index) => {
-          const isTopOne = index === 0;
-          const isTopTwo = index === 1;
-          const isTopThree = index === 2;
-          // const isYou = `${user.firstName} ${user.lastName}` === "YOU";
-          const isYou = false;
+          /* const isTopOne = index === 0;
+           const isTopTwo = index === 1;
+           const isTopThree = index === 2;
+           // const isYou = `${user.firstName} ${user.lastName}` === "YOU";
+           const isYou = false;*/
 
           return (
-            <div
+            /*<div
               key={user.id}
               className={`px-sm py-base gap-base flex self-stretch ${
                 isTopOne
@@ -107,10 +31,14 @@ export default function Leaderboard({ students = [] }) {
                       ? "bg-primary-50"
                       : "bg-white"
               } ${isYou ? "border-y-2 border-black shadow-inner" : ""}`}
+            >*/
+            <div
+              key={user.id}
+              className={`px-sm py-base gap-base flex self-stretch`}
             >
               {/* Rank */}
               {/* <div className="label-1 w-10 font-bold">#{user.id}</div> */}
-              <div className="label-1 w-10 font-bold">#{index+1}</div>
+              <div className="label-1 w-10 font-bold">#{index + 1}</div>
 
               {/* Avatar */}
               <div className="border-border relative h-[50.304px] w-[50.304px] self-stretch">

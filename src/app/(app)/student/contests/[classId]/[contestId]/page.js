@@ -5,10 +5,6 @@ import { getContestLobby } from "@/lib/services/student_contest.service";
 
 export default async function ContestPage({ params }) {
   const { classId, contestId } = await params;
-  console.log("start")
-  console.log(classId, contestId);
-  console.log(params)
-  console.log("End")
 
   const res = await getContestLobby(
     classId,
@@ -21,7 +17,7 @@ export default async function ContestPage({ params }) {
 
   return (
     <div className="flex min-h-screen w-full items-start justify-center gap-8 p-4 pt-12 md:p-8">
-      <Leaderboard users={contest?.registeredStudents || []} />
+      <Leaderboard students={contest?.registeredStudents || []} />
 
       <ContestLobbyCard
         contest={contest}

@@ -13,6 +13,29 @@ const SubjectIcons = {
 }
 
 export default function ContestCard({ contest }) {
+  const normalizedStatus = contest.status?.toUpperCase();
+  const isRegistered = contest.isRegistered;
+  const isOngoing = normalizedStatus === "ONGOING";
+
+  const isUpcoming = normalizedStatus === "UPCOMING";
+
+  const isFinished = normalizedStatus === "HISTORY";
+
+  let buttonText = "";
+
+  if (isOngoing) {
+    buttonText = "JOIN NOW";
+  } else if (isUpcoming && isRegistered) {
+    buttonText = "VIEW DETAILS";
+  } else if (isUpcoming) {
+    buttonText = "REGISTER";
+  } else if (isFinished ) {
+    buttonText = "VIEW RESULT";
+  }
+  else{
+    buttonText = "VIEW DETAILS";
+  }
+
   return (
     <div key={contest.contestId} className={`p-base flex flex-col 2xl:flex-row justify-between gap-sm border border-border rounded-lg shadow-[2px_3px_4px_0px_rgba(0,0,0,1.00)]`}>
       <div className="flex flex-col gap-xs">
@@ -58,8 +81,9 @@ export default function ContestCard({ contest }) {
         </div>
       </div>
       <Btn1
-        link={`/student/contests/${contest.classId}/${contest.contestId}`}
-        title={contest.status === "LIVE" ? "Join Now" : contest.isRegistered ? "View Details" : "Register"}
+        link={contest.status === "HISTORY" ? `/student/contests/summary/${contest.studentContestId}` : `/student/contests/${contest.classId}/${contest.contestId}`}
+        // title={contest.status === "LIVE" ? "Join Now" : contest.isRegistered ? "View Details" : "Register"}
+        title={buttonText}
         className="2xl:self-end 2xl:justify-self-end"
       />
     </div>)

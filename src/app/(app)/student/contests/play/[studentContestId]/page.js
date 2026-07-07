@@ -2,6 +2,13 @@ import ContestPlayPage from "./ContestPlayPage";
 import { getContestQuestionsAction, getContestRankAction } from "@/lib/actions/student_contest.action";
 
 export default async function Page({ params, searchParams }) {
+  searchParams = await searchParams;
+
+  const title = searchParams.title;
+  const start = searchParams.start;
+  const duration = Number(searchParams.duration);
+
+
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
 
@@ -30,6 +37,9 @@ export default async function Page({ params, searchParams }) {
         contestId={contestId}
         initialQuestionsMetadata={questionsMetadata}
         initialLeaderboard={mappedLeaderboard}
+        title={title}
+        start={start}
+        duration={duration}
       />
     </div>
   );
