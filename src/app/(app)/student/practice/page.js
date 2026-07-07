@@ -6,8 +6,8 @@ import ProgressBar from "@/components/ui/ProgressBar";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import FireIcon from "@/components/icons/FireIcon";
 import StartQuizButton from "@/components/practice/StartQuizButton";
-import { getAllGradesAction } from "@/lib/actions/grade.actions";
-import { getQuizListAction } from "@/lib/actions/quiz.actions";
+import { getAllGradesAction } from "@/lib/actions/grade.action";
+import { getQuizListAction } from "@/lib/actions/quiz.action";
 
 async function page() {
   let subject;

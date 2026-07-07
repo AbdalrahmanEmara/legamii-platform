@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { useNotificationSocket } from "@/app/(app)/hooks/useNotificationSocket";
-import { getSessionAction } from "@/lib/actions/auth.actions";
+import { getSessionAction } from "@/lib/actions/auth.action";
 
 export default function NotificationListener() {
   const [token, setToken] = useState("");

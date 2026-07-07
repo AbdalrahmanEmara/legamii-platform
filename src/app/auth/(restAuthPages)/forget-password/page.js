@@ -1,7 +1,7 @@
 "use client";
 import FormInput from "@/components/auth/FormInput";
 import Btn1 from "@/components/ui/Btn1";
-import { forgetPasswordAction } from "@/lib/actions/auth.actions";
+import { forgetPasswordAction } from "@/lib/actions/auth.action";
 import { forgetPasswordSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";

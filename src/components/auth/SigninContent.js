@@ -9,7 +9,7 @@ import Btn1 from "../ui/Btn1";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/lib/validators";
-import { loginAction } from "@/lib/actions/auth.actions";
+import { loginAction } from "@/lib/actions/auth.action";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";

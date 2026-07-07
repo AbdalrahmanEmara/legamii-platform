@@ -1,7 +1,7 @@
 "use client";
 import { Suspense } from "react";
 import OtpInput from "@/components/auth/OtpInput";
-import { verifyEmailAction } from "@/lib/actions/auth.actions";
+import { verifyEmailAction } from "@/lib/actions/auth.action";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 

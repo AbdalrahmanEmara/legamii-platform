@@ -1,5 +1,5 @@
 "use client"
-import { logoutAction } from "@/lib/actions/auth.actions"
+import { logoutAction } from "@/lib/actions/auth.action"
 import { useRouter } from "next/navigation"
 import Btn1 from "../ui/Btn1"
 export default function LogoutButton() {

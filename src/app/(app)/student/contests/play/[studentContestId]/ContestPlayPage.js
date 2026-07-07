@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useContestSocket } from "@/app/(app)/hooks/useContestSocket";
 import AnswerOption from "@/components/practice/AnswerOption";
 import ContestQuestionList from "@/components/ui/ContestQuestionList";
@@ -10,18 +10,14 @@ import ProgressBar from "@/components/ui/ProgressBar";
 import SystemLoading from "@/components/ui/SystemLoading";
 import ContestLeaderboard from "@/components/ui/ContestLeaderboard";
 import { useRouter } from "next/navigation";
-import { getContestQuestionAction, submitContestAnswerAction, finishContestAction } from "@/lib/actions/student_contest.action";
 import { X } from "lucide-react";
-import toast from "react-hot-toast";
-import { getSessionAction } from "@/lib/actions/auth.actions";
-import { getContestQuestionAction, submitContestAnswerAction, finishContestAction, toggleQuestionFlagAction } from "@/lib/actions/student_contest.action";
+import { getSessionAction } from "@/lib/actions/auth.action";
 import { FlagIcon } from "@/components/icons/FlagIcon";
+import { finishContestAction, getContestQuestionAction, submitContestAnswerAction, toggleQuestionFlagAction } from "@/lib/actions/student_contest.action";
 
 const LETTERS = ["A)", "B)", "C)", "D)"];
-// const optionKeys = ["a", "b", "c", "d"];
 
-export default function ContestPlayPage({ studentContestId, contestId, initialQuestionsMetadata, initialLeaderboard }) {
-export default function ContestPlayPage({ studentContestId, initialQuestionsMetadata, initialLeaderboard, title, start, duration }) {
+export default function ContestPlayPage({ studentContestId, contestId, initialQuestionsMetadata, initialLeaderboard, title, start, duration }) {
   const router = useRouter();
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -30,7 +26,6 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
   const [finished, setFinished] = useState(false);
 
   const [leaderboard, setLeaderboard] = useState(initialLeaderboard);
-  const [questionsMetadata] = useState(initialQuestionsMetadata);
 
   const [token, setToken] = useState(null);
   const [currentUserId, setCurrentUserId] = useState("you");
@@ -39,6 +34,9 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
 
   const [currentQuestionDetail, setCurrentQuestionDetail] = useState(null);
   const [isLoadingQuestion, setIsLoadingQuestion] = useState(true);
+  const [questionsMetadata, setQuestionsMetadata] = useState(
+    initialQuestionsMetadata
+  );
 
   // Fetch session token
   useEffect(() => {
@@ -80,11 +78,7 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
     const meta = questionsMetadata[currentIndex];
     if (!meta) return;
     setIsLoadingQuestion(true);
-    // console.log("current meta : ", meta)
     const res = await getContestQuestionAction(studentContestId, meta.questionId);
-    // console.log("whole response : res.data : ")
-    // console.log(JSON.stringify(res.data, null, 2))
-    // console.log("res.data is : ",res.data);
     if (res) {
       setCurrentQuestionDetail(res.data);
       setSelected(res.data.answer || null); // if previously answered
@@ -96,27 +90,13 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
     fetchCurrentQuestion();
   }, [fetchCurrentQuestion]);
 
-  // Timer logic
-  // useEffect(() => {
-  //   if (finished || isLoadingQuestion) return;
-  //   const id = setInterval(() => {
-  //     setTimeLeft((t) => {
-  //       if (t <= 1) {
-  //         setFinished(true);
-  //         return 0;
-  //       }
-  //       return t - 1;
-  //     });
-  //   }, 1000);
-  //   return () => clearInterval(id);
-  // }, [finished, isLoadingQuestion]);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
     if (!start || !duration) return;
 
     const startDate = new Date(start);
-
-    let interval;
+    let finishedCalled = false;
 
     const updateRemaining = async () => {
       const elapsed = Math.floor(
@@ -127,107 +107,58 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
 
       setTimeLeft(remaining);
 
-      if (remaining === 0) {
-        clearInterval(interval);
-
+      if (remaining <= 0 && !finishedCalled) {
+        finishedCalled = true;
+        clearInterval(intervalRef.current);
         await finishContestAction(studentContestId);
-
-        router.push(
-          `/student/contests/detailed-summary/${studentContestId}`
-        );
+        router.push(`/student/contests/detailed-summary/${studentContestId}`);
       }
     };
 
     updateRemaining();
 
-    interval = setInterval(() => {
-      updateRemaining();
-    }, 1000);
+    intervalRef.current = setInterval(updateRemaining, 1000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(intervalRef.current);
   }, [start, duration, studentContestId, router]);
-
-  /*useEffect(() => {
-    if (!finished) return;
-
-    const isTimeExpired = finishReason === "TIME_EXPIRED";
-    toast.success(
-      isTimeExpired ? "Time expired!" : "Contest Finished!",
-      { duration: 3000 }
-    );
-
-    const finishContest = async () => {
-      try {
-        await finishContestAction(studentContestId);
-        await new Promise((r) => setTimeout(r, 1500));
-        router.push(
-          `/student/contests/detailed-summary/${studentContestId}`
-        );
-
-        if (timeLeft === 0) {
-          router.push(`/student/contests/summary/${studentContestId}`);
-        } else {
-          router.push(`/student/contests/detailed-summary/${studentContestId}`);
-        }
-      } catch (error) {
-        console.error("Error finishing contest:", error);
-      }
-    };
-
-    finishContest();
-  }, [finished, finishReason, studentContestId, router]);
-  }, [finished, timeLeft, studentContestId, router]);*/
-
-
 
   const handleSelect = (answerText) => {
     setSelected(answerText);
   };
 
   const processAnswer = async () => {
-    console.log("SUBMIT CLICKED");
     if (!selected && !isLast) return;
 
     if (selected && currentQuestionDetail) {
-      console.log("=== SUBMIT ===");
-      console.log("studentContestId:", studentContestId);
-      console.log("questionId:", currentQuestionDetail.questionId);
       const res = await submitContestAnswerAction(
         studentContestId,
         currentQuestionDetail.questionId,
-        {
-          answer: selected,
-        }
+        { answer: selected }
       );
 
       if (res) {
         setQuestionsMetadata((prev) =>
           prev.map((q) =>
             q.questionId === currentQuestionDetail.questionId
-              ? {
-                ...q,
-                isAnswered: true,
-              }
+              ? { ...q, isAnswered: true }
               : q
           )
         );
       }
+    }
 
-      if (isLast) {
-        await finishContestAction(studentContestId);
-
-        router.push(`/student/contests/summary/${studentContestId}`);
-
-        return;
-      } else {
-        setCurrentIndex((i) => i + 1);
-        setSelected(null);
-      }
-    };
+    if (isLast) {
+      await finishContestAction(studentContestId);
+      router.push(`/student/contests/summary/${studentContestId}?contestId=${contestId}`);
+    } else {
+      setCurrentIndex((i) => i + 1);
+      setSelected(null);
+    }
   }
   const handleSkip = async () => {
     if (isLast) {
-      setFinished(true);
+      await finishContestAction(studentContestId);
+      router.push(`/student/contests/summary/${studentContestId}?contestId=${contestId}`);
     } else {
       setCurrentIndex((i) => i + 1);
       setSelected(null);
@@ -235,38 +166,6 @@ export default function ContestPlayPage({ studentContestId, initialQuestionsMeta
   };
 
   const handleFlagQuestion = async () => {
-    console.log({
-      studentContestId,
-      questionId: currentQuestionDetail.questionId,
-    });
-    try {
-      await toggleQuestionFlagAction(studentContestId, currentQuestionDetail.questionId);
-      // Update the flag status in the local state
-      setQuestionsMetadata((prev) =>
-        prev.map((q) =>
-          q.questionId === currentQuestionDetail.questionId
-            ? {
-              ...q,
-              isFlaged: !q.isFlaged,
-            }
-            : q
-        )
-      );
-      // Toggle the flag status on the current question detail as well
-      setCurrentQuestionDetail((prev) => ({
-        ...prev,
-        isFlaged: !prev.isFlaged,
-      }));
-    } catch (error) {
-      console.error("Error flagging question:", error);
-    }
-  };
-
-  const handleFlagQuestion = async () => {
-    console.log({
-      studentContestId,
-      questionId: currentQuestionDetail.questionId,
-    });
     try {
       await toggleQuestionFlagAction(studentContestId, currentQuestionDetail.questionId);
       // Update the flag status in the local state

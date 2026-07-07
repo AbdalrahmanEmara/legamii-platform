@@ -8,7 +8,7 @@ import SummaryPage from "@/components/practice/SummaryPage";
 import ProgressBar from "@/components/ui/ProgressBar";
 import SystemLoading from "@/components/ui/SystemLoading";
 import { useEffect, useState } from "react";
-import { finishQuizAction, getQuestionAction, solveQuestionAction } from "@/lib/actions/quiz.actions";
+import { finishQuizAction, getQuestionAction, solveQuestionAction } from "@/lib/actions/quiz.action";
 
 const QUIZ_DURATION = 90;
 const LETTERS = ["A)", "B)", "C)", "D)"];

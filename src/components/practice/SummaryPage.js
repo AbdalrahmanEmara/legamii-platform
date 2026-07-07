@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import ReusableWindow from "../ui/ReusableWindow";
 import QuestionReviewCard from "./QuestionReviewCard";
-import { getQuizByIdAction } from "@/lib/actions/quiz.actions";
+import { getQuizByIdAction } from "@/lib/actions/quiz.action";
 import SystemLoading from "../ui/SystemLoading";
 import SystemError from "../ui/SystemError";
 

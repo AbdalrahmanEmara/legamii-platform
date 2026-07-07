@@ -1,8 +1,8 @@
 import TeacherQuestionBankPage from "@/components/teacher/question-bank/TeacherQuestionBankPage";
 import TeacherQuestionEditorModal from "@/components/teacher/question-bank/TeacherQuestionEditorModal";
-import { getQuestionsAction, getMyQuestionsAction } from "@/lib/actions/qbank.actions";
-import { getAllSubjectsAction } from "@/lib/actions/subject.actions";
-import { getAllGradesAction } from "@/lib/actions/grade.actions";
+import { getQuestionsAction, getMyQuestionsAction } from "@/lib/actions/qbank.action";
+import { getAllSubjectsAction } from "@/lib/actions/subject.action";
+import { getAllGradesAction } from "@/lib/actions/grade.action";
 
 export default async function AddTeacherQuestionPage({ searchParams }: { searchParams: any }) {
   const params = await searchParams;

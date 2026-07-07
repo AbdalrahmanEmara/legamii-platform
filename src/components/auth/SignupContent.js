@@ -1,5 +1,5 @@
 "use client";
-import { signupAction } from "@/lib/actions/auth.actions";
+import { signupAction } from "@/lib/actions/auth.action";
 import Btn1 from "../ui/Btn1";
 import GoogleBtn from "../ui/GoogleBtn";
 import FormInput from "./FormInput";

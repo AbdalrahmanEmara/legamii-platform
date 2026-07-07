@@ -4,7 +4,11 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import ReusableWindow from "@/components/ui/ReusableWindow";
 import { cn } from "@/lib/utils";
-import { createQuestionAction, updateQuestionAction, deleteQuestionAction } from "@/lib/actions/qbank.actions";
+import {
+  createQuestionAction,
+  updateQuestionAction,
+  deleteQuestionAction,
+} from "@/lib/actions/qbank.action";
 import SystemConfirm from "@/components/ui/SystemConfirm";
 import SystemValidation from "@/components/ui/SystemValidation";
 interface TeacherQuestionEditorModalProps {

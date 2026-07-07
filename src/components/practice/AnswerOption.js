@@ -1,6 +1,6 @@
 "use client";
 
-import { solveQuestionAction } from "@/lib/actions/quiz.actions";
+import { solveQuestionAction } from "@/lib/actions/quiz.action";
 
 function AnswerOption({ quiz_id, question_id, answer, text, selected, onClick }) {
   const handleSelect = async () => {

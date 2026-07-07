@@ -8,7 +8,7 @@ import { Check, Eye, EyeClosed, X } from "lucide-react";
 import toast from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPasswordSchema } from "@/lib/validators";
-import { resetPasswordAction } from "@/lib/actions/auth.actions";
+import { resetPasswordAction } from "@/lib/actions/auth.action";
 import { useForm } from "react-hook-form";
 
 const requirements = [

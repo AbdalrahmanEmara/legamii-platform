@@ -9,7 +9,7 @@ import CustomScroll from "../ui/CustomScroll";
 import Image from "next/image";
 
 import { useLeaderboardSocket } from "@/app/(app)/hooks/useLeaderboardSocket";
-import { getSessionAction } from "@/lib/actions/auth.actions";
+import { getSessionAction } from "@/lib/actions/auth.action";
 
 
 export default function GlobalLeaderboard({ initialStudents }) {
