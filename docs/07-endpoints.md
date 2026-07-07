@@ -1,0 +1,212 @@
+# 7. Endpoints
+
+## Location
+
+`src/lib/api/endPoints.js`
+
+## Purpose
+
+The `ENDPOINTS` object is the **single source of truth** for all API endpoint paths. It keeps URL strings out of service files and makes it easy to see all backend endpoints at a glance.
+
+## Structure
+
+```js
+import { API_VERSION } from "../constants";
+
+const v = `api/${API_VERSION}`;   // API version v1 → "api/v1"
+
+export const ENDPOINTS = {
+  domain: {
+    actionName: `${v}/path/to/endpoint`,          // static
+    dynamicAction: (param) => `${v}/path/${param}`, // dynamic
+  },
+};
+```
+
+### Rules
+
+| Type | Syntax | Example |
+|---|---|---|
+| **Static path** | Plain string | `list: \`\${v}/quiz\`` |
+| **Dynamic path** | Arrow function taking ID(s) | `byId: (id) => \`\${v}/quiz/\${id}\`` |
+| **Naming** | camelCase, noun-focused | `list`, `byId`, `update`, `delete`, or descriptive action name |
+
+## Complete Endpoints Reference
+
+### Auth
+```js
+auth: {
+  signup:        `${v}/auth/signup`,
+  verifyEmail:   `${v}/auth/verify-email`,
+  login:         `${v}/auth/login`,
+  resetPassword: `${v}/auth/reset-password`,
+  forgetPassword:`${v}/auth/forgot-password`,
+}
+```
+
+### School
+```js
+school: {
+  list:   `${v}/school`,
+  byId:   (id) => `${v}/school/${id}`,
+  update: (id) => `${v}/school/${id}`,
+  delete: (id) => `${v}/school/${id}`,
+}
+```
+
+### Teacher
+```js
+teacher: {
+  profile:       () => `${v}/teacher/me`,
+  updateProfile: () => `${v}/teacher/me`,
+  classes:       () => `${v}/teacher/me/classes`,
+  statistics:    () => `${v}/teacher/me/statistics`,
+  list:          `${v}/teacher`,
+  byId:          (id) => `${v}/teacher/${id}`,
+  update:        (id) => `${v}/teacher/${id}`,
+  delete:        (id) => `${v}/teacher/${id}`,
+}
+```
+
+### Student Profile
+```js
+studentProfile: {
+  profile:      () => `${v}/student/me`,
+  updateProfile:() => `${v}/student/me`,
+  statistics:   () => `${v}/student/me/statistics`,
+  badges:       () => `${v}/student/me/badges`,
+  classes:      () => `${v}/student/me/classes`,
+  contests:     () => `${v}/student/me/contests`,
+  activity:     () => `${v}/student/me/activity`,
+  subjectTags:  () => `${v}/student/me/subject-tags`,
+}
+```
+
+### Student (Academic)
+```js
+student: {
+  updateAcademic: `${v}/student/academic`,
+}
+```
+
+### Student Contest
+```js
+student_contest: {
+  list:             (classId, status) => `${v}/student-contest?classId=${classId || ""}&status=${status || ""}`,
+  lobby:            (classId, contestId) => `${v}/student-contest/class/${classId}/contest/${contestId}`,
+  register:         (classId, contestId) => `${v}/student-contest/class/${classId}/contest/${contestId}/register`,
+  start:            (classId, contestId) => `${v}/student-contest/class/${classId}/contest/${contestId}/start`,
+  questions:        (studentContestId) => `${v}/student-contest/${studentContestId}/questions`,
+  question:         (studentContestId, questionId) => `${v}/student-contest/${studentContestId}/question/${questionId}`,
+  submit:           (studentContestId, questionId) => `${v}/student-contest/${studentContestId}/question/${questionId}`,
+  flag:             (studentContestId, questionId) => `${v}/student-contest/${studentContestId}/question/${questionId}`,
+  finish:           (studentContestId) => `${v}/student-contest/${studentContestId}/finish`,
+  summary:          (studentContestId) => `${v}/student-contest/${studentContestId}/summary`,
+  detailedSummary:  (studentContestId) => `${v}/student-contest/${studentContestId}/detailed-summary`,
+  rank:             (studentContestId) => `${v}/student-contest/${studentContestId}/rank`,
+}
+```
+
+> **Note:** `submit`, `flag`, and `question` share the same URL because they differ by HTTP method (POST, PATCH, GET respectively).
+
+### Quiz
+```js
+quiz: {
+  list:      `${v}/quiz`,
+  start:     `${v}/quiz`,
+  finish:    (quiz_id) => `${v}/quiz/${quiz_id}`,
+  questions: (quiz_id) => `${v}/quiz/${quiz_id}/question`,
+  question:  (quiz_id, question_id) => `${v}/quiz/${quiz_id}/question/${question_id}`,
+  solve:     (quiz_id, question_id) => `${v}/quiz/${quiz_id}/question/${question_id}`,
+  byId:      (quiz_id) => `${v}/quiz/${quiz_id}`,
+}
+```
+
+### Questions (Question Bank)
+```js
+questions: {
+  create:                     `${v}/questions`,
+  aiGenerate:                 `${v}/questions/ai-generate`,
+  list:                       (query = "") => `${v}/questions${query ? `?${query}` : ""}`,
+  myList:                     (query = "") => `${v}/questions/me${query ? `?${query}` : ""}`,
+  byIdStudent:                (id) => `${v}/questions/${id}/student`,
+  byIdAdmin:                  (id) => `${v}/questions/${id}/admin`,
+  update:                     (id) => `${v}/questions/${id}`,
+  delete:                     (id) => `${v}/questions/${id}`,
+  addToContest:               (contestId) => `${v}/questions/contest/${contestId}`,
+  createAndAttachToContest:   (contestId) => `${v}/questions/contest/${contestId}/add-and-attach`,
+  stats:                      (questionId, contestId) => `${v}/questions/${questionId}/contest/${contestId}/stats`,
+  listByContest:              (contestId) => `${v}/questions/contest/${contestId}`,
+  getByContestOrder:          (contestId, order) => `${v}/questions/contest/${contestId}/${order}`,
+}
+```
+
+### Notifications
+```js
+notifications: {
+  list:                    (page = 1, limit = 20) => `${v}/notifications?page=${page}&limit=${limit}`,
+  unreadCount:             `${v}/notifications/unread-count`,
+  read:                    (notificationId) => `${v}/notifications/${notificationId}/read`,
+  readAll:                 `${v}/notifications/read-all`,
+  broadcasts:              `${v}/notifications/broadcasts`,
+  readBroadcast:           (broadcastId) => `${v}/notifications/broadcasts/${broadcastId}/read`,
+  broadcast:               `${v}/notifications/broadcast`,
+  sendContestClarification:`${v}/notifications/contest-clarification`,
+  contestClarification:    (contestId) => `${v}/notifications/contest-clarification/${contestId}`,
+}
+```
+
+### Subject
+```js
+subject: {
+  list:          `${v}/subjects`,
+  listStudent:   `${v}/subjects/student`,
+}
+```
+
+### Grade
+```js
+grade: {
+  list:     `${v}/grades`,
+  subjects: (id) => `${v}/grades/${id}/subjects`,
+}
+```
+
+### Leaderboard
+```js
+leaderboard: {
+  global: `${v}/leaderboard/global`,
+}
+```
+
+### Streak
+```js
+streak: {
+  get: `${v}/streak/me`,
+}
+```
+
+### Missions
+```js
+missions: {
+  daily: `${v}/missions/daily`,
+  claim: (id) => `${v}/missions/${id}/claim`,
+}
+```
+
+## Adding a New Endpoint
+
+1. Add the path definition to `ENDPOINTS` in `endPoints.js`
+2. Static → plain string, dynamic → arrow function
+3. Create/update the corresponding service file in `services/`
+4. Create/update the corresponding action file in `actions/`
+
+## Naming Convention
+
+- **List/Index:** `domain.list`
+- **Get by ID:** `domain.byId` or `domain.byIdAdmin` / `domain.byIdStudent`
+- **Create:** `domain.create`
+- **Update:** `domain.update`
+- **Delete:** `domain.delete`
+- **Custom actions:** Use descriptive names like `domain.register`, `domain.finish`, `domain.claim`, `domain.markAsRead`
+- **Grouped by domain:** All quiz endpoints under `quiz`, all contest endpoints under `student_contest`, etc.
