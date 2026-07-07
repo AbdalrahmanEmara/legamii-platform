@@ -7,8 +7,7 @@ import { markAllNotificationsAsReadAction } from "@/lib/actions/notifications.ac
 
 import { useState } from "react";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import Button from "@/components/ui/Button";
-import Btn1 from "@/components/ui/Btn1";
+// import Btn1 from "@/components/ui/Btn1";
 export default function NotificationsPage({ initialNotifications, initialUnreadCount }) {
   const [notifications, setNotifications] = useState(initialNotifications);
 
@@ -23,18 +22,18 @@ export default function NotificationsPage({ initialNotifications, initialUnreadC
   };
 
   //Mark all read if used
-  const handleReadAll = async () => {
-    await markAllNotificationsAsReadAction();
+  // const handleReadAll = async () => {
+  //   await markAllNotificationsAsReadAction();
 
-    setNotifications((prev) =>
-      prev.map((n) => ({
-        ...n,
-        is_read: true,
-      }))
-    );
+  //   setNotifications((prev) =>
+  //     prev.map((n) => ({
+  //       ...n,
+  //       is_read: true,
+  //     }))
+  //   );
 
-    setUnreadCount(0);
-  };
+  //   setUnreadCount(0);
+  // };
   console.log("unreadCount:", unreadCount);
   return (
     <div className="mx-auto flex flex-col rounded-lg">
@@ -68,11 +67,11 @@ export default function NotificationsPage({ initialNotifications, initialUnreadC
               ))}
             </div>
           </div>
-          {unreadCount > 0 && (
+          {/* {unreadCount > 0 && (
             <div className="px-sm flex justify-center pt-2 pb-4 mb-2">
               <Btn1 onClick={handleReadAll} title={"Mark all read"} />
             </div>
-          )}
+          )} */}
         </CustomScroll>
       </ReusableWindow>
     </div>

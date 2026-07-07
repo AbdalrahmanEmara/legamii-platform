@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 function Header({ variant = "student" }) {
   const [profile, setProfile] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoutPopupOpen, setLogoutPopupOpen] = useState(false);
   const isStudent = variant === "student";
   const router = useRouter();
 
@@ -78,8 +79,6 @@ function Header({ variant = "student" }) {
             <Navigation variant={variant} />
           </div>
         </div>
-
-        <LogoutButton />
 
         {/* Mobile right — bell, hamburger */}
         <div className="flex items-center gap-6 md:hidden">
@@ -172,6 +171,38 @@ function Header({ variant = "student" }) {
           </div>
         )}
       </header>
+
+      {/* Floating logout trigger — bottom right */}
+      <button
+        onClick={() => setLogoutPopupOpen(true)}
+        className="fixed bottom-6 right-6 z-50 flex size-12 items-center justify-center rounded-full bg-primary-500 shadow-lg transition-transform active:scale-95"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+      </button>
+
+      {/* Logout confirmation popup */}
+      {logoutPopupOpen && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60">
+          <div className="mx-4 w-full max-w-sm rounded-lg border border-neutral-700 bg-neutral-950 p-6 shadow-2xl">
+            <p className="font-primary text-center text-lg font-bold text-neutral-50">
+              Are you sure you want to logout?
+            </p>
+            <div className="mt-6 flex justify-center gap-4">
+              <button
+                onClick={() => setLogoutPopupOpen(false)}
+                className="rounded border border-neutral-600 px-6 py-2 font-primary text-sm font-semibold text-neutral-300 transition-colors hover:bg-neutral-800"
+              >
+                Cancel
+              </button>
+              <LogoutButton />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Mobile menu overlay */}
       {menuOpen && (
