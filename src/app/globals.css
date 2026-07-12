@@ -20,46 +20,23 @@
    ═════════════════════════════════════════════════════════════════════════════ */
 @theme {
   /* ── Font Families ──────────────────────────────────────────────────────── */
-  --font-primary: var(--font-dogica);
-  --font-secondary: var(--font-inter);
-  --font-cabin-sketch: var(--font-cabin-sketch);
-  --font-futura: var(--font-jost);
-  --font-montserrat: var(--font-montserrat);
-  --font-rajdhani: "Rajdhani", sans-serif;
+  --font-primary: var(--font-dogica);  --font-secondary: var(--font-inter);
+  --font-cabin-sketch: var(--font-cabin-sketch);  --font-futura: var(--font-jost);
+  --font-montserrat: var(--font-montserrat);  --font-rajdhani: "Rajdhani", sans-serif;
   --font-share-tech-mono: "Share Tech Mono", monospace;
-
   /* ── Font Weights ───────────────────────────────────────────────────────── */
-  --font-weight-thin: 100;
-  --font-weight-extralight: 200;
-  --font-weight-light: 300;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  --font-weight-extrabold: 800;
-  --font-weight-black: 900;
-
+  --font-weight-thin: 100; --font-weight-extralight: 200;
+  --font-weight-light: 300;  --font-weight-normal: 400;
+  --font-weight-medium: 500;  --font-weight-semibold: 600;
+  --font-weight-bold: 700;  --font-weight-extrabold: 800; --font-weight-black: 900;
   /* ── Font Sizes ─────────────────────────────────────────────────────────── */
-  --text-title-1: 72px;
-  --text-title-2: 64px;
-  --text-title-3: 56px;
-  --text-h1: 56px;
-  --text-h2: 48px;
-  --text-h3: 40px;
-  --text-h4: 32px;
-  --text-h5: 24px;
-  --text-h6: 20px;
-  --text-h7: 16px;
-  --text-label-1: 16px;
-  --text-label-2: 14px;
-  --text-label-3: 12px;
-  --text-body-1: 20px;
-  --text-body-2: 18px;
-  --text-body-3: 14px;
-  --text-body-4: 12px;
-  --text-caption-1: 10px;
+  --text-title-1: 72px;  --text-title-2: 64px;  --text-title-3: 56px;
+  --text-h1: 56px;  --text-h2: 48px;  --text-h3: 40px;
+  --text-h4: 32px;  --text-h5: 24px;  --text-h6: 20px;
+  --text-h7: 16px;  --text-label-1: 16px;  --text-label-2: 14px;
+  --text-label-3: 12px;  --text-body-1: 20px;  --text-body-2: 18px;
+  --text-body-3: 14px;  --text-body-4: 12px;  --text-caption-1: 10px;
   --text-caption-2: 9px;
-
   /* ── Border Radius ──────────────────────────────────────────────────────── */
   --radius-none: 0px;
   --radius-sm: 2px;

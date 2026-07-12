@@ -29,27 +29,26 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto px-base md:px-md xl:px-xl3">
-      <div className="grid grid-cols-1 gap-base md:grid-cols-[1fr_258px] lg:grid-cols-[1fr_350px]  2xl:grid-cols-[1fr_435px] 2xl:gap-md">
-        <div className="md:col-span-2 xl:col-span-1 xl:col-start-1 xl:row-start-1 xl:row-end-3">
+      <div className="grid grid-cols-1 gap-base md:grid-cols-[1fr_258px] lg:grid-cols-3 2xl:gap-md">
+        <div className="md:col-span-2 lg:col-span-2 lg:row-start-1 lg:row-end-3">
           <WelcomeBack name={name} />
         </div>
-        <div className="xl:col-start-1 xl:row-start-3 xl:row-end-7">
+        <div className="lg:col-span-2 lg:row-start-3 lg:row-end-7">
           <Suspense fallback={<DailyMissionSkeleton />}>
             <DailyMission />
           </Suspense>
         </div>
-        <div className="md:col-start-2 md:row-start-2 xl:col-start-2 xl:row-start-1 xl:row-end-4">
+        <div className="md:col-start-2 md:row-start-2 lg:col-start-3 lg:row-start-1 lg:row-end-4">
           <Suspense fallback={<StreakSkeleton />}>
             <Streak />
           </Suspense>
         </div>
-        <div className="md:col-span-2 xl:col-span-1 xl:col-start-1 xl:row-start-7">
+        <div className="md:col-span-2 lg:col-span-2 lg:row-start-7">
           <Suspense fallback={<UpcomingContestsSkeleton />}>
             <UpcomingContests />
           </Suspense>
         </div>
-        <div className="md:col-span-2 xl:col-start-2 xl:row-start-4 xl:row-end-11">
-          {/* <Suspense fallback={<LeaderboardSkeleton />}> */}
+        <div className="md:col-span-2 lg:col-start-3 lg:col-span-1 lg:row-start-4 lg:row-end-11">
           <GlobalLeaderboard
             initialStudents={leaderboardRes.data.leaderboard}
           />

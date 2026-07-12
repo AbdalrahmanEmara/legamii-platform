@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import ReusableWindow from "@/components/ui/ReusableWindow";
 import Background from "@/components/ui/Background";
 import CustomScroll from "@/components/ui/CustomScroll";
+import { askQuestionAction } from "@/lib/actions/chat.action";
 
 // ─── MOCK CHAT HISTORY (sidebar) ─────────────────────────────────────────────
 const INITIAL_CHATS = [
@@ -49,7 +50,7 @@ function SendIcon() {
       <div style={{ width: 32, height: 32, position: "relative" }}>
         <img
           style={{ width: 32, height: 32, left: 0, top: 0, position: "absolute" }}
-          src="images/image 98.svg"
+          src="/images/image 98.svg"
         />
       </div>
     </div>
@@ -235,24 +236,12 @@ function AiTutorPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          system:
-            "You are an encouraging science tutor helping students understand concepts. Keep explanations clear, engaging, and use real-world analogies. Address the student as a curious learner on a science mission.",
-          messages: next.map((m) => ({
-            role: m.role === "user" ? "user" : "assistant",
-            content: m.text,
-          })),
-        }),
-      });
-      const data = await res.json();
-      const reply =
-        data.content?.map((c) => c.text || "").join("") || "Sorry, I couldn't respond right now!";
-      updateMessages(activeChatId, [...next, { role: "tutor", text: reply }]);
+      const result = await askQuestionAction(text);
+      if (result.success) {
+        updateMessages(activeChatId, [...next, { role: "tutor", text: result.answer }]);
+      } else {
+        updateMessages(activeChatId, [...next, { role: "tutor", text: result.message }]);
+      }
     } catch {
       updateMessages(activeChatId, [
         ...next,

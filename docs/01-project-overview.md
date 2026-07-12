@@ -80,4 +80,4 @@ The frontend is a **Next.js 16 App Router** application that communicates with a
 | Real-Time | Socket.IO with 3 namespaces |
 | Auth | httpOnly JWT cookies, middleware-protected routes |
 | Icons | lucide-react + custom SVG icons |
-| State | TanStack React Query (client) |
+| State | React useState / useReducer + Server Actions (server) |

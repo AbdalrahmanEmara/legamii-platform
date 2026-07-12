@@ -2,12 +2,6 @@ import { twMerge } from "tailwind-merge";
 import { clsx } from "clsx";
 import Link from "next/link";
 
-// const sizeClasses = {
-//   sm: "px-sm py-zero text-xs font-bold leading-4",
-//   md: "px-md py-sm text-base font-bold",
-//   lg: "px-lg py-base text-lg font-bold",
-// };
-
 function cn(...inputs) {
   return twMerge(clsx(inputs));
 }

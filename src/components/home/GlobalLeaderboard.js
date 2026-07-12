@@ -45,7 +45,7 @@ export default function GlobalLeaderboard({ initialStudents }) {
     return (
         <ReusableWindow
             title="Global_Leaderboard.sys"
-            className="flex h-[1395px] w-[413px] flex-col"
+            className="flex h-[1395px] w-full flex-col"
         >
             <CustomScroll>
 

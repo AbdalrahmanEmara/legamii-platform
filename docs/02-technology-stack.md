@@ -37,11 +37,10 @@ All forms (signup, login, password reset, etc.) use react-hook-form with Zod sch
 
 | Technology | Purpose |
 |---|---|
-| **TanStack React Query** | Client-side server state management |
 | **Server Actions** | Server-side mutations with progressive enhancement |
 | **Server Components** | Direct data fetching without client round-trips |
 
-TanStack React Query is available for client components that need caching and background refetching. Server Components and Server Actions cover most data-fetching needs, following the architecture pattern.
+Server Components and Server Actions cover all data-fetching needs. Client components use React's built-in `useState` + `useEffect` pattern for data fetching, with the `cancelled` flag pattern to prevent state updates on unmounted components.
 
 ## Real-Time
 
@@ -75,7 +74,7 @@ All custom icons live in `src/components/icons/` as individual React components.
 
 JWT tokens are stored in httpOnly cookies set by server actions, preventing XSS attacks. A middleware (`proxy.js`) protects routes by checking for the `token` cookie and validating role-based access.
 
-## Fonts
+<!-- ## Fonts
 
 | Font | Type | Usage |
 |---|---|---|
@@ -85,9 +84,9 @@ JWT tokens are stored in httpOnly cookies set by server actions, preventing XSS 
 | **Jost** | Google Fonts | Theming alias `--font-futura` |
 | **Montserrat** | Google Fonts | Additional heading style |
 | **Rajdhani** | Google Fonts | Monospace-style accent |
-| **Share Tech Mono** | Google Fonts | Technical/monospace text |
+| **Share Tech Mono** | Google Fonts | Technical/monospace text | -->
 
-Dogica is loaded as a local font from `public/fonts/` via `next/font/local`, while all other fonts are loaded from Google Fonts via `next/font/google` in the root layout.
+<!-- Dogica is loaded as a local font from `public/fonts/` via `next/font/local`, while all other fonts are loaded from Google Fonts via `next/font/google` in the root layout. -->
 
 ## Development Tools
 

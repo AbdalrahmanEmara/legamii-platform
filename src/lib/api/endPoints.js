@@ -118,4 +118,7 @@ export const ENDPOINTS = {
     daily: `${v}/missions/daily`,
     claim: (id) => `${v}/missions/${id}/claim`,
   },
+  chat: {
+    ask: `${v}/chat`,
+  },
 };
