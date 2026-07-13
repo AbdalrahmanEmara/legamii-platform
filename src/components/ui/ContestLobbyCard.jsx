@@ -8,6 +8,7 @@ import { BookOpen, FlaskConical, Cpu, Calendar, Clock, Hourglass } from "lucide-
 import { useRouter } from "next/navigation";
 import { startContestAction, registerContestAction } from "@/lib/actions/student_contest.action";
 import Btn1 from "./Btn1";
+import RegistrationPopup from "./RegistrationPopup";
 
 export default function ContestLobbyCard({ contest, classId, contestId }) {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function ContestLobbyCard({ contest, classId, contestId }) {
   );
 
   const [liveDuration, setLiveDuration] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
   /*async function handleContestAction() {
     console.log("BUTTON CLICKED");
     console.log("contest", contest);
@@ -88,7 +90,7 @@ export default function ContestLobbyCard({ contest, classId, contestId }) {
   const handleContestAction = async () => {
     if (!contest?.isRegistered) {
       await registerContestAction(classId, contestId);
-      router.refresh();
+      setShowPopup(true);
       return;
     }
 
@@ -116,6 +118,11 @@ export default function ContestLobbyCard({ contest, classId, contestId }) {
 
 const handleBackToContest = () => {
   router.back();
+};
+
+const handlePopupClose = () => {
+  setShowPopup(false);
+  router.refresh();
 };
 
 
@@ -294,6 +301,12 @@ return (
         </div>
       </div>
     </div>
+    {showPopup && (
+      <RegistrationPopup
+        contestTitle={contest.contestTitle}
+        onClose={handlePopupClose}
+      />
+    )}
   </ReusableWindow>
 );
 }

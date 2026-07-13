@@ -6,6 +6,7 @@ import { TextAlignJustify } from "lucide-react";
 import ContestList from "./ContestList";
 import { useState } from "react";
 import { CloseIcon } from "../icons/CloseIcon";
+import RegistrationPopup from "../ui/RegistrationPopup";
 
 export default function MainContestPage({ status, contestsData }) {
   const [showFilter, setShowFilter] = useState(false);
@@ -41,6 +42,7 @@ export default function MainContestPage({ status, contestsData }) {
           {/* <Suspense fallback={<ContestListSkeleton />}>
               <ContestListWrapper searchParams={searchParams} />
             </Suspense> */}
+          <RegistrationPopup />
           <ContestList contestsData={contestsData} />
         </CustomScroll>
       </div>

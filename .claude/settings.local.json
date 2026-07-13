@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__figma__get_figma_data",
+      "Bash(python3 -c ' *)",
+      "Bash(npm run *)"
+    ]
+  },
+  "model": "sonnet[1m]",
+  "enabledMcpjsonServers": [
+    "figma"
+  ],
+  "effortLevel": "medium",
+  "mcpServers": {
+    "figma": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "figma-developer-mcp",
+        "--stdio"
+      ],
+      "env": {
+        "FIGMA_API_KEY": "figd_Ry5k1jAQB4XYpIR72qci3622pQ9BvlxbUkQs57gU"
+      },
+      "timeout": 15000
+    }
+  }
+}
